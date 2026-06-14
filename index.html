@@ -1,0 +1,3856 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ฟิสิกส์ ม.6: บทเรียนเรื่องความร้อนและแก๊ส 🌡️🔥</title>
+  <!-- Production Tailwind CSS build -->
+  <link rel="stylesheet" href="./styles.css">
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax Configuration for LaTeX -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --ink: #14313d;
+      --muted: #5f7480;
+      --paper: rgba(255, 255, 255, 0.92);
+      --line: rgba(20, 49, 61, 0.09);
+      --mint: #35d0ba;
+      --sky: #2f80ed;
+      --sun: #ffcf5a;
+      --coral: #ff7a70;
+    }
+
+    body {
+      font-family: 'Prompt', 'Sarabun', sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(53, 208, 186, 0.12), transparent 28%),
+        linear-gradient(225deg, rgba(255, 207, 90, 0.22), transparent 34%),
+        repeating-linear-gradient(0deg, rgba(20, 49, 61, 0.035) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(90deg, rgba(20, 49, 61, 0.03) 0 1px, transparent 1px 34px),
+        #f7fbf7;
+      text-rendering: optimizeLegibility;
+    }
+
+    html.exam-locked,
+    body.exam-locked {
+      overscroll-behavior-y: none;
+    }
+
+
+
+    .math-font {
+      font-family: 'Sarabun', sans-serif;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0ea5a3 0%, #2f80ed 52%, #ff7a70 100%) !important;
+      box-shadow: 0 12px 30px rgba(20, 49, 61, 0.16);
+    }
+
+    header h1 {
+      letter-spacing: 0;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    }
+
+    header p,
+    header span {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    main {
+      position: relative;
+    }
+
+    main .bg-white {
+      background: var(--paper) !important;
+      border-color: var(--line) !important;
+      box-shadow: 0 10px 28px rgba(20, 49, 61, 0.07);
+      backdrop-filter: blur(8px);
+    }
+
+    main .rounded-2xl {
+      border-radius: 18px;
+    }
+
+    button,
+    input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      position: relative;
+      border: 1px solid rgba(20, 49, 61, 0.12) !important;
+      box-shadow:
+        0 4px 0 rgba(20, 49, 61, 0.14),
+        0 10px 20px rgba(20, 49, 61, 0.08);
+      transform: translateY(0);
+      transition:
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        filter 120ms ease,
+        background-color 120ms ease;
+      user-select: none;
+    }
+
+    button:hover {
+      filter: brightness(1.03) saturate(1.04);
+      box-shadow:
+        0 5px 0 rgba(20, 49, 61, 0.16),
+        0 14px 24px rgba(20, 49, 61, 0.11);
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow:
+        0 1px 0 rgba(20, 49, 61, 0.18),
+        0 5px 12px rgba(20, 49, 61, 0.09);
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(255, 207, 90, 0.72);
+      outline-offset: 3px;
+    }
+
+    button.group,
+    main button:not([onclick="closeAlertModal()"]) {
+      will-change: transform;
+    }
+
+    button.group {
+      border-width: 1px;
+      box-shadow:
+        0 6px 0 rgba(20, 49, 61, 0.12),
+        0 16px 28px rgba(20, 49, 61, 0.09);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    button.group:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 0 rgba(20, 49, 61, 0.13),
+        0 20px 34px rgba(20, 49, 61, 0.13);
+    }
+
+    button.group:active {
+      transform: translateY(2px);
+      box-shadow:
+        0 2px 0 rgba(20, 49, 61, 0.14),
+        0 8px 16px rgba(20, 49, 61, 0.1);
+    }
+
+    button.group:nth-child(1) {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 255, 0.86)) !important;
+    }
+
+    button.group:nth-child(2) {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(232, 255, 241, 0.88)) !important;
+    }
+
+    button.group:nth-child(3) {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 239, 221, 0.9)) !important;
+    }
+
+    #sec-home>div:first-child {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(232, 255, 241, 0.9) 48%, rgba(255, 246, 214, 0.88)) !important;
+      border: 1px solid rgba(20, 49, 61, 0.08) !important;
+    }
+
+    #sec-home>div:first-child svg {
+      filter: drop-shadow(0 14px 22px rgba(47, 128, 237, 0.16));
+    }
+
+    #sec-home>div:last-child {
+      background: linear-gradient(135deg, rgba(255, 248, 219, 0.92), rgba(225, 249, 244, 0.9)) !important;
+      border-color: rgba(255, 207, 90, 0.38) !important;
+    }
+
+    #review-tab-single .bg-slate-900 {
+      background: linear-gradient(135deg, #12343b, #0f766e) !important;
+    }
+
+    svg[aria-label="ภาพปลายวัตถุวางบนสเกล"] rect:first-child {
+      fill: #fbfefb;
+    }
+
+    .measurement-figure {
+      position: relative;
+      cursor: zoom-in;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .measurement-figure:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(20, 49, 61, 0.1);
+    }
+
+    .measurement-figure::after {
+      content: "แตะเพื่อซูม";
+      position: absolute;
+      right: 0.75rem;
+      top: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(20, 49, 61, 0.78);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    #measurement-zoom-stage svg {
+      width: min(1120px, 175vw);
+      max-width: none;
+      height: auto;
+    }
+
+    body.exam-locked header {
+      position: static !important;
+    }
+
+    .shadow-sm {
+      box-shadow: 0 8px 22px rgba(20, 49, 61, 0.06) !important;
+    }
+
+    .text-slate-800,
+    .text-slate-900,
+    .text-blue-950,
+    .text-indigo-950,
+    .text-violet-950 {
+      color: var(--ink) !important;
+    }
+
+    .text-slate-500,
+    .text-slate-600,
+    .text-slate-700 {
+      color: var(--muted) !important;
+    }
+
+    .bg-blue-600,
+    .bg-indigo-600,
+    .bg-violet-600,
+    .bg-emerald-600 {
+      background: linear-gradient(180deg, #39d5c2 0%, #208de6 100%) !important;
+      border-color: rgba(16, 94, 121, 0.28) !important;
+      color: #fff !important;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.14);
+    }
+
+    .bg-blue-100,
+    .bg-indigo-100,
+    .bg-violet-100,
+    .bg-slate-100 {
+      background-color: rgba(225, 249, 244, 0.92) !important;
+    }
+
+    .text-blue-600,
+    .text-indigo-600,
+    .text-violet-600 {
+      color: #0b8f89 !important;
+    }
+
+    .border-slate-100,
+    .border-slate-200,
+    .border-blue-100,
+    .border-indigo-100,
+    .border-violet-100 {
+      border-color: var(--line) !important;
+    }
+
+    #mobile-menu {
+      background: rgba(15, 118, 110, 0.96) !important;
+    }
+
+    #mobile-menu button,
+    header button,
+    header .bg-indigo-800 {
+      background: rgba(255, 255, 255, 0.18) !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      color: #fff !important;
+      box-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.14),
+        0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-slate-100,
+    .bg-slate-200 {
+      border-color: rgba(20, 49, 61, 0.14) !important;
+      box-shadow:
+        0 4px 0 rgba(20, 49, 61, 0.11),
+        0 10px 18px rgba(20, 49, 61, 0.07);
+    }
+
+    .text-blue-600.bg-transparent,
+    button.text-blue-600:not(.bg-blue-600) {
+      box-shadow: none;
+      border-color: transparent !important;
+    }
+
+    input {
+      border-color: rgba(20, 49, 61, 0.13) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    input:focus {
+      box-shadow: 0 0 0 4px rgba(53, 208, 186, 0.18) !important;
+      border-color: var(--mint) !important;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #12343b, #0f766e) !important;
+      border-top: 0 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding-top: 1.25rem !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+      }
+
+      header h1 {
+        font-size: 1.05rem !important;
+        line-height: 1.35;
+      }
+
+      main .rounded-2xl {
+        border-radius: 14px;
+      }
+
+      .measurement-figure svg {
+        min-width: 720px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .measurement-figure svg {
+        min-width: 680px;
+      }
+    }
+
+    @media (max-height: 430px) and (orientation: landscape) {
+      header .max-w-6xl {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+      }
+
+      header h1 {
+        font-size: 1rem !important;
+      }
+
+      header p {
+        display: none;
+      }
+    }
+
+    /* Custom Scrollbar for better UI */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* ==========================================================================
+       HIGH CONTRAST & ACCESSIBILITY CUSTOM STYLES (Light and Dark Modes)
+       This fixes missing Tailwind classes and ensures perfect readability.
+       ========================================================================== */
+
+    /* 1. Live Calculation Box backgrounds (Day/Default Mode) */
+    .bg-blue-900 {
+      background-color: #0f2c59 !important;
+      /* Deep navy blue */
+    }
+
+    .bg-indigo-950 {
+      background-color: #1a1b4b !important;
+      /* Deep indigo */
+    }
+
+    .bg-violet-950 {
+      background-color: #29134a !important;
+      /* Deep violet */
+    }
+
+    /* 2. Luminous text colors inside dark boxes (Day/Default Mode) */
+    .text-blue-100 {
+      color: #dbeafe !important;
+    }
+
+    .text-blue-200 {
+      color: #bfdbfe !important;
+    }
+
+    .text-indigo-100 {
+      color: #e0e7ff !important;
+    }
+
+    .text-indigo-200 {
+      color: #c7d2fe !important;
+    }
+
+    .text-violet-100 {
+      color: #ede9fe !important;
+    }
+
+    .text-violet-200 {
+      color: #ddd6fe !important;
+    }
+
+    .text-cyan-300 {
+      color: #22d3ee !important;
+      /* Luminous cyan */
+    }
+
+    /* 3. Backgrounds for light containers (Day Mode) */
+    .bg-blue-50 {
+      background-color: #eff6ff !important;
+    }
+
+    .bg-indigo-50 {
+      background-color: #f0f4ff !important;
+    }
+
+    .bg-violet-50 {
+      background-color: #f5f3ff !important;
+    }
+
+    .bg-emerald-50 {
+      background-color: #ecfdf5 !important;
+    }
+
+    .bg-rose-50 {
+      background-color: #fff1f2 !important;
+    }
+
+    .bg-amber-50 {
+      background-color: #fffbeb !important;
+    }
+
+    /* 4. Light/translucent borders (Day Mode) */
+    .border-emerald-100 {
+      border-color: #d1fae5 !important;
+    }
+
+    .border-rose-100 {
+      border-color: #ffe4e6 !important;
+    }
+
+    .border-amber-100 {
+      border-color: #fef3c7 !important;
+    }
+
+    .border-indigo-100 {
+      border-color: #e0e7ff !important;
+    }
+
+    /* 5. Text colors for light containers (Day Mode) */
+    .text-emerald-800 {
+      color: #065f46 !important;
+    }
+
+    .text-rose-800 {
+      color: #9f1239 !important;
+    }
+
+    .text-amber-900 {
+      color: #78350f !important;
+    }
+
+    .text-amber-950 {
+      color: #451a03 !important;
+    }
+
+    .text-indigo-700 {
+      color: #4338ca !important;
+    }
+
+    /* 6. Slate and general text contrast adjustments (Day Mode) */
+    .text-slate-300 {
+      color: #cbd5e1 !important;
+    }
+
+    .text-slate-400 {
+      color: #475569 !important;
+      /* Darker slate gray for better Day contrast */
+    }
+
+    /* 7. Hover states for buttons (Day Mode) */
+    .hover\:bg-blue-50:hover {
+      background-color: #eff6ff !important;
+    }
+
+    .hover\:bg-indigo-50:hover {
+      background-color: #f0f4ff !important;
+    }
+
+    .hover\:bg-violet-50:hover {
+      background-color: #f5f3ff !important;
+    }
+
+    /* 8. Form Inputs and Selects (Day/Default Mode) */
+    input[type="text"],
+    input[type="number"],
+    select {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      /* Slate 900 */
+      border: 1px solid rgba(20, 49, 61, 0.18) !important;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="number"]::placeholder {
+      color: #64748b !important;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header Banner -->
+  <header class="bg-gradient-to-r from-blue-950 via-indigo-950 to-slate-900 text-white shadow-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-3">
+        <div class="bg-red-600 text-white p-3 rounded-xl shadow-inner text-2xl flex items-center justify-center">
+          <i class="fa-solid fa-temperature-half"></i>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-bold tracking-wide">ฟิสิกส์ ม.6: บทเรียนเรื่องความร้อนและแก๊ส</h1>
+          <p class="text-xs md:text-sm text-blue-200">รายวิชา ฟิสิกส์ 5 รหัสวิชา ว33205 โรงเรียนห้องสอนศึกษา
+            ในพระอุปถัมภ์ฯ</p>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <span
+          class="bg-indigo-800 text-indigo-200 px-3 py-1.5 rounded-full text-xs font-semibold border border-indigo-700">
+          <i class="fa-solid fa-graduation-cap mr-1"></i> มัธยมศึกษาปีที่ 6
+        </span>
+
+        <button onclick="showSection('home')"
+          class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-xs transition duration-200 flex items-center gap-1">
+          <i class="fa-solid fa-house"></i> หน้าแรก
+        </button>
+      </div>
+      <div class="w-full md:hidden flex items-center justify-between">
+        <span
+          class="bg-indigo-800/80 text-indigo-100 px-3 py-1.5 rounded-full text-[11px] font-semibold border border-indigo-700">ว33205
+          ฟิสิกส์ 5</span>
+        <button onclick="toggleMobileMenu()"
+          class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg text-sm transition duration-200"
+          aria-label="Toggle mobile menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95">
+      <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-2 gap-2 text-sm">
+        <button onclick="showSection('home')" class="bg-white/10 rounded-lg py-2">หน้าหลัก</button>
+        <button onclick="showSection('review')" class="bg-white/10 rounded-lg py-2">บทเรียน</button>
+        <button onclick="showSection('practice')" class="bg-white/10 rounded-lg py-2">ฝึกโจทย์</button>
+        <button onclick="showSection('exam-start')" class="bg-white/10 rounded-lg py-2">สอบเก็บคะแนน</button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 1: HOME / LANDING PAGE -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-home" class="space-y-8 animate-fade-in">
+      <!-- Welcome Hero Card -->
+      <div
+        class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-4 max-w-2xl">
+          <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">
+            ความร้อนและแก๊ส
+          </span>
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-800 leading-tight">
+            16.1 ความร้อน <span class="text-red-600">(\(Q, C, c, L\))</span>
+          </h2>
+          <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+            ยินดีต้อนรับนักเรียนชั้น ม.6 ทุกคน! เว็บไซต์นี้จะช่วยให้เธอเข้าใจฟิสิกส์บทที่ 16.1 เรื่องความร้อน
+            ตั้งแต่ความเข้าใจเรื่องอุณหภูมิ ความจุความร้อน ความร้อนจำเพาะ และความร้อนแฝง
+            พร้อมจำลองปรากฏการณ์ฟิสิกส์เชิงปฏิสัมพันธ์ ระบบฝึกทำโจทย์แบบสุ่ม
+            และระบบสอบเก็บคะแนนวัดประเมินความรู้พร้อมเฉลยละเอียดตามคู่มือครู สสวท. เล่ม 5 ครับ!
+          </p>
+          <!-- Quick Status Indicator -->
+          <div id="latest-score-badge"
+            class="hidden bg-slate-100 p-3.5 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-xs md:text-sm text-slate-600">
+              <i class="fa-solid fa-clipboard-check text-emerald-500 text-lg"></i>
+              <span>ผลสอบล่าสุดของคุณ: <strong id="lbl-last-score" class="text-slate-800">-</strong></span>
+            </div>
+            <button onclick="showLatestResultModal()"
+              class="text-blue-600 hover:text-blue-800 font-semibold text-xs flex items-center gap-1">
+              <i class="fa-solid fa-eye"></i> ดูผลสอบละเอียด
+            </button>
+          </div>
+        </div>
+        <div class="w-full md:w-64 flex justify-center">
+          <svg class="w-48 h-48 drop-shadow-lg transition-transform duration-300 hover:scale-105" viewBox="0 0 200 200"
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background glow -->
+            <circle cx="100" cy="100" r="80" fill="url(#heat-glow)" opacity="0.15" />
+            <!-- Thermometer shape -->
+            <!-- Glass stem -->
+            <rect x="92" y="30" width="16" height="110" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3" />
+            <!-- Vapour lines/heat waves -->
+            <path d="M 65 90 Q 70 80 75 90 T 85 90" stroke="#ff7a70" stroke-width="3" stroke-linecap="round"
+              opacity="0.7">
+              <animate attributeName="d" dur="3s" repeatCount="indefinite"
+                values="M 65 90 Q 70 80 75 90 T 85 90; M 65 85 Q 70 95 75 85 T 85 85; M 65 90 Q 70 80 75 90 T 85 90" />
+            </path>
+            <path d="M 115 90 Q 120 80 125 90 T 135 90" stroke="#ff7a70" stroke-width="3" stroke-linecap="round"
+              opacity="0.7">
+              <animate attributeName="d" dur="3s" repeatCount="indefinite"
+                values="M 115 90 Q 120 80 125 90 T 135 90; M 115 85 Q 120 95 125 85 T 135 85; M 115 90 Q 120 80 125 90 T 135 90" />
+            </path>
+            <!-- Liquid bulb -->
+            <circle cx="100" cy="140" r="22" fill="#ff7a70" stroke="#94a3b8" stroke-width="3" />
+            <!-- Inner red mercury column -->
+            <rect x="96" y="50" width="8" height="90" rx="4" fill="#ff7a70" />
+            <!-- Mercury bulb center shine -->
+            <circle cx="100" cy="140" r="15" fill="#ff9b93" />
+            <circle cx="95" cy="135" r="5" fill="#fff" opacity="0.6" />
+            <!-- Fire flame under thermometer -->
+            <path d="M 90 175 Q 100 150 102 162 Q 107 155 110 175 Z" fill="#ffcf5a">
+              <animate attributeName="d" dur="1.5s" repeatCount="indefinite"
+                values="M 90 175 Q 100 150 102 162 Q 107 155 110 175 Z; M 88 175 Q 98 145 104 165 Q 108 150 112 175 Z; M 90 175 Q 100 150 102 162 Q 107 155 110 175 Z" />
+            </path>
+            <path d="M 94 175 Q 100 160 101 167 Q 103 163 106 175 Z" fill="#ff7a70" />
+            <defs>
+              <radialGradient id="heat-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff7a70" />
+                <stop offset="100%" stop-color="#ffcf5a" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Main Action Buttons -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Button 1: Review -->
+        <button onclick="showSection('review')"
+          class="group text-left bg-white hover:bg-gradient-to-br hover:from-white hover:to-blue-50/50 rounded-2xl p-6 shadow-sm hover:shadow-md border border-slate-100 hover:border-blue-200 transition-all duration-300">
+          <div
+            class="w-14 h-14 bg-blue-100 group-hover:bg-blue-200 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-4 transition-colors">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+            1. ทบทวนเนื้อหา
+            <i
+              class="fa-solid fa-arrow-right text-sm text-blue-500 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all"></i>
+          </h3>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            ศึกษาทฤษฎีสเกลอุณหภูมิ ความจุความร้อน ความร้อนจำเพาะ และความร้อนแฝง
+            พร้อมเครื่องจำลองเชิงปฏิสัมพันธ์และกราฟเปรียบเทียบ
+          </p>
+        </button>
+
+        <!-- Button 2: Practice -->
+        <button onclick="showSection('practice')"
+          class="group text-left bg-white hover:bg-gradient-to-br hover:from-white hover:to-indigo-50/50 rounded-2xl p-6 shadow-sm hover:shadow-md border border-slate-100 hover:border-indigo-200 transition-all duration-300">
+          <div
+            class="w-14 h-14 bg-indigo-100 group-hover:bg-indigo-200 text-indigo-600 rounded-xl flex items-center justify-center text-2xl mb-4 transition-colors">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+            2. ฝึกทำโจทย์
+            <i
+              class="fa-solid fa-arrow-right text-sm text-indigo-500 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all"></i>
+          </h3>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            ฝึกฝนแก้โจทย์คำถามตรวจสอบความเข้าใจ และแบบฝึกหัด 16.1 จากคู่มือครู สสวท.
+            พร้อมการสุ่มตัวแปรและเฉลยละเอียดทีละขั้นตอน
+          </p>
+        </button>
+
+        <!-- Button 3: Exam -->
+        <button onclick="showSection('exam-start')"
+          class="group text-left bg-white hover:bg-gradient-to-br hover:from-white hover:to-violet-50/50 rounded-2xl p-6 shadow-sm hover:shadow-md border border-slate-100 hover:border-violet-200 transition-all duration-300">
+          <div
+            class="w-14 h-14 bg-violet-100 group-hover:bg-violet-200 text-violet-600 rounded-xl flex items-center justify-center text-2xl mb-4 transition-colors">
+            <i class="fa-solid fa-file-signature"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+            3. สอบเก็บคะแนน
+            <i
+              class="fa-solid fa-arrow-right text-sm text-violet-500 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all"></i>
+          </h3>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            ทดสอบเก็บคะแนนจริงแบบจับเวลา 10 นาที (5 ข้อ 10 คะแนน) จากคลังโจทย์ความร้อน 16.1
+            พร้อมระบบบันทึกผลการสอบและเฉลยรายบุคคล
+          </p>
+        </button>
+      </div>
+
+      <!-- Quick Tips Box (เคล็ดลับความรู้คู่ความร้อน) -->
+      <div class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 p-6 rounded-2xl border border-orange-100/80 shadow-sm space-y-4">
+        <div class="flex items-center gap-3 border-b border-orange-100 pb-3">
+          <div class="text-orange-600 text-2xl flex items-center justify-center bg-orange-100 p-2 rounded-xl">
+            <i class="fa-solid fa-lightbulb animate-pulse"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-orange-950 text-base">เคล็ดลับความรู้คู่ความร้อน (Key Heat Concepts)</h4>
+            <p class="text-xs text-orange-800/70">สรุปความรู้และสมการสำคัญประจำบทเรียนเรื่องความร้อนและอุณหภูมิ</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Card 1: Temperature -->
+          <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-orange-100/50 flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div>
+              <div class="text-rose-500 font-bold text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-temperature-empty"></i> 16.1.1 Temperature
+              </div>
+              <h5 class="font-bold text-slate-800 text-sm mb-1">อุณหภูมิ</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">บอกระดับความร้อนเย็นของสสาร ซึ่งแปรผันตามพลังงานจลน์เฉลี่ยของอนุภาค</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100/80">
+              <div class="text-xs font-mono text-rose-700 bg-rose-50 p-1.5 rounded text-center font-bold">
+                \( T(\text{K}) = t(^\circ\text{C}) + 273 \)
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 2: Heat Capacity -->
+          <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-orange-100/50 flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div>
+              <div class="text-amber-600 font-bold text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-fire-burner"></i> 16.1.2 Heat Capacity
+              </div>
+              <h5 class="font-bold text-slate-800 text-sm mb-1">ความจุความร้อน</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">ความร้อนที่ทำให้อุณหภูมิวัตถุเปลี่ยนไป 1 หน่วย โดยไม่เปลี่ยนสถานะ (ขึ้นอยู่กับมวลและชนิดสาร)</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100/80">
+              <div class="text-xs font-mono text-amber-700 bg-amber-50 p-1.5 rounded text-center font-bold">
+                \( Q = C\Delta T \)
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 3: Specific Heat Capacity -->
+          <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-orange-100/50 flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div>
+              <div class="text-orange-600 font-bold text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-droplet"></i> 16.1.3 Specific Heat
+              </div>
+              <h5 class="font-bold text-slate-800 text-sm mb-1">ความร้อนจำเพาะ</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">ความร้อนที่ทำให้สารมวล 1 กิโลกรัม มีอุณหภูมิเปลี่ยนไป 1 หน่วย (ค่าเฉพาะตัวของสาร เช่น น้ำมีค่าสูงมาก)</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100/80">
+              <div class="text-xs font-mono text-orange-700 bg-orange-50 p-1.5 rounded text-center font-bold">
+                \( Q = mc\Delta T \)
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 4: Latent Heat -->
+          <div class="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-orange-100/50 flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div>
+              <div class="text-blue-600 font-bold text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-cube"></i> 16.1.4 Latent Heat
+              </div>
+              <h5 class="font-bold text-slate-800 text-sm mb-1">ความร้อนแฝง</h5>
+              <p class="text-xs text-slate-600 leading-relaxed">ความร้อนที่ทำให้สารเปลี่ยนสถานะโดยตรง โดยอุณหภูมิไม่มีการเปลี่ยนแปลงเลย</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100/80">
+              <div class="text-xs font-mono text-blue-700 bg-blue-50 p-1.5 rounded text-center font-bold">
+                \( Q = mL \)
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bottom Note / Extra Tip -->
+        <div class="text-[11px] text-orange-800/80 bg-orange-100/50 px-3 py-2 rounded-lg flex items-center gap-2">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>เกร็ดความรู้เพิ่มเติม:</strong> ค่าความร้อนจำเพาะของน้ำ \( (c_{\text{water}} \approx 4200\text{ J/kg}\cdot\text{K}) \) มีค่าสูงมากเมื่อเทียบกับทรายหรือเหล็ก ทำให้น้ำทะเลร้อนและเย็นช้ากว่าพื้นดิน ซึ่งส่งผลต่อลมบกและลมทะเลในชีวิตประจำวัน!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 2: REVIEW SYSTEM -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-review" class="hidden space-y-6 animate-fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800">🌡️ บทเรียนเรื่องความร้อน (Heat)</h2>
+          <p class="text-sm text-slate-500">ทบทวนทฤษฎี สูตรการคำนวณ และจำลองปรากฏการณ์ความร้อนและอุณหภูมิเชิงปฏิสัมพันธ์
+          </p>
+        </div>
+        <button onclick="showSection('home')"
+          class="self-start sm:self-auto px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-sm font-semibold transition duration-150 flex items-center gap-1.5">
+          <i class="fa-solid fa-chevron-left"></i> กลับหน้าแรก
+        </button>
+      </div>
+
+      <!-- Segment Tabs -->
+      <div class="flex flex-wrap bg-slate-200/60 p-1.5 rounded-xl gap-1 max-w-3xl mb-6">
+        <button onclick="switchReviewTab('16-1-1')" id="btn-tab-16-1-1"
+          class="flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 bg-white text-blue-900 shadow-sm">
+          16.1.1 อุณหภูมิ
+        </button>
+        <button onclick="switchReviewTab('16-1-2')" id="btn-tab-16-1-2"
+          class="flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">
+          16.1.2 ความจุความร้อน
+        </button>
+        <button onclick="switchReviewTab('16-1-3')" id="btn-tab-16-1-3"
+          class="flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">
+          16.1.3 ความร้อนจำเพาะ
+        </button>
+        <button onclick="switchReviewTab('16-1-4')" id="btn-tab-16-1-4"
+          class="flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">
+          16.1.4 ความร้อนแฝง
+        </button>
+      </div>
+
+      <!-- ---------------------------------------------------- -->
+      <!-- Tab 16.1.1: อุณหภูมิ -->
+      <!-- ---------------------------------------------------- -->
+      <div id="review-tab-16-1-1" class="space-y-6">
+        <!-- Interactive Simulator Widget -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-red-500">
+            <i class="fa-solid fa-temperature-half"></i> เครื่องทดลองจำลอง 16.1.1:
+            สเกลอุณหภูมิและการเคลื่อนที่ของโมเลกุล
+          </h3>
+          <p class="text-sm text-slate-600 mb-6">
+            ทดลองปรับอุณหภูมิ สังเกตการเปรียบเทียบระดับปรอทระหว่างหน่วยองศาเซลเซียส (\(^\circ\text{C}\)) และหน่วยเคลวิน
+            (\(\text{K}\))
+            พร้อมทั้งสังเกตความเร็วการเคลื่อนที่แบบสุ่มของโมเลกุลในกล่องปริมาตรปิด
+            (ความเร็วมวลโมเลกุลเฉลี่ยแปรผันตรงกับรากที่สองของอุณหภูมิสัมบูรณ์ \(v_{\text{rms}} \propto \sqrt{T}\))
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <!-- Animation Box (7 columns) -->
+            <div
+              class="lg:col-span-7 bg-slate-950 p-6 rounded-2xl flex flex-col justify-between items-center relative overflow-hidden min-h-[320px]">
+              <div class="absolute left-6 top-6 text-xs text-white font-bold tracking-wider z-10">
+                🔭 แบบจำลองโมเลกุลและเทอร์มอมิเตอร์เปรียบเทียบการเคลื่อนที่แบบสุ่มของแก๊สอุดมคติ
+              </div>
+              <div class="w-full flex-grow flex flex-col md:flex-row items-center justify-around gap-6 mt-12">
+                <!-- Molecule Container Box (Canvas) -->
+
+                <div class="flex flex-col items-center gap-2 w-full md:w-3/5">
+                  <canvas id="temp-molecule-canvas" width="260" height="180"
+                    class="bg-slate-900 border border-slate-700 rounded-lg shadow-inner"></canvas>
+                </div>
+                <!-- Thermometer Display (SVG) -->
+                <div class="flex flex-col items-center gap-2 w-1/3 min-w-[100px]">
+                  <span class="text-xs text-slate-400 font-bold">เทอร์มอมิเตอร์</span>
+                  <div id="sim-temp-thermometer-svg" class="w-full flex justify-center">
+                    <!-- Injected dynamically by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controller & Formulas Box (5 columns) -->
+            <div
+              class="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200/60 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block">ปรับแต่งอุณหภูมิ:</span>
+
+                <!-- Temp Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>อุณหภูมิ (\(t\) ในหน่วยองศาเซลเซียส):</span>
+                    <span id="lbl-sim-temp-c" class="text-red-500 font-bold text-sm">25.0 °C</span>
+                  </div>
+                  <input type="range" id="sim-temp-slider" min="-273" max="300" step="1" value="25"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-red-500">
+                </div>
+
+                <!-- Input Boxes for precise control -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">ระบุองศาเซลเซียส (°C):</label>
+                    <input type="number" id="sim-temp-input-c" value="25" min="-273.15" max="1000" step="any"
+                      class="w-full px-3 py-1.5 rounded-lg text-xs font-mono">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">ระบุเคลวิน (K):</label>
+                    <input type="number" id="sim-temp-input-k" value="298.15" min="0" max="1273.15" step="any"
+                      class="w-full px-3 py-1.5 rounded-lg text-xs font-mono">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Formula Calculation -->
+              <div class="bg-violet-950 text-white p-4 rounded-xl space-y-2 shadow-inner">
+                <span class="text-[10px] text-violet-200 block font-bold uppercase tracking-wider">สูตรและคำนวณสด (Live
+                  Calculation):</span>
+                <p class="text-xs">\(T = t + 273.15\)</p>
+                <div class="text-xs space-y-1 text-violet-100 font-mono">
+                  <p>\(T\) คือ อุณหภูมิในหน่วย เคลวิน (K)</p>
+                  <p>\(t\) คือ อุณหภูมิในหน่วย องศาเซลเซียส (°C)</p>
+                  <p id="lbl-sim-temp-calc">\(T = 25 + 273.15 = 298.15\text{ K}\)</p>
+                  <p class="text-sm font-bold text-cyan-300 mt-1">อุณหภูมิสัมบูรณ์ \(T = \) <span
+                      id="lbl-sim-temp-result">298.15</span> K</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">💡 หลักทฤษฎี: ระดับอุณหภูมิ</h4>
+            <p class="text-sm text-slate-600 leading-relaxed font-sans">
+              <strong>อุณหภูมิ (Temperature)</strong> คือ ปริมาณที่ระบุระดับความร้อนของวัตถุ
+              ประสาทสัมผัสของมนุษย์มีความคลาดเคลื่อนสูง นักวิทยาศาสตร์จึงใช้ <strong>เทอร์มอมิเตอร์
+                (Thermometer)</strong> เป็นเครื่องมือมาตรฐานในการวัดอุณหภูมิ<br>
+              <strong>หน่วยของอุณหภูมิ:</strong><br>
+              - <strong>องศาเซลเซียส (\(^\circ\text{C}\)):</strong> กำหนดจุดเยือกแข็งของน้ำเป็น \(0\ ^\circ\text{C}\)
+              และจุดเดือดเป็น \(100\ ^\circ\text{C}\) ที่ความดัน 1 บรรยากาศ<br>
+              - <strong>เคลวิน (\(\text{K}\)):</strong> เป็นหน่วยวัดอุณหภูมิในระบบเอสไอ (SI) เริ่มต้นจากศูนย์สัมบูรณ์
+              (Absolute Zero) ซึ่งเป็นอุณหภูมิต่ำสุดที่เป็นไปได้ทางทฤษฎี (โมเลกุลหยุดเคลื่อนที่โดยสมบูรณ์)<br>
+              - <strong>ความสัมพันธ์ของขนาดสเกล:</strong> อุณหภูมิที่เปลี่ยนแปลงไป 1 เคลวิน (\(\Delta T = 1\text{ K}\))
+              จะเท่ากับอุณหภูมิที่เปลี่ยนแปลงไป 1 องศาเซลเซียส (\(\Delta t = 1\ ^\circ\text{C}\)) พอดี
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">📝 ตัวอย่างแบบฝึกหัด 16.1 สสวท.
+              (ข้อ 1)</h4>
+            <div class="text-sm text-slate-600 space-y-3">
+              <p><strong>โจทย์:</strong> จงเปลี่ยนอุณหภูมิต่อไปนี้เป็นหน่วยเคลวิน: \(30\ ^\circ\text{C}\) และ \(-10\
+                ^\circ\text{C}\)
+                และแปลงอุณหภูมิต่อไปนี้เป็นหน่วยองศาเซลเซียส: \(30\text{ K}\) และ \(373.15\text{ K}\)</p>
+              <div class="space-y-1.5 pl-3 border-l-2 border-red-500 font-sans">
+                <p><strong>กรณีที่ 1: แปลงจาก \(^\circ\text{C}\) เป็น \(\text{K}\) (ใช้สูตร \(T = t + 273.15\))</strong></p>
+                <p>- ที่ \(t = 30\ ^\circ\text{C} \rightarrow T = 30 + 273.15 = 303.15\text{ K}\)</p>
+                <p>- ที่ \(t = -10\ ^\circ\text{C} \rightarrow T = -10 + 273.15 = 263.15\text{ K}\)</p>
+                <p><strong>กรณีที่ 2: แปลงจาก \(\text{K}\) เป็น \(^\circ\text{C}\) (ใช้สูตร \(t = T - 273.15\))</strong></p>
+                <p>- ที่ \(T = 30\text{ K} \rightarrow t = 30 - 273.15 = -243.15\ ^\circ\text{C}\)</p>
+                <p>- ที่ \(T = 373.15\text{ K} \rightarrow t = 373.15 - 273.15 = 100.00\ ^\circ\text{C}\)</p>
+              </div>
+              <p class="text-slate-800 font-bold bg-rose-50 p-2.5 rounded text-center">
+                คำตอบตรงตามคู่มือครู สสวท. เล่ม 5 หน้า 155
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------- -->
+      <!-- Tab 16.1.2: ความจุความร้อน -->
+      <!-- ---------------------------------------------------- -->
+      <div id="review-tab-16-1-2" class="hidden space-y-6">
+        <!-- Interactive Simulator Widget -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-orange-500">
+            <i class="fa-solid fa-fire-burner"></i> เครื่องทดลองจำลอง 16.1.2: ความจุความร้อนของวัตถุ
+          </h3>
+          <p class="text-sm text-slate-600 mb-6">
+            ทดลองจำลองการใส่ความร้อน (\(Q\)) ให้กับแผ่นหินความร้อนที่มี <strong>ความจุความร้อน (\(C\))</strong> แตกต่างกัน
+            เพื่อสังเกตการเพิ่มขึ้นของอุณหภูมิ (\(\Delta T\)) ในหน่วยองศาเซลเซียสหรือเคลวิน
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <!-- Animation Box (7 columns) -->
+            <div
+              class="lg:col-span-7 bg-slate-950 p-6 rounded-2xl flex flex-col justify-between items-center relative overflow-hidden min-h-[320px]">
+              <div class="absolute left-6 top-6 text-xs text-white font-bold tracking-wider z-10">
+                🔭 แบบจำลองการส่งผ่านความร้อนสู่แผ่นความร้อน
+              </div>
+              <div id="sim-cap-svg-container" class="w-full flex-grow flex items-center justify-center mt-12">
+                <!-- SVG dynamically rendered by JS -->
+              </div>
+              <div class="absolute bottom-6 right-6 z-10 flex gap-2">
+                <button onclick="startHeatCapSim()" id="btn-cap-start"
+                  class="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-play"></i> เริ่มให้ความร้อน
+                </button>
+                <button onclick="resetHeatCapSim()"
+                  class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> รีเซ็ต
+                </button>
+              </div>
+            </div>
+
+            <!-- Controller & Formulas Box (5 columns) -->
+            <div
+              class="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200/60 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <span
+                  class="text-xs text-slate-500 font-bold uppercase tracking-wider block">ปรับแต่งค่าสมบัติของวัตถุ:</span>
+
+                <!-- Heat Capacity Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>ความจุความร้อน (\(C\)):</span>
+                    <span id="lbl-sim-cap-c" class="text-orange-600 font-bold text-sm">125 J/K</span>
+                  </div>
+                  <input type="range" id="sim-cap-slider-c" min="50" max="500" step="25" value="125"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600">
+                </div>
+
+                <!-- Heat Input Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>ปริมาณความร้อนที่ให้ (\(Q\)):</span>
+                    <span id="lbl-sim-cap-q" class="text-orange-600 font-bold text-sm">2500 J</span>
+                  </div>
+                  <input type="range" id="sim-cap-slider-q" min="500" max="10000" step="500" value="2500"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-600">
+                </div>
+              </div>
+
+              <!-- Live Formula Calculation -->
+              <div class="bg-amber-950 text-white p-4 rounded-xl space-y-2 shadow-inner">
+                <span class="text-[10px] text-amber-200 block font-bold uppercase tracking-wider">สูตรและคำนวณสด (Live
+                  Calculation):</span>
+                <p class="text-xs">\(Q = C \Delta T \quad \rightarrow \quad \Delta T = \frac{Q}{C}\)</p>
+                <div class="text-xs space-y-1 text-amber-100 font-mono">
+                  <p>\(Q\) คือ ปริมาณความร้อนที่ได้รับ (J)</p>
+                  <p>\(C\) คือ ความจุความร้อน (J/K)</p>
+                  <p id="lbl-sim-cap-calc">\(\Delta T = \frac{2500}{125} = 20.0\text{ K}\)</p>
+                  <p class="text-sm font-bold text-cyan-300 mt-1">อุณหภูมิที่เพิ่มขึ้น \(\Delta T = \) <span
+                      id="lbl-sim-cap-result">20.0</span> K (หรือ °C)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">💡 ทฤษฎี: ความจุความร้อน (\(C\))
+            </h4>
+            <p class="text-sm text-slate-600 leading-relaxed font-sans">
+              เมื่อสารได้รับความร้อนอุณหภูมิของสารนั้นจะเพิ่มขึ้น (เมื่อไม่มีการเปลี่ยนสถานะ)
+              อัตราส่วน of ความร้อนที่ให้กับวัตถุต่ออุณหภูมิที่เพิ่มขึ้น เรียกว่า <strong>ความจุความร้อน (Heat Capacity,
+                \(C\))</strong> มีสมบัติเป็นค่าสัมบูรณ์เฉพาะของวัตถุแต่ละชิ้น ซึ่งคำนวณได้ดังสมการ:
+              <span
+                class="block bg-orange-50 text-orange-950 text-center font-bold py-2.5 my-3 rounded-lg border border-orange-100">
+                \(Q = C \Delta T \quad \text{หรือ} \quad C = \frac{Q}{\Delta T}\)
+              </span>
+              - <strong>หน่วยของความจุความร้อน:</strong> จูลต่อเคลวิน (\(\text{J/K}\)) หรือ จูลต่อองศาเซลเซียส
+              (\(\text{J/}^\circ\text{C}\))<br>
+              - <strong>คุณลักษณะทางกายภาพ:</strong> วัตถุที่มี่ความจุความร้อนมาก (เช่น
+              มีขนาดใหญ่หรือทำจากสารที่อมความร้อนดี) จะมีระดับอุณหภูมิเปลี่ยนแปลงไป **น้อย**
+              เมื่อได้รับพลังงานความร้อนในปริมาณที่เท่ากัน
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">📝 ตัวอย่างแบบฝึกหัด 16.1 สสวท.
+              (ข้อ 2 - ส่วน ก)</h4>
+            <div class="text-sm text-slate-600 space-y-3">
+              <p><strong>โจทย์:</strong> โลหะชนิดหนึ่งมวล \(2.0\text{ kg}\) ได้รับความร้อน \(2500\text{ J}\)
+                ทำให้อุณหภูมิเปลี่ยนจาก \(25\ ^\circ\text{C}\) เป็น \(45\ ^\circ\text{C}\) จงหาความจุความร้อนของวัตถุนี้</p>
+              <div class="space-y-1.5 pl-3 border-l-2 border-orange-500 font-sans">
+                <p><strong>ขั้นที่ 1: คำนวณหาการเปลี่ยนแปลงอุณหภูมิ (\(\Delta T\))</strong></p>
+                <p>\(\Delta T = T_{\text{final}} - T_{\text{initial}} = 45\ ^\circ\text{C} - 25\ ^\circ\text{C} = 20\
+                  ^\circ\text{C} \ (\text{หรือ } 20\text{ K})\)</p>
+                <p><strong>ขั้นที่ 2: ใช้สมการความสัมพันธ์ \(C = \frac{Q}{\Delta T}\) แทนค่าลงไป:</strong></p>
+                <p>\(C = \frac{2500\text{ J}}{20\text{ K}} = 125\text{ J/K}\)</p>
+              </div>
+              <p class="text-slate-800 font-bold bg-orange-50 p-2.5 rounded text-center">
+                คำตอบ: ความจุความร้อนเท่ากับ 125 จูลต่อเคลวิน (หรือ จูลต่อองศาเซลเซียส)
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------- -->
+      <!-- Tab 16.1.3: ความร้อนจำเพาะ -->
+      <!-- ---------------------------------------------------- -->
+      <div id="review-tab-16-1-3" class="hidden space-y-6">
+        <!-- Interactive Simulator Widget -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-amber-500">
+            <i class="fa-solid fa-mug-hot"></i> เครื่องทดลองจำลอง 16.1.3: ความร้อนจำเพาะของสสารต่างชนิด
+          </h3>
+          <p class="text-sm text-slate-600 mb-6">
+            ทดลองเลือกสสารต่างชนิดกัน (น้ำ, น้ำแข็ง, อลูมิเนียม, ทองแดง, ตะกั่ว) ที่มี <strong>ความร้อนจำเพาะ
+              (\(c\))</strong> แตกต่างกันเฉพาะชนิด
+            ปรับมวล (\(m\)) และปริมาณความร้อนที่ให้กับสาร (\(Q\)) เพื่อดูการเปลี่ยนแปลงอุณหภูมิของสสารเหล่านั้น
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <!-- Animation Box (7 columns) -->
+            <div
+              class="lg:col-span-7 bg-slate-950 p-6 rounded-2xl flex flex-col justify-between items-center relative overflow-hidden min-h-[320px]">
+              <div class="absolute left-6 top-6 text-xs text-white font-bold tracking-wider z-10">
+                🔭 จำลองการให้ความร้อนแก่วัตถุเฉพาะวัสดุ
+              </div>
+              <div id="sim-spec-svg-container" class="w-full flex-grow flex items-center justify-center mt-12">
+                <!-- SVG dynamically rendered by JS -->
+              </div>
+              <div class="absolute bottom-6 right-6 z-10 flex gap-2">
+                <button onclick="startHeatSpecSim()" id="btn-spec-start"
+                  class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-play"></i> เริ่มให้ความร้อน
+                </button>
+                <button onclick="resetHeatSpecSim()"
+                  class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> รีเซ็ต
+                </button>
+              </div>
+            </div>
+
+            <!-- Controller & Formulas Box (5 columns) -->
+            <div
+              class="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200/60 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <span
+                  class="text-xs text-slate-500 font-bold uppercase tracking-wider block">ปรับแต่งสมบัติและสาร:</span>
+
+                <!-- Substance Selector -->
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">เลือกประเภทของสาร:</label>
+                  <select id="sim-spec-select-substance"
+                    class="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <option value="water" selected>น้ำ (c = 4186 J/kg K)</option>
+                    <option value="ice">น้ำแข็ง (c = 2100 J/kg K)</option>
+                    <option value="aluminum">อลูมิเนียม (c = 900 J/kg K)</option>
+                    <option value="copper">ทองแดง (c = 385 J/kg K)</option>
+                    <option value="lead">ตะกั่ว (c = 128 J/kg K)</option>
+                  </select>
+                </div>
+
+                <!-- Mass Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>มวลของสาร (\(m\)):</span>
+                    <span id="lbl-sim-spec-m" class="text-amber-600 font-bold text-sm">2.0 kg</span>
+                  </div>
+                  <input type="range" id="sim-spec-slider-m" min="0.5" max="5.0" step="0.5" value="2.0"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-600">
+                </div>
+
+                <!-- Heat Input Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>ปริมาณความร้อนที่ให้ (\(Q\)):</span>
+                    <span id="lbl-sim-spec-q" class="text-amber-600 font-bold text-sm">2500 J</span>
+                  </div>
+                  <input type="range" id="sim-spec-slider-q" min="500" max="10000" step="500" value="2500"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-600">
+                </div>
+              </div>
+
+              <!-- Live Formula Calculation -->
+              <div class="bg-amber-950 text-white p-4 rounded-xl space-y-2 shadow-inner">
+                <span class="text-[10px] text-amber-200 block font-bold uppercase tracking-wider">สูตรและคำนวณสด (Live
+                  Calculation):</span>
+                <p class="text-xs">\(Q = m c \Delta T \quad \rightarrow \quad \Delta T = \frac{Q}{m c}\)</p>
+                <div class="text-xs space-y-1 text-amber-100 font-mono">
+                  <p>\(Q\) คือ ความร้อน (J), \(m\) คือ มวล (kg)</p>
+                  <p>\(c\) คือ ความร้อนจำเพาะ (\(\text{J/(kg K)}\))</p>
+                  <p id="lbl-sim-spec-calc">\(\Delta T = \frac{2500}{2.0 \times 4186} = 0.30\text{ K}\)</p>
+                  <p class="text-sm font-bold text-cyan-300 mt-1">อุณหภูมิที่เพิ่มขึ้น \(\Delta T = \) <span
+                      id="lbl-sim-spec-result">0.30</span> K (หรือ °C)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">💡 ทฤษฎี: ความร้อนจำเพาะ (\(c\))
+            </h4>
+            <p class="text-sm text-slate-600 leading-relaxed font-sans">
+              เนื่องจากความจุความร้อนเป็นค่าเฉพาะของสารและจะแปรตามมวล
+              วัตถุชนิดเดียวกันที่มีมวลไม่เท่ากันจะมีความจุความร้อนแตกต่างกัน
+              นักวิทยาศาสตร์จึงใช้นิยามของ <strong>ความร้อนจำเพาะ (Specific Heat, \(c\))</strong> ซึ่งก็คือ
+              ความจุความร้อนต่อหนึ่งหน่วยมวลของสารนั้นๆ
+              <span
+                class="block bg-amber-50 text-amber-950 text-center font-bold py-2.5 my-3 rounded-lg border border-amber-100">
+                \(Q = m c \Delta T \quad \text{หรือ} \quad c = \frac{C}{m} = \frac{Q}{m \Delta T}\)
+              </span>
+              - <strong>หน่วยของความร้อนจำเพาะ:</strong> จูลต่อกิโลกรัม เคลวิน (\(\text{J/(kg K)}\)) หรือ จูลต่อกิโลกรัม
+              องศาเซลเซียส (\(\text{J/(kg }^\circ\text{C)}\))<br>
+              - <strong>จุดแตกต่าง:</strong> วัตถุชนิดเดียวกัน (เช่น น้ำ) จะมีความร้อนจำเพาะเท่ากันเสมอไม่ว่าจะมวลเท่าใด
+              แต่ความจุความร้อนจะแปรตามมวลของวัตถุ
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">📝 ตัวอย่างแบบฝึกหัด 16.1 สสวท.
+              (ข้อ 2 - ส่วน ข)</h4>
+            <div class="text-sm text-slate-600 space-y-3">
+              <p><strong>โจทย์ต่อจากข้อที่แล้ว:</strong> โลหะชนิดหนึ่งมวล \(2.0\text{ kg}\) ได้รับความร้อน \(2500\text{ J}\)
+                ทำให้อุณหภูมิเปลี่ยนไป \(20\ ^\circ\text{C}\) จงหาความร้อนจำเพาะของโลหะนี้</p>
+              <div class="space-y-1.5 pl-3 border-l-2 border-amber-500 font-sans">
+                <p><strong>ใช้สูตรความสัมพันธ์ \(c = \frac{C}{m}\) หรือ \(c = \frac{Q}{m \Delta T}\)</strong></p>
+                <p>จากที่เราคำนวณได้ว่าความจุความร้อน \(C = 125\text{ J/K}\)</p>
+                <p>แทนค่า:</p>
+                <p>\(c = \frac{C}{m} = \frac{125\text{ J/K}}{2.0\text{ kg}} = 62.5\text{ J/(kg K)}\)</p>
+              </div>
+              <p class="text-slate-800 font-bold bg-amber-50 p-2.5 rounded text-center">
+                คำตอบ: ความร้อนจำเพาะของโลหะเท่ากับ 62.5 จูลต่อกิโลกรัม เคลวิน
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------- -->
+      <!-- Tab 16.1.4: ความร้อนแฝง -->
+      <!-- ---------------------------------------------------- -->
+      <div id="review-tab-16-1-4" class="hidden space-y-6">
+        <!-- Interactive Simulator Widget -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-coral">
+            <i class="fa-solid fa-snowflake"></i> เครื่องทดลองจำลอง 16.1.4: กราฟความร้อนกับการเปลี่ยนสถานะของน้ำ
+          </h3>
+          <p class="text-sm text-slate-600 mb-6">
+            จำลองการจ่ายความร้อนให้แก่น้ำแข็งมวล \(m\) ที่เริ่มต้นจากอุณหภูมิ \(-20\ ^\circ\text{C}\) จนกลายเป็นไอน้ำที่
+            \(120\ ^\circ\text{C}\)
+            สังเกตพฤติกรรมการเปลี่ยนสถานะบน <strong>เส้นกราฟอุณหภูมิ-ความร้อน (\(T\)-\(Q\) Curve)</strong>
+            และความแตกต่างในขณะที่อุณหภูมิเปลี่ยน (\(Q = mc\Delta T\)) และอุณหภูมิคงตัวเมื่อเปลี่ยนสถานะ (\(Q = mL\))
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <!-- Animation Box (7 columns) -->
+            <div
+              class="lg:col-span-7 bg-slate-950 p-6 rounded-2xl flex flex-col justify-between items-center relative overflow-hidden min-h-[360px]">
+              <div class="absolute left-6 top-6 text-xs text-white font-bold tracking-wider z-10">
+                🔭 กราฟการเปลี่ยนสถานะ (\(T\)-\(Q\) Graph) & บีกเกอร์จำลองฟิสิกส์
+              </div>
+              <div class="w-full flex-grow flex flex-col sm:flex-row items-center justify-around gap-4 mt-12">
+                <!-- Heat Curve Chart (SVG) -->
+                <div id="sim-latent-graph-svg" class="w-full sm:w-3/5">
+                  <!-- SVG dynamically rendered by JS -->
+                </div>
+                <!-- Beaker and Flame (SVG) -->
+                <div id="sim-latent-beaker-svg" class="w-2/5 min-w-[130px] flex justify-center">
+                  <!-- SVG dynamically rendered by JS -->
+                </div>
+              </div>
+              <div class="absolute bottom-6 right-6 z-10 flex gap-2">
+                <button onclick="playLatentSim()" id="btn-latent-play"
+                  class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-play"></i> เล่นจำลองจ่ายความร้อน
+                </button>
+                <button onclick="resetLatentSim()"
+                  class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg border-0 shadow">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> รีเซ็ต
+                </button>
+              </div>
+            </div>
+
+            <!-- Controller & Formulas Box (5 columns) -->
+            <div
+              class="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200/60 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block">ปรับแต่งค่าตัวแปร:</span>
+
+                <!-- Mass Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>มวลของน้ำแข็ง (\(m\)):</span>
+                    <span id="lbl-sim-latent-m" class="text-rose-600 font-bold text-sm">0.5 kg</span>
+                  </div>
+                  <input type="range" id="sim-latent-slider-m" min="0.2" max="2.0" step="0.1" value="0.5"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                </div>
+
+                <!-- Cumulative Heat Input Slider -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>ปริมาณความร้อนสะสมที่ใส่ (\(Q\)):</span>
+                    <span id="lbl-sim-latent-q" class="text-rose-600 font-bold text-sm">0 kJ</span>
+                  </div>
+                  <input type="range" id="sim-latent-slider-q" min="0" max="1600" step="5" value="0"
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                </div>
+
+                <div class="bg-slate-100 p-3.5 rounded-xl border border-slate-200/80 space-y-1">
+                  <div class="text-[11px] font-bold text-slate-700">สถานะของน้ำขณะนี้:</div>
+                  <div class="text-xs text-slate-800" id="lbl-sim-latent-phase-desc">-</div>
+                </div>
+              </div>
+
+              <!-- Live Formula Calculation -->
+              <div class="bg-violet-950 text-white p-4 rounded-xl space-y-2 shadow-inner">
+                <span
+                  class="text-[10px] text-violet-200 block font-bold uppercase tracking-wider">สูตรและสมการที่ใช้อยู่ขณะนี้:</span>
+                <div id="sim-latent-formula-box" class="space-y-2">
+                  <!-- Highlighted formulas dynamically rendered -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">💡 ทฤษฎี: ความร้อนแฝง (\(L\))
+              และจุดเปลี่ยนสถานะ</h4>
+            <p class="text-sm text-slate-600 leading-relaxed font-sans">
+              เมื่อสารได้รับความร้อนแต่ไม่เกิดการเปลี่ยนแปลงอุณหภูมิ
+              แสดงว่าพลังงานความร้อนที่ถูกใส่เข้าไปถูกนำไปใช้ทำลายแรงยึดเหนี่ยวระหว่างโมเลกุลเพื่อเปลี่ยนสถานะ
+              ความร้อนประเภทนี้เรียกว่า <strong>ความร้อนแฝง (Latent Heat, \(L\))</strong> คำนวณได้จาก:
+              <span
+                class="block bg-rose-50 text-rose-950 text-center font-bold py-2.5 my-3 rounded-lg border border-rose-100">
+                \(Q = m L\)
+              </span>
+              - <strong>ความร้อนแฝงของการหลอมเหลว (\(L_f\)):</strong> ใช้ในการเปลี่ยนของแข็งเป็นของเหลว สำหรับน้ำแข็ง \(L_f
+              = 3.33 \times 10^5\text{ J/kg}\) (หรือ \(333\text{ kJ/kg}\))<br>
+              - <strong>ความร้อนแฝงของการกลายเป็นไอ (\(L_v\)):</strong> ใช้ในการเปลี่ยนของเหลวเป็นแก๊ส สำหรับน้ำเดือด \(L_v
+              = 2.256 \times 10^6\text{ J/kg}\) (หรือ \(22.56 \times 10^5\text{ J/kg}\))<br>
+              - **ข้อควรจำ:** ในกระบวนการเปลี่ยนสถานะ อุณหภูมิของสารจะ **คงตัว** เสมอ
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+            <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">📝 ตัวอย่างแบบฝึกหัด 16.1 สสวท.
+              (ข้อ 4)</h4>
+            <div class="text-sm text-slate-600 space-y-3">
+              <p><strong>โจทย์:</strong> การทำให้น้ำมวล \(0.5\text{ kg}\) อุณหภูมิ \(0\ ^\circ\text{C}\) กลายเป็นไอน้ำ \(100\
+                ^\circ\text{C}\) ทั้งหมดที่ความดัน 1 บรรยากาศ ต้องใช้ความร้อนกี่กิโลจูล (กำหนด \(c_{\text{water}} =
+                4186\text{ J/(kg K)}\), \(L_v = 22.56 \times 10^5\text{ J/kg}\))</p>
+              <div class="space-y-1.5 pl-3 border-l-2 border-rose-500 font-sans text-xs">
+                <p><strong>ขั้นที่ 1: คำนวณความร้อนที่ใช้เพิ่มอุณหภูมิน้ำจาก \(0\ ^\circ\text{C} \rightarrow 100\
+                    ^\circ\text{C}\)</strong></p>
+                <p>\(Q_1 = m c_{\text{water}} \Delta T = (0.5)(4186)(100 - 0) = 209,300\text{ J} = 209.3\text{ kJ}\)</p>
+                <p><strong>ขั้นที่ 2: คำนวณความร้อนที่ใช้เปลี่ยนสถานะน้ำ \(100\ ^\circ\text{C} \rightarrow\) ไอน้ำ \(100\
+                    ^\circ\text{C}\)</strong></p>
+                <p>\(Q_2 = m L_v = (0.5)(22.56 \times 10^5) = 1,128,000\text{ J} = 1128\text{ kJ}\)</p>
+                <p><strong>ขั้นที่ 3: หาปริมาณความร้อนรวม \(Q_{\text{total}} = Q_1 + Q_2\)</strong></p>
+                <p>\(Q_{\text{total}} = 209.3\text{ kJ} + 1128\text{ kJ} = 1337.3\text{ kJ}\)</p>
+              </div>
+              <p class="text-slate-800 font-bold bg-rose-50 p-2 text-center text-xs">
+                คำตอบ: ต้องใช้ความร้อนรวมเท่ากับ 1337.3 กิโลจูล
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 3: PRACTICE MODE -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-practice" class="hidden space-y-6 animate-fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800">🧠 ตะลุยฝึกโจทย์ฟิสิกส์ ม.6</h2>
+          <p class="text-sm text-slate-500">ท้าทายตนเองด้วยโจทย์ฝึกฝนและแบบฝึกหัดเรื่องความร้อน (สสวท. 16.1)</p>
+        </div>
+        <button onclick="showSection('home')"
+          class="self-start sm:self-auto px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-sm font-semibold transition duration-150 flex items-center gap-1.5">
+          <i class="fa-solid fa-chevron-left"></i> กลับหน้าแรก
+        </button>
+      </div>
+
+      <!-- Mode Selector -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button onclick="startPracticeMode('16-1-1')" id="btn-prac-16-1-1"
+          class="p-4 bg-white hover:bg-blue-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left">
+          <div
+            class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-base font-bold">
+            16.1.1</div>
+          <div>
+            <h4 class="font-bold">16.1.1 อุณหภูมิ</h4>
+            <p class="text-xs text-slate-500">การวัดและแปลงสเกลอุณหภูมิ</p>
+          </div>
+        </button>
+        <button onclick="startPracticeMode('16-1-2')" id="btn-prac-16-1-2"
+          class="p-4 bg-white hover:bg-orange-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left">
+          <div
+            class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 text-base font-bold">
+            16.1.2</div>
+          <div>
+            <h4 class="font-bold">16.1.2 ความจุ & ความร้อน</h4>
+            <p class="text-xs text-slate-500">คำนวณพลังงานที่เปลี่ยนอุณหภูมิ</p>
+          </div>
+        </button>
+        <button onclick="startPracticeMode('16-1-3')" id="btn-prac-16-1-3"
+          class="p-4 bg-white hover:bg-rose-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left">
+          <div
+            class="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center text-rose-600 text-base font-bold">
+            16.1.3</div>
+          <div>
+            <h4 class="font-bold">16.1.3 ความร้อนแฝง</h4>
+            <p class="text-xs text-slate-500">คำนวณพลังงานที่เปลี่ยนสถานะ</p>
+          </div>
+        </button>
+        <button onclick="startPracticeMode('16-1-4')" id="btn-prac-16-1-4"
+          class="p-4 bg-white hover:bg-amber-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left">
+          <div
+            class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 text-base font-bold">
+            16.1.4</div>
+          <div>
+            <h4 class="font-bold">16.1.4 ถ่ายโอน & สมดุล</h4>
+            <p class="text-xs text-slate-500">คำนวณความร้อนและอุณหภูมิผสม</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- Live Practice Container -->
+      <div id="practice-arena" class="hidden bg-white rounded-2xl p-6 shadow-sm border border-slate-200/60 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold self-start"
+            id="prac-badge-mode">
+            โหมดการฝึกฝน
+          </span>
+          <div class="flex items-center gap-2">
+            <select id="prac-type-select" onchange="regeneratePractice()"
+              class="text-xs font-bold border border-slate-200 rounded-lg px-2.5 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="standard" selected>โจทย์ตามคู่มือครู สสวท. (ตัวเลขเป๊ะ)</option>
+              <option value="random">โจทย์สุ่มตัวเลข (ฝึกฝนทักษะการคำนวณ)</option>
+            </select>
+            <button onclick="regeneratePractice()"
+              class="text-xs font-bold bg-blue-50 text-blue-600 hover:bg-blue-100 border-0 px-2.5 py-1.5 rounded-lg transition duration-150 flex items-center gap-1">
+              <i class="fa-solid fa-rotate"></i> สุ่มตัวแปรใหม่
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Display Card -->
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-2" id="prac-question-title">📋
+            โจทย์ฟิสิกส์:</span>
+          <p id="prac-question-text" class="text-base text-slate-800 font-medium leading-relaxed">
+            - กำลังเจนโจทย์ -
+          </p>
+        </div>
+
+        <!-- User Answer Inputs Form -->
+        <div class="space-y-4">
+          <h4 class="font-bold text-sm text-slate-700">✍ ️เลือกหรือกรอกคำตอบของคุณ:</h4>
+
+          <!-- Choice Inputs (conceptual questions) -->
+          <div id="prac-choice-zone" class="grid grid-cols-1 gap-2.5 hidden">
+            <!-- Choices dynamically injected by JS -->
+          </div>
+
+          <!-- Numeric Answer Inputs -->
+          <div id="prac-numeric-zone" class="space-y-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label id="lbl-prac-input-1" class="block text-xs font-semibold text-slate-500 mb-1">ระบุคำตอบ:</label>
+                <input type="text" autocomplete="off" id="prac-input-val1" placeholder="เช่น 2.0"
+                  class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div id="prac-input-zone-2" class="hidden">
+                <label id="lbl-prac-input-2"
+                  class="block text-xs font-semibold text-slate-500 mb-1">ระบุคำตอบที่สอง:</label>
+                <input type="text" autocomplete="off" id="prac-input-val2" placeholder="เช่น 60"
+                  class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button onclick="checkPracticeAnswer()"
+              class="w-full sm:w-auto sm:flex-1 md:flex-none px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm transition duration-150">
+              ตรวจคำตอบ
+            </button>
+            <button onclick="regeneratePractice()"
+              class="w-full sm:w-auto px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition duration-150">
+              ข้าม / สุ่มโจทย์ใหม่
+            </button>
+          </div>
+        </div>
+
+        <!-- Feedback Box -->
+        <div id="prac-feedback" class="hidden p-5 rounded-2xl border transition-all duration-300">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Explanations Block (Shows after check) -->
+        <div id="prac-explanation-box" class="hidden space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+          <h5 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2">✏️
+            วิธีคิดและเฉลยละเอียดทีละขั้นตอน:</h5>
+          <div id="prac-explanation-text" class="text-sm text-slate-600 space-y-3 math-font leading-relaxed">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 4: EXAM START SCREEN -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-exam-start" class="hidden max-w-xl mx-auto space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 space-y-6">
+        <div class="text-center space-y-2">
+          <div
+            class="w-16 h-16 bg-violet-100 text-violet-600 rounded-2xl flex items-center justify-center text-3xl mx-auto">
+            <i class="fa-solid fa-file-pen"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-800">ระบบสอบเก็บคะแนน ม.6</h2>
+          <p class="text-sm text-slate-500">บทที่ 16 เรื่อง ความร้อนและแก๊ส 🌡️🔥</p>
+        </div>
+
+        <div
+          class="bg-amber-50 rounded-xl p-4 border border-amber-100 space-y-2 text-xs md:text-sm text-amber-900/90 leading-relaxed">
+          <h4 class="font-bold text-amber-950 flex items-center gap-1">
+            <i class="fa-solid fa-circle-info"></i> กติกาการสอบเก็บคะแนน:
+          </h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>มีทั้งหมด <strong>5 ข้อ</strong> คะแนนรวมเต็ม <strong>10 คะแนน</strong> (ข้อละ 2 คะแนน)
+              โดยสุ่มจากเนื้อหา 16.1.1 - 16.1.4</li>
+            <li>มีเวลาจำกัดในการทำข้อสอบ <strong>10 นาที</strong> (มีตัวจับเวลาแสดงบนจอ)</li>
+            <li>หากหมดเวลา ระบบจะส่งคำตอบทันทีตามข้อมูลที่มีการกรอกไว้ล่าสุด</li>
+            <li>ระบบจะบันทึกผลการสอบล่าสุดของคุณไว้ในบราวเซอร์นี้เพื่อใช้ดูประวัติย้อนหลัง</li>
+          </ul>
+        </div>
+
+        <!-- Student Info Form -->
+        <div class="space-y-4 pt-2">
+          <h4 class="font-bold text-sm text-slate-700">กรอกข้อมูลผู้เข้าสอบ:</h4>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 mb-1">ชื่อ-นามสกุล:</label>
+              <input type="text" id="exam-student-name" placeholder="เด็กหญิงสมศรี ดีเลิศ"
+                class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-violet-500 focus:outline-none text-sm">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">ชั้น ม.6 / ห้อง:</label>
+                <select id="exam-student-class"
+                  class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-violet-500 focus:outline-none text-sm bg-white">
+                  <option value="" disabled selected>เลือกห้อง</option>
+                  <option value="1">6/1</option>
+                  <option value="2">6/2</option>
+                  <option value="3">6/3</option>
+                  <option value="4">6/4</option>
+                  <option value="5">6/5</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-500 mb-1">เลขที่:</label>
+                <input type="number" id="exam-student-no" placeholder="5"
+                  class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-violet-500 focus:outline-none text-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+          <button onclick="showSection('home')"
+            class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition text-center text-sm">
+            กลับหน้าแรก
+          </button>
+          <button onclick="startExamProcess()"
+            class="flex-[2] py-3 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl shadow-md transition text-center text-sm">
+            เริ่มทำข้อสอบ <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 5: LIVE EXAM SCREEN -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-exam-live" class="hidden space-y-6 relative animate-fade-in">
+      <!-- Sticky Timer bar -->
+      <div
+        class="sticky top-2 z-30 bg-slate-900 text-white px-3 md:px-4 py-3 rounded-xl shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-slate-700">
+        <div class="flex items-center gap-2 min-w-0">
+          <i class="fa-solid fa-user-pen text-indigo-400"></i>
+          <span class="text-xs md:text-sm text-slate-300 font-medium truncate">
+            ผู้เข้าสอบ: <strong class="text-white" id="lbl-exam-user-info">-</strong>
+          </span>
+        </div>
+        <div class="flex items-center gap-2 font-bold text-rose-400 text-base md:text-lg">
+          <i class="fa-solid fa-clock animate-pulse"></i>
+          <span>เวลาที่เหลือ: <span id="exam-timer-display" class="font-mono">10:00</span></span>
+        </div>
+      </div>
+
+      <!-- Exam Questions Container -->
+      <div id="exam-questions-container" class="space-y-6">
+        <!-- Dynamically rendered by JS -->
+      </div>
+
+      <!-- Action Button inside Exam -->
+      <div class="flex gap-4">
+        <button onclick="confirmSubmitExam()"
+          class="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition text-center">
+          <i class="fa-solid fa-paper-plane mr-1"></i> ส่งข้อสอบเก็บคะแนน
+        </button>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- SECTION 6: EXAM RESULTS SCREEN -->
+    <!-- ---------------------------------------------------- -->
+    <section id="sec-exam-result" class="hidden max-w-3xl mx-auto space-y-6 animate-fade-in">
+      <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 space-y-6">
+        <div class="text-center space-y-2">
+          <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+            รายงานผลการประเมินคะแนนสอบ
+          </span>
+          <h2 class="text-2xl font-bold text-slate-800">ประกาศผลสอบเก็บคะแนนฟิสิกส์ ม.6</h2>
+        </div>
+
+        <!-- Score Circle Visualization -->
+        <div
+          class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col md:flex-row items-center justify-around gap-6">
+          <div class="text-center space-y-1">
+            <h4 class="text-slate-500 text-xs font-bold uppercase">ผู้รับการทดสอบ</h4>
+            <p id="lbl-res-student-name" class="text-lg font-bold text-slate-800">-</p>
+            <p id="lbl-res-student-meta" class="text-xs text-slate-400">ชั้น ม.6 เลขที่ -</p>
+          </div>
+
+          <!-- Circular score display -->
+          <div class="relative w-32 h-32 flex items-center justify-center">
+            <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+              <circle cx="64" cy="64" r="50" stroke="#e2e8f0" stroke-width="10" fill="transparent" />
+              <circle cx="64" cy="64" r="50" id="res-circle-progress" stroke="#4F46E5" stroke-dasharray="314"
+                stroke-dashoffset="314" stroke-width="10" fill="transparent" stroke-linecap="round"
+                class="transition-all duration-1000" />
+            </svg>
+            <div class="text-center">
+              <span id="lbl-res-total-score" class="text-3xl font-extrabold text-slate-800">0</span>
+              <span class="text-slate-400 text-sm font-semibold block">/ 10 คะแนน</span>
+            </div>
+          </div>
+
+          <div
+            class="text-center md:text-left space-y-2 max-w-sm bg-indigo-50 border border-indigo-100 rounded-2xl p-4 shadow-sm">
+            <h4
+              class="text-indigo-700 text-sm md:text-base font-extrabold uppercase tracking-wide flex items-center justify-center md:justify-start gap-2">
+              <i class="fa-solid fa-triangle-exclamation"></i> การวิเคราะห์ผลตอบสนอง
+            </h4>
+            <p id="lbl-res-time-elapsed" class="text-xs md:text-sm font-bold text-slate-700">ใช้เวลาไปทั้งหมด: -</p>
+            <p id="lbl-res-finished-at" class="text-xs md:text-sm font-bold text-slate-700">ส่งข้อสอบเมื่อ: -</p>
+            <p id="lbl-res-badge-feedback"
+              class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100 font-semibold leading-relaxed">
+              - รอการคำนวณ -
+            </p>
+          </div>
+        </div>
+
+        <!-- Diagnostic Table -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-slate-800 text-sm">📊 รายละเอียดแยกรายข้อ:</h4>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left text-slate-500">
+              <thead class="text-xs text-slate-700 bg-slate-100 uppercase">
+                <tr>
+                  <th scope="col" class="px-4 py-3">ข้อที่</th>
+                  <th scope="col" class="px-4 py-3">เรื่อง / หัวข้อ</th>
+                  <th scope="col" class="px-4 py-3 text-center">คะแนนเต็ม</th>
+                  <th scope="col" class="px-4 py-3 text-center">คะแนนที่คุณได้</th>
+                  <th scope="col" class="px-4 py-3 text-center">ผลการประเมิน</th>
+                </tr>
+              </thead>
+              <tbody id="exam-result-tbody" class="divide-y divide-slate-200">
+                <!-- Dynamically generated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Detailed Solutions for Exam -->
+        <div class="space-y-4 border-t border-slate-100 pt-6">
+          <button onclick="toggleExamSolutionBox()" id="btn-toggle-solutions"
+            class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm flex items-center justify-center gap-1">
+            <i class="fa-solid fa-file-invoice"></i> <span
+              id="lbl-toggle-solution-text">ดูเฉลยละเอียดของข้อที่คุณได้รับ</span>
+          </button>
+
+          <div id="exam-solution-box" class="hidden space-y-6">
+            <div id="exam-solutions-container" class="space-y-6">
+              <!-- Dynamically generated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Grid after Exam -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <button onclick="showSection('exam-start')"
+            class="py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition text-center text-sm">
+            <i class="fa-solid fa-rotate-right mr-1"></i> สอบใหม่อีกครั้ง
+          </button>
+          <button onclick="showSection('practice')"
+            class="py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition text-center text-sm">
+            <i class="fa-solid fa-dumbbell mr-1"></i> ไปฝึกโจทย์เพิ่ม
+          </button>
+          <button onclick="showSection('home')"
+            class="py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition text-center text-sm">
+            <i class="fa-solid fa-house mr-1"></i> กลับหน้าแรก
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Custom Alert Modal Container (to prevent browser popups) -->
+  <div id="modal-alert"
+    class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 max-w-sm w-full text-center space-y-4 transform transition-all duration-300 scale-95 opacity-0"
+      id="modal-alert-card">
+      <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl" id="modal-alert-icon">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <div class="space-y-1">
+        <h3 class="font-bold text-lg text-slate-800" id="modal-alert-title">แจ้งเตือน</h3>
+        <p class="text-sm text-slate-500 leading-relaxed" id="modal-alert-msg">ข้อความชี้แจง</p>
+      </div>
+      <button onclick="closeAlertModal()"
+        class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-sm text-sm transition">
+        ตกลง / เข้าใจแล้ว
+      </button>
+    </div>
+  </div>
+
+  <!-- Measurement Figure Zoom Modal -->
+  <div id="measurement-zoom-modal" onclick="if (event.target.id === 'measurement-zoom-modal') closeMeasurementZoom()"
+    class="hidden fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm p-3 md:p-6">
+    <div
+      class="h-full max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl border border-white/40 flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-200">
+        <div>
+          <h3 class="font-bold text-slate-800 text-sm md:text-base">ภาพสเกลแบบขยาย</h3>
+          <p class="text-xs text-slate-500">เลื่อนซ้าย-ขวาเพื่ออ่านตัวเลขบนมือถือ</p>
+        </div>
+        <button onclick="closeMeasurementZoom()"
+          class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+          aria-label="Close zoom">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="measurement-zoom-stage" class="flex-1 overflow-auto p-3 md:p-6 bg-slate-50"></div>
+    </div>
+  </div>
+
+  <!-- Footer block -->
+  <footer class="bg-slate-950 text-slate-300 py-8 border-t border-slate-900 text-center text-sm space-y-3 px-4">
+    <p class="font-semibold">รายวิชา ฟิสิกส์ 5 รหัสวิชา ว33205 โรงเรียนห้องสอนศึกษา ในพระอุปถัมภ์ฯ</p>
+    <div class="inline-flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-full px-4 py-2">
+      <span class="text-cyan-300 font-bold uppercase tracking-wider text-xs">Dev Badge</span>
+      <span class="text-white font-semibold">: นายนพพร สมบูรณ์ชัย</span>
+    </div>
+    <p class="text-slate-500 text-xs">© 2026 Interactive Physics Learning Portal</p>
+  </footer>
+
+  <!-- ---------------------------------------------------- -->
+  <!-- JAVASCRIPT SYSTEM CODE -->
+  <!-- ---------------------------------------------------- -->
+  <script>
+    // System State Variables
+    let currentSection = 'home';
+    let currentReviewTab = '16-1-1';
+    let currentSim2SubTab = 'charge';
+    let currentPracticeTopic = '16-1-1';
+    let currentPracticeQuestion = null;
+
+    let currentExamQuestions = [];
+    let examTimerInterval = null;
+    let examTimeRemaining = 600;
+    const EXAM_DURATION_SECONDS = 600;
+    const EXAM_STATE_KEY = 'active_exam_session_v6';
+    let examStartTimestamp = null;
+    let examDeadlineTimestamp = null;
+    let examIsActive = false;
+    let examSubmissionInProgress = false;
+    let examStudentInfo = {};
+    let examExitGuardEnabled = false;
+    let examTouchStartY = 0;
+
+    let wireAnimFrame = null;
+    let wireActive = false;
+    let wirePos = 120;
+    let wireVel = 0;
+    let wireAcc = 0;
+    let wireLastTime = 0;
+
+    function roundHalfEven(num, decimalPlaces = 0) {
+      if (!Number.isFinite(num)) return num;
+      const factor = Math.pow(10, decimalPlaces);
+      const sign = Math.sign(num) || 1;
+      const scaled = Math.abs(num) * factor;
+      const floor = Math.floor(scaled);
+      const fraction = scaled - floor;
+      const epsilon = 1e-10;
+      let roundedInteger;
+      if (fraction > 0.5 + epsilon) roundedInteger = floor + 1;
+      else if (fraction < 0.5 - epsilon) roundedInteger = floor;
+      else roundedInteger = floor % 2 === 0 ? floor : floor + 1;
+      const rounded = sign * roundedInteger / factor;
+      return decimalPlaces > 0 ? Number(rounded.toFixed(decimalPlaces)) : rounded;
+    }
+
+    function formatHalfEven(num, decimalPlaces = 0) {
+      return roundHalfEven(num, decimalPlaces).toFixed(decimalPlaces);
+    }
+
+    function formatSci(num, sigFigs = 2) {
+      if (num === 0) return "0";
+      const absNum = Math.abs(num);
+      if (absNum >= 0.01 && absNum < 1000) {
+        if (absNum === Math.round(absNum)) return num.toString();
+        let dp = 2;
+        if (absNum >= 100) dp = 1;
+        if (absNum < 1) dp = 3;
+        return roundHalfEven(num, dp).toString();
+      }
+      const exp = num.toExponential(sigFigs - 1);
+      const parts = exp.split('e');
+      const base = parts[0];
+      const power = parseInt(parts[1]);
+      return `${base} \\times 10^{${power}}`;
+    }
+
+    function cleanAndParseNumber(str) {
+      let clean = str.trim().toLowerCase()
+        .replace(/\\times/g, 'e')
+        .replace(/x/g, 'e')
+        .replace(/\*/g, 'e')
+        .replace(/10\^/g, '')
+        .replace(/\{/g, '')
+        .replace(/\}/g, '')
+        .replace(/\s+/g, '');
+      if (clean.includes('e-')) {
+        const parts = clean.split('e-');
+        return parseFloat(parts[0]) * Math.pow(10, -parseFloat(parts[1]));
+      }
+      if (clean.includes('e')) {
+        const parts = clean.split('e');
+        return parseFloat(parts[0]) * Math.pow(10, parseFloat(parts[1]));
+      }
+      return parseFloat(clean);
+    }
+
+    function isNumericAnswerCorrect(userStr, targetNum) {
+      if (!userStr) return false;
+      const parsedUser = cleanAndParseNumber(userStr);
+      if (isNaN(parsedUser)) return false;
+      if (Math.abs(targetNum) < 1e-9) return Math.abs(parsedUser) < 1e-9;
+      const diff = Math.abs(parsedUser - targetNum) / Math.abs(targetNum);
+      return diff < 0.05;
+    }
+
+    function formatExamTime(seconds) {
+      const safeSeconds = Math.max(0, Math.floor(seconds));
+      const minutes = Math.floor(safeSeconds / 60).toString().padStart(2, '0');
+      const remainingSeconds = (safeSeconds % 60).toString().padStart(2, '0');
+      return `${minutes}:${remainingSeconds}`;
+    }
+
+    function formatThaiDateTimeBuddhistEra(date = new Date()) {
+      return new Intl.DateTimeFormat('th-TH-u-ca-buddhist', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(date);
+    }
+
+    function getCurrentExamRemainingSeconds() {
+      if (!examDeadlineTimestamp) return examTimeRemaining;
+      return Math.max(0, Math.ceil((examDeadlineTimestamp - Date.now()) / 1000));
+    }
+
+    function getCurrentExamAnswers() {
+      const answers = [];
+      currentExamQuestions.forEach((q, idx) => {
+        if (q.type === 'choice') {
+          const checked = document.querySelector(`input[name="exam-q${idx}"]:checked`);
+          answers.push(checked ? checked.value : null);
+        } else if (q.type === 'numeric_single') {
+          const val = document.getElementById(`exam-q${idx}-val1`).value;
+          answers.push([val]);
+        } else if (q.type === 'numeric_double') {
+          const val1 = document.getElementById(`exam-q${idx}-val1`).value;
+          const val2 = document.getElementById(`exam-q${idx}-val2`).value;
+          answers.push([val1, val2]);
+        }
+      });
+      return answers;
+    }
+
+    function restoreExamAnswers(answers) {
+      if (!answers) return;
+      answers.forEach((ans, idx) => {
+        const q = currentExamQuestions[idx];
+        if (!q) return;
+        if (q.type === 'choice') {
+          if (ans) {
+            const radio = document.querySelector(`input[name="exam-q${idx}"][value="${ans}"]`);
+            if (radio) radio.checked = true;
+          }
+        } else if (q.type === 'numeric_single') {
+          if (ans && ans[0]) document.getElementById(`exam-q${idx}-val1`).value = ans[0];
+        } else if (q.type === 'numeric_double') {
+          if (ans) {
+            if (ans[0]) document.getElementById(`exam-q${idx}-val1`).value = ans[0];
+            if (ans[1]) document.getElementById(`exam-q${idx}-val2`).value = ans[1];
+          }
+        }
+      });
+    }
+
+    function persistExamSession() {
+      if (!examIsActive || !currentExamQuestions.length || !examStartTimestamp || !examDeadlineTimestamp) return;
+      const payload = {
+        examQuestions: currentExamQuestions,
+        studentInfo: examStudentInfo,
+        examStartTimestamp,
+        examDeadlineTimestamp,
+        answers: getCurrentExamAnswers()
+      };
+      sessionStorage.setItem(EXAM_STATE_KEY, JSON.stringify(payload));
+    }
+
+    function clearExamSession() {
+      sessionStorage.removeItem(EXAM_STATE_KEY);
+    }
+
+    function stopExamExitGuard() {
+      if (!examExitGuardEnabled) return;
+      window.removeEventListener('beforeunload', handleExamBeforeUnload);
+      window.removeEventListener('popstate', handleExamPopState);
+      window.removeEventListener('keydown', handleExamKeydown, true);
+      window.removeEventListener('touchstart', handleExamTouchStart);
+      window.removeEventListener('touchmove', handleExamTouchMove);
+      document.documentElement.classList.remove('exam-locked');
+      document.body.classList.remove('exam-locked');
+      examExitGuardEnabled = false;
+    }
+
+    function startExamExitGuard() {
+      if (examExitGuardEnabled) return;
+      window.addEventListener('beforeunload', handleExamBeforeUnload);
+      window.addEventListener('popstate', handleExamPopState);
+      window.addEventListener('keydown', handleExamKeydown, true);
+      window.addEventListener('touchstart', handleExamTouchStart, { passive: true });
+      window.addEventListener('touchmove', handleExamTouchMove, { passive: false });
+      document.documentElement.classList.add('exam-locked');
+      document.body.classList.add('exam-locked');
+      examExitGuardEnabled = true;
+    }
+
+    function handleExamBeforeUnload(event) {
+      if (!examIsActive) return;
+      persistExamSession();
+      event.preventDefault();
+      event.returnValue = '';
+      return '';
+    }
+
+    function handleExamPopState() {
+      if (!examIsActive) return;
+      history.pushState({ examLock: true }, '', location.href);
+      triggerAlert("กำลังสอบอยู่", "ระบบล็อกการย้อนกลับไว้ระหว่างทำข้อสอบ เพื่อป้องกันการหลุดจากการสอบโดยไม่ตั้งใจ", "fa-ban", "bg-amber-100 text-amber-600");
+      showSection('exam-live');
+    }
+
+    function handleExamKeydown(event) {
+      if (!examIsActive) return;
+      const key = event.key.toLowerCase();
+      const blocked = event.key === 'F5' || ((event.ctrlKey || event.metaKey) && key === 'r') || (event.altKey && key === 'arrowleft');
+      if (blocked) {
+        event.preventDefault();
+        event.stopPropagation();
+        triggerAlert("กำลังสอบอยู่", "ระบบปิดการรีเฟรชและย้อนหน้าไว้ชั่วคราว เพื่อให้เวลาสอบเดินต่อเนื่องตลอด 10 นาที", "fa-lock", "bg-amber-100 text-amber-600");
+      }
+    }
+
+    function handleExamTouchStart(event) {
+      if (!examIsActive || !event.touches || event.touches.length !== 1) return;
+      examTouchStartY = event.touches[0].clientY;
+    }
+
+    function handleExamTouchMove(event) {
+      if (!examIsActive || !event.touches || event.touches.length !== 1) return;
+      const currentY = event.touches[0].clientY;
+      const pullingDownFromTop = window.scrollY <= 0 && currentY > examTouchStartY + 8;
+      if (pullingDownFromTop) {
+        event.preventDefault();
+      }
+    }
+
+    function startExamTimer() {
+      clearInterval(examTimerInterval);
+      const updateTimer = () => {
+        if (!examIsActive) return;
+        examTimeRemaining = getCurrentExamRemainingSeconds();
+        document.getElementById('exam-timer-display').innerText = formatExamTime(examTimeRemaining);
+        if (examTimeRemaining < 60) {
+          document.getElementById('exam-timer-display').classList.add('text-rose-500');
+        } else {
+          document.getElementById('exam-timer-display').classList.remove('text-rose-500');
+        }
+        persistExamSession();
+        if (examTimeRemaining <= 0) {
+          clearInterval(examTimerInterval);
+          examTimeRemaining = 0;
+          document.getElementById('exam-timer-display').innerText = "00:00";
+          triggerAlert("หมดเวลาแล้ว!", "เวลาสอบ 10 นาทีของคุณหมดแล้ว ระบบจะส่งข้อสอบและเฉลยให้ทันที", "fa-hourglass-end", "bg-rose-100 text-rose-600");
+          submitExam(true);
+        }
+      };
+      updateTimer();
+      examTimerInterval = setInterval(updateTimer, 250);
+    }
+
+    function initializeExamSession(questions, studentInfo) {
+      currentExamQuestions = questions;
+      examStudentInfo = studentInfo;
+      examStartTimestamp = Date.now();
+      examDeadlineTimestamp = examStartTimestamp + (EXAM_DURATION_SECONDS * 1000);
+      examTimeRemaining = EXAM_DURATION_SECONDS;
+      examIsActive = true;
+      examSubmissionInProgress = false;
+      startExamExitGuard();
+      history.pushState({ examLock: true }, '', location.href);
+      persistExamSession();
+      startExamTimer();
+    }
+
+    function restoreActiveExamSession() {
+      const saved = sessionStorage.getItem(EXAM_STATE_KEY);
+      if (!saved) return false;
+      try {
+        const parsed = JSON.parse(saved);
+        if (!parsed || !parsed.examQuestions || !parsed.studentInfo || !parsed.examDeadlineTimestamp) return false;
+        currentExamQuestions = parsed.examQuestions;
+        examStudentInfo = parsed.studentInfo;
+        examStartTimestamp = parsed.examStartTimestamp || (parsed.examDeadlineTimestamp - (EXAM_DURATION_SECONDS * 1000));
+        examDeadlineTimestamp = parsed.examDeadlineTimestamp;
+        examIsActive = true;
+        examSubmissionInProgress = false;
+
+        document.getElementById('lbl-exam-user-info').innerText = `${examStudentInfo.name} (ม.6/${examStudentInfo.class} เลขที่ ${examStudentInfo.number})`;
+        renderExamLiveDOM();
+        restoreExamAnswers(parsed.answers);
+        showSection('exam-live');
+
+        const remaining = getCurrentExamRemainingSeconds();
+        examTimeRemaining = remaining;
+        document.getElementById('exam-timer-display').innerText = formatExamTime(remaining);
+        document.getElementById('exam-timer-display').classList.toggle('text-rose-500', remaining < 60);
+
+        startExamExitGuard();
+        if (remaining <= 0) {
+          submitExam(true);
+        } else {
+          startExamTimer();
+        }
+        return true;
+      } catch (error) {
+        console.error('Failed to restore exam session:', error);
+        clearExamSession();
+        return false;
+      }
+    }
+
+    function endExamSession() {
+      examIsActive = false;
+      examSubmissionInProgress = false;
+      examStartTimestamp = null;
+      examDeadlineTimestamp = null;
+      clearInterval(examTimerInterval);
+      stopExamExitGuard();
+      clearExamSession();
+    }
+
+    function renderMath() {
+      if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+        MathJax.typesetPromise().catch(function (err) {
+          console.error("MathJax error: ", err);
+        });
+      }
+    }
+
+    window.onload = function () {
+      updateLatestScoreOnHome();
+      switchReviewTab('16-1-1');
+      renderMath();
+      restoreActiveExamSession();
+    }
+
+    document.addEventListener('input', function (event) {
+      if (!examIsActive || !event.target || !event.target.id) return;
+      if (event.target.id.startsWith('exam-q')) {
+        persistExamSession();
+      }
+    });
+
+    function showSection(sectionId) {
+      let norm = sectionId.startsWith('sec-') ? sectionId.slice(4) : sectionId;
+      if (examIsActive && norm !== 'exam-live' && norm !== 'exam-result') {
+        triggerAlert("กำลังสอบอยู่", "ระบบล็อกไม่ให้ออกจากหน้าทดสอบจนกว่าจะกดส่งข้อสอบหรือหมดเวลาครับ", "fa-lock", "bg-amber-100 text-amber-600");
+        norm = 'exam-live';
+      }
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) mobileMenu.classList.add('hidden');
+
+      const sections = ['home', 'review', 'practice', 'exam-start', 'exam-live', 'exam-result'];
+      sections.forEach(s => {
+        const sec = document.getElementById('sec-' + s);
+        if (sec) {
+          if (s === norm) sec.classList.remove('hidden');
+          else sec.classList.add('hidden');
+        }
+      });
+
+      if (norm !== 'exam-live' && !examIsActive) {
+        clearInterval(examTimerInterval);
+      }
+      currentSection = norm;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderMath();
+    }
+
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) mobileMenu.classList.toggle('hidden');
+    }
+
+    function triggerAlert(title, message, iconClass = 'fa-circle-exclamation', iconColorClass = 'bg-rose-100 text-rose-600') {
+      const modal = document.getElementById('modal-alert');
+      const card = document.getElementById('modal-alert-card');
+      const icon = document.getElementById('modal-alert-icon');
+
+      document.getElementById('modal-alert-title').innerText = title;
+      document.getElementById('modal-alert-msg').innerText = message;
+      icon.className = `w-14 h-14 rounded-full mx-auto flex items-center justify-center text-2xl ${iconColorClass}`;
+      icon.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      }, 50);
+    }
+
+    function closeAlertModal() {
+      const modal = document.getElementById('modal-alert');
+      const card = document.getElementById('modal-alert-card');
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    function updateLatestScoreOnHome() {
+      const saved = localStorage.getItem('last_exam_results');
+      const badge = document.getElementById('latest-score-badge');
+      if (saved) {
+        const info = JSON.parse(saved);
+        const finishedLabel = info.finishedAtDisplay || info.date || 'ไม่พบเวลาส่ง';
+        document.getElementById('lbl-last-score').innerText = `${info.score} / 10 คะแนน (${info.studentInfo?.name || info.name || '-'}) • ${finishedLabel}`;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function showLatestResultModal() {
+      const saved = localStorage.getItem('last_exam_results');
+      if (saved) {
+        const info = JSON.parse(saved);
+        currentExamQuestions = info.examQuestions || [];
+        showSection('exam-result');
+        displayExamResults(info.score, info.gradedResults, info.timeTaken, info.studentInfo, info.finishedAtDisplay || info.date || '-');
+      }
+    }
+
+    function switchReviewTab(tabName) {
+      currentReviewTab = tabName;
+      const tabs = ['16-1-1', '16-1-2', '16-1-3', '16-1-4'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`btn-tab-${t}`);
+        const tab = document.getElementById(`review-tab-${t}`);
+        if (t === tabName) {
+          btn.className = "flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 bg-white text-blue-900 shadow-sm";
+          tab.classList.remove('hidden');
+        } else {
+          btn.className = "flex-1 min-w-[120px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900";
+          tab.classList.add('hidden');
+        }
+      });
+
+      // Stop any active animations
+      stopAllReviewAnimations();
+
+      if (tabName === '16-1-1') initTempSimulator();
+      else if (tabName === '16-1-2') initHeatCapSimulator();
+      else if (tabName === '16-1-3') initHeatSpecSimulator();
+      else if (tabName === '16-1-4') initLatentSimulator();
+    }
+
+    function stopAllReviewAnimations() {
+      if (tempAnimFrame) {
+        cancelAnimationFrame(tempAnimFrame);
+        tempAnimFrame = null;
+      }
+      if (capAnimFrame) {
+        cancelAnimationFrame(capAnimFrame);
+        capAnimFrame = null;
+      }
+      if (specAnimFrame) {
+        cancelAnimationFrame(specAnimFrame);
+        specAnimFrame = null;
+      }
+      if (latentAnimFrame) {
+        cancelAnimationFrame(latentAnimFrame);
+        latentAnimFrame = null;
+      }
+      capIsHeating = false;
+      specIsHeating = false;
+      latentIsHeating = false;
+    }
+
+    // ============================================================================
+    // TAB 1: TEMPERATURE SIMULATOR (16.1.1)
+    // ============================================================================
+    let tempMolecules = [];
+    let tempCanvas = null;
+    let tempCtx = null;
+    let tempAnimFrame = null;
+
+    function initTempMolecules() {
+      tempMolecules = [];
+      for (let i = 0; i < 25; i++) {
+        tempMolecules.push({
+          x: Math.random() * 240 + 10,
+          y: Math.random() * 160 + 10,
+          vx: (Math.random() - 0.5) * 4.5,
+          vy: (Math.random() - 0.5) * 4.5,
+          r: 5
+        });
+      }
+    }
+
+    function drawThermometerSVG(cVal) {
+      const container = document.getElementById('sim-temp-thermometer-svg');
+      if (!container) return;
+      const minC = -273.15;
+      const maxC = 300.0;
+      const percent = (cVal - minC) / (maxC - minC);
+      const mercuryHeight = Math.max(2, Math.min(130, percent * 130));
+
+      container.innerHTML = `
+        <svg viewBox="0 0 120 200" class="h-44 w-auto">
+          <!-- Scale lines -->
+          <line x1="56" y1="20" x2="64" y2="20" stroke="#94a3b8" stroke-width="1.5"/>
+          <text x="68" y="23" fill="#94a3b8" font-size="7" font-family="monospace" font-weight="bold">300°C / 573K</text>
+          
+          <line x1="56" y1="65.4" x2="64" y2="65.4" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="68" y="68.4" fill="#ef4444" font-size="7" font-family="monospace" font-weight="bold">100°C / 373K</text>
+          
+          <line x1="56" y1="110.8" x2="64" y2="110.8" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="68" y="113.8" fill="#3b82f6" font-size="7" font-family="monospace" font-weight="bold">0°C / 273K</text>
+          
+          <line x1="56" y1="150" x2="64" y2="150" stroke="#94a3b8" stroke-width="1.5"/>
+          <text x="68" y="153" fill="#94a3b8" font-size="7" font-family="monospace" font-weight="bold">-273°C / 0K</text>
+          
+          <!-- Glass tube -->
+          <rect x="40" y="10" width="12" height="145" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+          <!-- Bulb -->
+          <circle cx="46" cy="160" r="14" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+          
+          <!-- Mercury level -->
+          <rect x="43" y="${150 - mercuryHeight}" width="6" height="${mercuryHeight}" rx="1" fill="#ef4444"/>
+          <circle cx="46" cy="160" r="10" fill="#ef4444"/>
+          <circle cx="43" cy="157" r="3.5" fill="#fca5a5" opacity="0.6"/>
+        </svg>
+      `;
+    }
+
+    function initTempSimulator() {
+      const slider = document.getElementById('sim-temp-slider');
+      const inputC = document.getElementById('sim-temp-input-c');
+      const inputK = document.getElementById('sim-temp-input-k');
+
+      const updateValues = (cVal) => {
+        cVal = Math.max(-273.15, cVal);
+        const kVal = cVal + 273.15;
+
+        slider.value = cVal;
+        inputC.value = cVal.toFixed(2);
+        inputK.value = kVal.toFixed(2);
+
+        document.getElementById('lbl-sim-temp-c').innerText = `${cVal.toFixed(1)} °C`;
+        document.getElementById('lbl-sim-temp-calc').innerHTML = `\\(T = ${cVal.toFixed(2)} + 273.15 = ${kVal.toFixed(2)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-temp-result').innerText = kVal.toFixed(2);
+
+        drawThermometerSVG(cVal);
+        renderMath();
+      };
+
+      slider.oninput = () => updateValues(parseFloat(slider.value));
+      inputC.onchange = () => updateValues(parseFloat(inputC.value) || 0);
+      inputK.onchange = () => updateValues((parseFloat(inputK.value) || 0) - 273.15);
+
+      updateValues(parseFloat(slider.value));
+
+      // Setup Canvas animation
+      tempCanvas = document.getElementById('temp-molecule-canvas');
+      if (tempCanvas) {
+        tempCtx = tempCanvas.getContext('2d');
+        initTempMolecules();
+
+        const loop = () => {
+          if (currentReviewTab !== '16-1-1') return;
+          tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+          const cVal = parseFloat(slider.value);
+          const T = cVal + 273.15;
+          // rms velocity factor v_rms = sqrt(3RT/M) -> speed proportional to sqrt(T)
+          const speedFactor = Math.max(0.05, Math.sqrt(T / 298.15) * 1.5);
+
+          tempCtx.fillStyle = '#f87171';
+          tempCtx.strokeStyle = '#ef4444';
+          tempCtx.lineWidth = 1;
+
+          tempMolecules.forEach(m => {
+            m.x += m.vx * speedFactor;
+            m.y += m.vy * speedFactor;
+
+            if (m.x - m.r < 0) { m.x = m.r; m.vx = -m.vx; }
+            if (m.x + m.r > tempCanvas.width) { m.x = tempCanvas.width - m.r; m.vx = -m.vx; }
+            if (m.y - m.r < 0) { m.y = m.r; m.vy = -m.vy; }
+            if (m.y + m.r > tempCanvas.height) { m.y = tempCanvas.height - m.r; m.vy = -m.vy; }
+
+            tempCtx.beginPath();
+            tempCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+            tempCtx.fill();
+            tempCtx.stroke();
+          });
+
+          tempAnimFrame = requestAnimationFrame(loop);
+        };
+        if (tempAnimFrame) cancelAnimationFrame(tempAnimFrame);
+        tempAnimFrame = requestAnimationFrame(loop);
+      }
+    }
+
+    // ============================================================================
+    // TAB 2: HEAT CAPACITY SIMULATOR (16.1.2)
+    // ============================================================================
+    let capAnimFrame = null;
+    let capIsHeating = false;
+    let capHeatProgress = 0;
+    let capLastTime = 0;
+
+    function drawHeatCapSim(C, Q, tempRiseFraction = 0) {
+      const container = document.getElementById('sim-cap-svg-container');
+      if (!container) return;
+
+      const deltaT_target = Q / C;
+      const current_deltaT = deltaT_target * tempRiseFraction;
+
+      // Interpolate metal block color from slate-600 to bright glowing red-orange (#ea580c)
+      const r = Math.round(71 + tempRiseFraction * (234 - 71));
+      const g = Math.round(85 + tempRiseFraction * (88 - 85));
+      const b = Math.round(105 - tempRiseFraction * (105 - 12));
+      const metalColor = `rgb(${r}, ${g}, ${b})`;
+
+      const flameOpacity = capIsHeating && tempRiseFraction < 0.99 ? 0.8 + Math.sin(Date.now() / 80) * 0.2 : 0.05;
+      const heatWaves = capIsHeating && tempRiseFraction < 0.99 ? `
+        <g opacity="${1 - tempRiseFraction * 0.8}">
+          <path d="M 160 110 Q 170 95 160 85 T 160 65" stroke="#f97316" stroke-width="2.5" fill="none" opacity="0.6">
+            <animate attributeName="d" dur="0.8s" repeatCount="indefinite"
+              values="M 160 110 Q 170 95 160 85 T 160 65; M 165 110 Q 155 95 165 85 T 165 65; M 160 110 Q 170 95 160 85 T 160 65"/>
+          </path>
+          <path d="M 180 110 Q 190 95 180 85 T 180 65" stroke="#f97316" stroke-width="2.5" fill="none" opacity="0.6">
+            <animate attributeName="d" dur="1s" repeatCount="indefinite"
+              values="M 180 110 Q 190 95 180 85 T 180 65; M 185 110 Q 175 95 185 85 T 185 65; M 180 110 Q 190 95 180 85 T 180 65"/>
+          </path>
+          <path d="M 200 110 Q 210 95 200 85 T 200 65" stroke="#f97316" stroke-width="2.5" fill="none" opacity="0.6">
+            <animate attributeName="d" dur="0.9s" repeatCount="indefinite"
+              values="M 200 110 Q 210 95 200 85 T 200 65; M 205 110 Q 195 95 205 85 T 205 65; M 200 110 Q 210 95 200 85 T 200 65"/>
+          </path>
+        </g>
+      ` : '';
+
+      container.innerHTML = `
+        <svg viewBox="0 0 360 240" class="w-full max-w-sm h-auto">
+          <defs>
+            <radialGradient id="flame-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffedd5" />
+              <stop offset="50%" stop-color="#ea580c" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#ff7a70" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="100%" height="100%" rx="16" fill="#090d16"/>
+          
+          <!-- Heater / Burner Flame base -->
+          <rect x="155" y="195" width="50" height="20" fill="#334155" rx="3"/>
+          <rect x="176" y="180" width="8" height="15" fill="#475569"/>
+          
+          <!-- Flame -->
+          <circle cx="180" cy="165" r="25" fill="url(#flame-glow)" opacity="${flameOpacity}"/>
+          <path d="M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z" fill="#f97316" opacity="${flameOpacity}">
+            <animate attributeName="d" dur="0.4s" repeatCount="indefinite"
+              values="M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z; M 170 180 Q 180 140 186 160 Q 190 142 190 180 Z; M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z"/>
+          </path>
+          <path d="M 176 180 Q 180 158 181 163 Q 183 160 184 180 Z" fill="#facc15" opacity="${flameOpacity}"/>
+          
+          <!-- Tripod Stand and Mesh Gauze -->
+          <line x1="120" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-width="4"/>
+          <line x1="130" y1="180" x2="105" y2="225" stroke="#64748b" stroke-width="4"/>
+          <line x1="230" y1="180" x2="255" y2="225" stroke="#64748b" stroke-width="4"/>
+          <rect x="125" y="175" width="110" height="5" fill="#475569"/>
+          
+          <!-- Metal Heating Block -->
+          <rect x="150" y="115" width="60" height="60" fill="${metalColor}" stroke="#1e293b" stroke-width="2.5" rx="6"/>
+          
+          ${heatWaves}
+          
+          <!-- Label Inside metal block -->
+          <text x="180" y="150" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle" opacity="0.9">แผ่นโลหะ C</text>
+          
+          <!-- Readings Panel -->
+          <rect x="15" y="15" width="125" height="55" rx="8" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)"/>
+          <text x="25" y="32" fill="#94a3b8" font-size="8">อุณหภูมิแผ่นความร้อนที่สูงขึ้น</text>
+          <text x="25" y="52" fill="#f97316" font-size="15" font-weight="bold" font-family="monospace">ΔT: +${current_deltaT.toFixed(1)} K</text>
+          
+          <rect x="220" y="15" width="125" height="55" rx="8" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)"/>
+          <text x="230" y="32" fill="#94a3b8" font-size="8">ความจุความร้อน (C)</text>
+          <text x="230" y="52" fill="#38bdf8" font-size="15" font-weight="bold" font-family="monospace">${C} J/K</text>
+        </svg>
+      `;
+    }
+
+    function initHeatCapSimulator() {
+      const sliderC = document.getElementById('sim-cap-slider-c');
+      const sliderQ = document.getElementById('sim-cap-slider-q');
+
+      const update = () => {
+        const C = parseFloat(sliderC.value);
+        const Q = parseFloat(sliderQ.value);
+
+        document.getElementById('lbl-sim-cap-c').innerText = `${C} J/K`;
+        document.getElementById('lbl-sim-cap-q').innerText = `${Q} J`;
+
+        const deltaT = Q / C;
+        document.getElementById('lbl-sim-cap-calc').innerHTML = `\\(\Delta T = \frac{${Q}}{${C}} = ${deltaT.toFixed(2)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-cap-result').innerText = deltaT.toFixed(2);
+
+        drawHeatCapSim(C, Q, capHeatProgress);
+        renderMath();
+      };
+
+      sliderC.oninput = update;
+      sliderQ.oninput = update;
+
+      capHeatProgress = 0;
+      update();
+    }
+
+    function startHeatCapSim() {
+      if (capIsHeating) return;
+      capIsHeating = true;
+      capHeatProgress = 0;
+      capLastTime = performance.now();
+
+      const btn = document.getElementById('btn-cap-start');
+      if (btn) btn.innerText = "กำลังคำนวณความร้อน...";
+
+      const C = parseFloat(document.getElementById('sim-cap-slider-c').value);
+      const Q = parseFloat(document.getElementById('sim-cap-slider-q').value);
+
+      const loop = (time) => {
+        if (!capIsHeating) return;
+        const dt = (time - capLastTime) / 1000;
+        capLastTime = time;
+
+        // Heat in 3 seconds
+        capHeatProgress += dt / 3.0;
+        if (capHeatProgress >= 1.0) {
+          capHeatProgress = 1.0;
+          capIsHeating = false;
+          if (btn) btn.innerText = "เริ่มให้ความร้อนใหม่";
+        }
+
+        drawHeatCapSim(C, Q, capHeatProgress);
+
+        // Update live ΔT result in calculations panel during animation
+        const current_deltaT = (Q / C) * capHeatProgress;
+        document.getElementById('lbl-sim-cap-result').innerText = current_deltaT.toFixed(2);
+
+        if (capIsHeating) capAnimFrame = requestAnimationFrame(loop);
+      };
+
+      if (capAnimFrame) cancelAnimationFrame(capAnimFrame);
+      capAnimFrame = requestAnimationFrame(loop);
+    }
+
+    function resetHeatCapSim() {
+      capIsHeating = false;
+      cancelAnimationFrame(capAnimFrame);
+      capHeatProgress = 0;
+      const btn = document.getElementById('btn-cap-start');
+      if (btn) btn.innerText = "เริ่มให้ความร้อน";
+      initHeatCapSimulator();
+    }
+
+    // ============================================================================
+    // TAB 3: SPECIFIC HEAT SIMULATOR (16.1.3)
+    // ============================================================================
+    let specAnimFrame = null;
+    let specIsHeating = false;
+    let specHeatProgress = 0;
+    let specLastTime = 0;
+
+    const SPECIFIC_HEAT_DB = {
+      water: { name: 'น้ำ (Water)', c: 4186, color: '#3b82f6', isLiquid: true },
+      ice: { name: 'น้ำแข็ง (Ice)', c: 2100, color: '#93c5fd', isLiquid: false, isIce: true },
+      aluminum: { name: 'อลูมิเนียม (Aluminum)', c: 900, color: '#cbd5e1', isLiquid: false },
+      copper: { name: 'ทองแดง (Copper)', c: 385, color: '#ea580c', isLiquid: false },
+      lead: { name: 'ตะกั่ว (Lead)', c: 128, color: '#475569', isLiquid: false }
+    };
+
+    function drawHeatSpecSim(substanceKey, m, Q, tempRiseFraction = 0) {
+      const container = document.getElementById('sim-spec-svg-container');
+      if (!container) return;
+
+      const subInfo = SPECIFIC_HEAT_DB[substanceKey];
+      const c = subInfo.c;
+      const deltaT_target = Q / (m * c);
+      const current_deltaT = deltaT_target * tempRiseFraction;
+
+      // Calculate color shift based on heating progress
+      let itemColor = subInfo.color;
+      if (subInfo.isIce) {
+        itemColor = tempRiseFraction > 0.01 ? '#93c5fd' : '#e0f2fe';
+      } else if (!subInfo.isLiquid) {
+        // solid block glow shift
+        const baseColor = subInfo.color; // e.g. slate-300 or copper or lead
+        const r = Math.round(100 + tempRiseFraction * (234 - 100));
+        const g = Math.round(110 + tempRiseFraction * (80 - 110));
+        const b = Math.round(120 - tempRiseFraction * (120 - 10));
+        itemColor = `rgb(${r}, ${g}, ${b})`;
+      } else {
+        // water color warming up
+        const r = Math.round(59 + tempRiseFraction * (220 - 59));
+        const g = Math.round(130 - tempRiseFraction * (130 - 80));
+        const b = Math.round(246 - tempRiseFraction * (246 - 80));
+        itemColor = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      const flameOpacity = specIsHeating && tempRiseFraction < 0.99 ? 0.8 + Math.sin(Date.now() / 80) * 0.2 : 0.05;
+
+      let contentsHTML = '';
+      if (subInfo.isIce) {
+        // draw chunks of ice block
+        contentsHTML = `
+          <!-- Beaker -->
+          <rect x="140" y="80" width="80" height="80" fill="none" stroke="#e2e8f0" stroke-width="3" rx="4"/>
+          <!-- Ice Blocks -->
+          <rect x="150" y="120" width="30" height="30" fill="${itemColor}" opacity="0.9" rx="3" stroke="#7dd3fc"/>
+          <rect x="180" y="125" width="28" height="25" fill="${itemColor}" opacity="0.8" rx="3" stroke="#7dd3fc"/>
+          <rect x="165" y="102" width="25" height="25" fill="${itemColor}" opacity="0.85" rx="3" stroke="#7dd3fc"/>
+        `;
+      } else if (subInfo.isLiquid) {
+        // draw beaker with liquid water
+        contentsHTML = `
+          <!-- Beaker -->
+          <rect x="140" y="80" width="80" height="80" fill="none" stroke="#e2e8f0" stroke-width="3" rx="4"/>
+          <!-- Water level -->
+          <rect x="143" y="105" width="74" height="52" fill="${itemColor}" opacity="0.75" rx="2"/>
+          ${specIsHeating && tempRiseFraction > 0.4 ? `
+            <circle cx="160" cy="140" r="3.5" fill="#fff" opacity="0.6"><animate attributeName="cy" dur="0.8s" repeatCount="indefinite" values="145;110"/></circle>
+            <circle cx="185" cy="145" r="2.5" fill="#fff" opacity="0.7"><animate attributeName="cy" dur="0.9s" repeatCount="indefinite" values="145;110"/></circle>
+            <circle cx="200" cy="138" r="3" fill="#fff" opacity="0.5"><animate attributeName="cy" dur="0.7s" repeatCount="indefinite" values="145;110"/></circle>
+          ` : ''}
+        `;
+      } else {
+        // solid cylinder
+        contentsHTML = `
+          <!-- Metal cylinder block -->
+          <rect x="155" y="105" width="50" height="55" fill="${itemColor}" stroke="#1e293b" stroke-width="2" rx="4"/>
+          <text x="180" y="137" fill="#1e293b" font-size="9" font-weight="bold" text-anchor="middle" opacity="0.8">${subInfo.name.split(' ')[0]}</text>
+        `;
+      }
+
+      container.innerHTML = `
+        <svg viewBox="0 0 360 240" class="w-full max-w-sm h-auto">
+          <defs>
+            <radialGradient id="flame-glow-spec" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffedd5" />
+              <stop offset="50%" stop-color="#ea580c" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#ff7a70" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="100%" height="100%" rx="16" fill="#090d16"/>
+          
+          <!-- Heater base -->
+          <rect x="155" y="195" width="50" height="20" fill="#334155" rx="3"/>
+          <rect x="176" y="180" width="8" height="15" fill="#475569"/>
+          
+          <!-- Flame -->
+          <circle cx="180" cy="165" r="25" fill="url(#flame-glow-spec)" opacity="${flameOpacity}"/>
+          <path d="M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z" fill="#f97316" opacity="${flameOpacity}">
+            <animate attributeName="d" dur="0.4s" repeatCount="indefinite"
+              values="M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z; M 170 180 Q 180 140 186 160 Q 190 142 190 180 Z; M 172 180 Q 180 145 184 158 Q 188 150 188 180 Z"/>
+          </path>
+          
+          <!-- Stand -->
+          <line x1="120" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-width="4"/>
+          <line x1="130" y1="180" x2="105" y2="225" stroke="#64748b" stroke-width="4"/>
+          <line x1="230" y1="180" x2="255" y2="225" stroke="#64748b" stroke-width="4"/>
+          
+          ${contentsHTML}
+          
+          <!-- Readings -->
+          <rect x="15" y="15" width="125" height="55" rx="8" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)"/>
+          <text x="25" y="32" fill="#94a3b8" font-size="8">มวลสสาร & อุณหภูมิที่สูงขึ้น</text>
+          <text x="25" y="52" fill="#eab308" font-size="14" font-weight="bold" font-family="monospace">m: ${m.toFixed(1)}kg  ΔT: +${current_deltaT.toFixed(2)}K</text>
+          
+          <rect x="220" y="15" width="125" height="55" rx="8" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)"/>
+          <text x="230" y="32" fill="#94a3b8" font-size="8">ความร้อนจำเพาะ (c)</text>
+          <text x="230" y="52" fill="#a855f7" font-size="14" font-weight="bold" font-family="monospace">c: ${c} J/kg·K</text>
+        </svg>
+      `;
+    }
+
+    function initHeatSpecSimulator() {
+      const select = document.getElementById('sim-spec-select-substance');
+      const sliderM = document.getElementById('sim-spec-slider-m');
+      const sliderQ = document.getElementById('sim-spec-slider-q');
+
+      const update = () => {
+        const subKey = select.value;
+        const m = parseFloat(sliderM.value);
+        const Q = parseFloat(sliderQ.value);
+        const c = SPECIFIC_HEAT_DB[subKey].c;
+
+        document.getElementById('lbl-sim-spec-m').innerText = `${m.toFixed(1)} kg`;
+        document.getElementById('lbl-sim-spec-q').innerText = `${Q} J`;
+
+        const deltaT = Q / (m * c);
+        document.getElementById('lbl-sim-spec-calc').innerHTML = `\\(\Delta T = \frac{${Q}}{${m.toFixed(1)} \times ${c}} = ${deltaT.toFixed(3)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-spec-result').innerText = deltaT.toFixed(3);
+
+        drawHeatSpecSim(subKey, m, Q, specHeatProgress);
+        renderMath();
+      };
+
+      select.onchange = update;
+      sliderM.oninput = update;
+      sliderQ.oninput = update;
+
+      specHeatProgress = 0;
+      update();
+    }
+
+    function startHeatSpecSim() {
+      if (specIsHeating) return;
+      specIsHeating = true;
+      specHeatProgress = 0;
+      specLastTime = performance.now();
+
+      const btn = document.getElementById('btn-spec-start');
+      if (btn) btn.innerText = "กำลังประมวลผลความร้อน...";
+
+      const subKey = document.getElementById('sim-spec-select-substance').value;
+      const m = parseFloat(document.getElementById('sim-spec-slider-m').value);
+      const Q = parseFloat(document.getElementById('sim-spec-slider-q').value);
+      const c = SPECIFIC_HEAT_DB[subKey].c;
+
+      const loop = (time) => {
+        if (!specIsHeating) return;
+        const dt = (time - specLastTime) / 1000;
+        specLastTime = time;
+
+        specHeatProgress += dt / 3.0; // 3 seconds heating
+        if (specHeatProgress >= 1.0) {
+          specHeatProgress = 1.0;
+          specIsHeating = false;
+          if (btn) btn.innerText = "เริ่มให้ความร้อนใหม่";
+        }
+
+        drawHeatSpecSim(subKey, m, Q, specHeatProgress);
+
+        const current_deltaT = (Q / (m * c)) * specHeatProgress;
+        document.getElementById('lbl-sim-spec-result').innerText = current_deltaT.toFixed(3);
+
+        if (specIsHeating) specAnimFrame = requestAnimationFrame(loop);
+      };
+
+      if (specAnimFrame) cancelAnimationFrame(specAnimFrame);
+      specAnimFrame = requestAnimationFrame(loop);
+    }
+
+    function resetHeatSpecSim() {
+      specIsHeating = false;
+      cancelAnimationFrame(specAnimFrame);
+      specHeatProgress = 0;
+      const btn = document.getElementById('btn-spec-start');
+      if (btn) btn.innerText = "เริ่มให้ความร้อน";
+      initHeatSpecSimulator();
+    }
+
+    // ============================================================================
+    // TAB 4: LATENT HEAT & PHASE TRANSITION GRAPH SIMULATOR (16.1.4)
+    // ============================================================================
+    let latentAnimFrame = null;
+    let latentIsHeating = false;
+    let latentLastTime = 0;
+
+    // Constants for Water
+    const C_ICE = 2.1;       // kJ/kg*K
+    const C_WATER = 4.186;   // kJ/kg*K
+    const C_STEAM = 2.0;     // kJ/kg*K
+    const L_FUSION = 333;    // kJ/kg
+    const L_VAPOR = 2256;    // kJ/kg
+
+    function getLatentPoints(m) {
+      const qA = m * C_ICE * 20;               // Heating ice from -20 to 0
+      const qB = qA + m * L_FUSION;            // Melting ice at 0
+      const qC = qB + m * C_WATER * 100;       // Heating water from 0 to 100
+      const qD = qC + m * L_VAPOR;             // Vaporizing water at 100
+      const qE = qD + m * C_STEAM * 20;        // Heating steam from 100 to 120
+
+      return { qA, qB, qC, qD, qE };
+    }
+
+    function getLatentState(m, Q) {
+      const pts = getLatentPoints(m);
+
+      if (Q < pts.qA) {
+        // Region 1: Solid Ice
+        const T = -20.0 + Q / (m * C_ICE);
+        return {
+          T,
+          phase: 'ice',
+          desc: `ของแข็ง (น้ำแข็ง) กำลังทำอุณหภูมิขึ้นจาก -20.0 °C ถึง 0.0 °C`,
+          formula: `Q = m c_{ice} \Delta T`,
+          calc: `Q = ${m.toFixed(1)} \times 2.1 \times (t - (-20))`,
+          activeIdx: 1
+        };
+      } else if (Q < pts.qB) {
+        // Region 2: Melting (Freezing Point)
+        const T = 0.0;
+        const meltFraction = (Q - pts.qA) / (pts.qB - pts.qA);
+        return {
+          T,
+          phase: 'melting',
+          desc: `กำลังหลอมเหลว (น้ำแข็งผสมน้ำ) อุณหภูมิคงตัวที่ 0.0 °C (หลอมเหลวแล้ว ${(meltFraction * 100).toFixed(0)}%)`,
+          formula: `Q = m L_f`,
+          calc: `Q_{melt} = m_{melt} \times 333\text{ kJ}`,
+          activeIdx: 2
+        };
+      } else if (Q < pts.qC) {
+        // Region 3: Liquid Water
+        const T = 0.0 + (Q - pts.qB) / (m * C_WATER);
+        return {
+          T,
+          phase: 'water',
+          desc: `ของเหลว (น้ำ) กำลังทำอุณหภูมิขึ้นจาก 0.0 °C ถึง 100.0 °C`,
+          formula: `Q = m c_{water} \Delta T`,
+          calc: `Q = ${m.toFixed(1)} \times 4.186 \times (t - 0)`,
+          activeIdx: 3
+        };
+      } else if (Q < pts.qD) {
+        // Region 4: Boiling / Vaporization (Boiling Point)
+        const T = 100.0;
+        const vaporFraction = (Q - pts.qC) / (pts.qD - pts.qC);
+        return {
+          T,
+          phase: 'boiling',
+          desc: `กำลังเดือดกลายเป็นไอ อุณหภูมิคงตัวที่ 100.0 °C (กลายเป็นไอแล้ว ${(vaporFraction * 100).toFixed(0)}%)`,
+          formula: `Q = m L_v`,
+          calc: `Q_{vapor} = m_{vapor} \times 2256\text{ kJ}`,
+          activeIdx: 4
+        };
+      } else {
+        // Region 5: Steam (Superheated Vapor)
+        const T = 100.0 + Math.min(20, (Q - pts.qD) / (m * C_STEAM));
+        return {
+          T,
+          phase: 'steam',
+          desc: `แก๊ส (ไอน้ำ) กำลังทำอุณหภูมิขึ้นจาก 100.0 °C เป็นต้นไป`,
+          formula: `Q = m c_{steam} \Delta T`,
+          calc: `Q = ${m.toFixed(1)} \times 2.0 \times (t - 100)`,
+          activeIdx: 5
+        };
+      }
+    }
+
+    function renderLatentFormulaBox(state) {
+      const box = document.getElementById('sim-latent-formula-box');
+      if (!box) return;
+
+      const f1 = state.activeIdx === 1 || state.activeIdx === 3 || state.activeIdx === 5;
+      const f2 = state.activeIdx === 2 || state.activeIdx === 4;
+
+      box.innerHTML = `
+        <div class="p-2.5 rounded-lg border ${f1 ? 'bg-orange-500/20 border-orange-400 font-bold' : 'opacity-50 border-transparent'} text-xs">
+          <span>สูตรเปลี่ยนอุณหภูมิ (อุณหภูมิเปลี่ยน):</span>
+          <p class="font-sans font-bold text-cyan-300">\\(Q = m c \Delta T\\)</p>
+        </div>
+        <div class="p-2.5 rounded-lg border ${f2 ? 'bg-rose-500/20 border-rose-400 font-bold' : 'opacity-50 border-transparent'} text-xs">
+          <span>สูตรเปลี่ยนสถานะ (อุณหภูมิคงตัว):</span>
+          <p class="font-sans font-bold text-cyan-300">\\(Q = m L\\)</p>
+        </div>
+        <div class="text-[11px] font-mono text-purple-200 mt-1">
+          แทนค่าคำนวณสดในสถานะปัจจุบัน: \\(${state.calc}\\)
+        </div>
+      `;
+      renderMath();
+    }
+
+    function drawLatentSim(m, Q) {
+      const state = getLatentState(m, Q);
+
+      // Update UI readings
+      document.getElementById('lbl-sim-latent-q').innerText = `${Math.round(Q)} kJ`;
+      document.getElementById('lbl-sim-latent-phase-desc').innerText = state.desc;
+
+      renderLatentFormulaBox(state);
+
+      // 1. Draw Graph SVG
+      const graph = document.getElementById('sim-latent-graph-svg');
+      if (graph) {
+        const pts = getLatentPoints(m);
+        // Graph coordinates mapping:
+        // x-axis: Q from 0 to pts.qE
+        // y-axis: T from -30 to 130
+        const padX = 25, padY = 20;
+        const gw = 180, gh = 120;
+
+        const getGX = (qVal) => padX + (qVal / pts.qE) * gw;
+        const getGY = (tVal) => padY + gh - ((tVal - (-30)) / 160) * gh;
+
+        const gA = { x: getGX(pts.qA), y: getGY(0.0) };
+        const gB = { x: getGX(pts.qB), y: getGY(0.0) };
+        const gC = { x: getGX(pts.qC), y: getGY(100.0) };
+        const gD = { x: getGX(pts.qD), y: getGY(100.0) };
+        const gE = { x: getGX(pts.qE), y: getGY(120.0) };
+        const gStart = { x: getGX(0.0), y: getGY(-20.0) };
+
+        const curX = getGX(Q);
+        const curY = getGY(state.T);
+
+        graph.innerHTML = `
+          <svg viewBox="0 0 230 160" class="w-full h-auto">
+            <!-- Grid Axes -->
+            <line x1="${padX}" y1="${padY}" x2="${padX}" y2="${padY + gh}" stroke="#475569" stroke-width="1.5"/>
+            <line x1="${padX}" y1="${padY + gh}" x2="${padX + gw}" y2="${padY + gh}" stroke="#475569" stroke-width="1.5"/>
+            <text x="${padX + gw}" y="${padY + gh + 10}" fill="#94a3b8" font-size="7" text-anchor="end">พลังงานความร้อน Q (kJ)</text>
+            <text x="${padX - 5}" y="${padY - 5}" fill="#94a3b8" font-size="7">T (°C)</text>
+            
+            <!-- Axis Labels -->
+            <text x="${padX - 5}" y="${getGY(120.0) + 2.5}" fill="#94a3b8" font-size="6" text-anchor="end">120</text>
+            <text x="${padX - 5}" y="${getGY(100.0) + 2.5}" fill="#ef4444" font-size="6" text-anchor="end" font-weight="bold">100</text>
+            <text x="${padX - 5}" y="${getGY(0.0) + 2.5}" fill="#3b82f6" font-size="6" text-anchor="end" font-weight="bold">0</text>
+            <text x="${padX - 5}" y="${getGY(-20.0) + 2.5}" fill="#94a3b8" font-size="6" text-anchor="end">-20</text>
+            
+            <!-- Axis dashed reference lines -->
+            <line x1="${padX}" y1="${getGY(100.0)}" x2="${gD.x}" y2="${getGY(100.0)}" stroke="#475569" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <line x1="${padX}" y1="${getGY(0.0)}" x2="${gB.x}" y2="${getGY(0.0)}" stroke="#475569" stroke-width="0.5" stroke-dasharray="2 2"/>
+            
+            <!-- Curve Path -->
+            <path d="M ${gStart.x},${gStart.y} L ${gA.x},${gA.y} L ${gB.x},${gB.y} L ${gC.x},${gC.y} L ${gD.x},${gD.y} L ${gE.x},${gE.y}" 
+              fill="none" stroke="#f43f5e" stroke-width="2.5"/>
+            
+            <!-- Active State Dot -->
+            <line x1="${curX}" y1="${curY}" x2="${curX}" y2="${padY + gh}" stroke="#ffffff" stroke-width="0.75" stroke-dasharray="2 2" opacity="0.6"/>
+            <line x1="${padX}" y1="${curY}" x2="${curX}" y2="${curY}" stroke="#ffffff" stroke-width="0.75" stroke-dasharray="2 2" opacity="0.6"/>
+            
+            <circle cx="${curX}" cy="${curY}" r="4" fill="#fff" stroke="#f43f5e" stroke-width="2">
+              <animate attributeName="r" values="3.5;5;3.5" dur="1s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Scale Annotations -->
+            <text x="${gA.x}" y="${padY + gh + 8}" fill="#94a3b8" font-size="5" text-anchor="middle">${Math.round(pts.qA)}</text>
+            <text x="${gB.x}" y="${padY + gh + 8}" fill="#94a3b8" font-size="5" text-anchor="middle">${Math.round(pts.qB)}</text>
+            <text x="${gC.x}" y="${padY + gh + 8}" fill="#94a3b8" font-size="5" text-anchor="middle">${Math.round(pts.qC)}</text>
+            <text x="${gD.x}" y="${padY + gh + 8}" fill="#94a3b8" font-size="5" text-anchor="middle">${Math.round(pts.qD)}</text>
+          </svg>
+        `;
+      }
+
+      // 2. Draw Beaker Graphic SVG
+      const beaker = document.getElementById('sim-latent-beaker-svg');
+      if (beaker) {
+        let contentsHTML = '';
+        const pts = getLatentPoints(m);
+
+        const opacityFlame = latentIsHeating && Q < pts.qD ? 0.7 + Math.sin(Date.now() / 80) * 0.3 : 0.05;
+
+        if (state.phase === 'ice') {
+          // Ice Block
+          contentsHTML = `<rect x="60" y="105" width="40" height="40" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <text x="80" y="128" fill="#0369a1" font-size="8" font-weight="bold" text-anchor="middle">น้ำแข็ง (${state.T.toFixed(1)}°C)</text>`;
+        } else if (state.phase === 'melting') {
+          // Ice melting in water
+          const meltFrac = (Q - pts.qA) / (pts.qB - pts.qA);
+          const iceSize = 40 * (1 - meltFrac * 0.7);
+          contentsHTML = `
+            <!-- Water Level -->
+            <rect x="52" y="115" width="56" height="32" fill="#38bdf8" opacity="0.6" rx="2"/>
+            <!-- Ice Shrunk Block -->
+            <rect x="${80 - iceSize / 2}" y="${147 - iceSize}" width="${iceSize}" height="${iceSize}" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5" rx="3"/>
+            <text x="80" y="110" fill="#ffffff" font-size="7" font-weight="bold" text-anchor="middle">กำลังหลอมเหลว (0°C)</text>
+          `;
+        } else if (state.phase === 'water') {
+          // Liquid Water Heating
+          const tempFrac = (state.T) / 100.0;
+          const r = Math.round(56 + tempFrac * (220 - 56));
+          const b = Math.round(246 - tempFrac * (246 - 80));
+          const color = `rgb(${r}, 130, ${b})`;
+
+          contentsHTML = `
+            <rect x="52" y="105" width="56" height="42" fill="${color}" opacity="0.8" rx="2"/>
+            <text x="80" y="128" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">น้ำ (${state.T.toFixed(1)}°C)</text>
+          `;
+        } else if (state.phase === 'boiling') {
+          // Boiling water with bubbles and vapour
+          const vaporFrac = (Q - pts.qC) / (pts.qD - pts.qC);
+          const waterHeight = Math.max(10, 42 * (1 - vaporFrac * 0.8));
+
+          contentsHTML = `
+            <!-- Vapour waves -->
+            <path d="M 65 90 Q 70 80 65 70" stroke="#cbd5e1" stroke-width="2" fill="none" opacity="0.7"><animate attributeName="d" dur="0.8s" repeatCount="indefinite" values="M 65 90 Q 70 80 65 70; M 70 90 Q 65 80 70 70"/></path>
+            <path d="M 80 85 Q 85 75 80 65" stroke="#cbd5e1" stroke-width="2" fill="none" opacity="0.7"><animate attributeName="d" dur="0.9s" repeatCount="indefinite" values="M 80 85 Q 85 75 80 65; M 85 85 Q 80 75 85 65"/></path>
+            <path d="M 95 90 Q 90 80 95 70" stroke="#cbd5e1" stroke-width="2" fill="none" opacity="0.7"><animate attributeName="d" dur="0.7s" repeatCount="indefinite" values="M 95 90 Q 90 80 95 70; M 90 90 Q 95 80 90 70"/></path>
+            
+            <!-- Water Level -->
+            <rect x="52" y="${147 - waterHeight}" width="56" height="${waterHeight}" fill="#ea580c" opacity="0.8" rx="1"/>
+            
+            <!-- Bubbles -->
+            <circle cx="62" cy="130" r="2.5" fill="#fff" opacity="0.6"><animate attributeName="cy" dur="0.5s" repeatCount="indefinite" values="140;110"/></circle>
+            <circle cx="80" cy="135" r="3" fill="#fff" opacity="0.7"><animate attributeName="cy" dur="0.7s" repeatCount="indefinite" values="140;110"/></circle>
+            <circle cx="98" cy="128" r="2" fill="#fff" opacity="0.8"><animate attributeName="cy" dur="0.4s" repeatCount="indefinite" values="140;110"/></circle>
+            
+            <text x="80" y="145" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle" opacity="0.9">น้ำเดือด (100°C)</text>
+          `;
+        } else {
+          // Superheated Steam
+          contentsHTML = `
+            <!-- Dense steam cloud -->
+            <ellipse cx="80" cy="95" rx="30" ry="20" fill="#f1f5f9" opacity="0.5"/>
+            <path d="M 55 60 Q 80 40 105 60" stroke="#e2e8f0" stroke-width="3" fill="none" opacity="0.6">
+              <animate attributeName="d" dur="0.6s" repeatCount="indefinite" values="M 55 60 Q 80 40 105 60; M 50 60 Q 80 50 110 60"/>
+            </path>
+            <text x="80" y="98" fill="#334155" font-size="8" font-weight="bold" text-anchor="middle">ไอน้ำ (${state.T.toFixed(1)}°C)</text>
+          `;
+        }
+
+        beaker.innerHTML = `
+          <svg viewBox="0 0 160 200" class="h-44 w-auto">
+            <!-- Flame -->
+            <path d="M 72 175 Q 80 150 84 160 Q 88 155 88 175 Z" fill="#ff7a70" opacity="${opacityFlame}">
+              <animate attributeName="d" dur="0.4s" repeatCount="indefinite"
+                values="M 72 175 Q 80 150 84 160 Q 88 155 88 175 Z; M 70 175 Q 80 145 86 162 Q 90 148 90 175 Z; M 72 175 Q 80 150 84 160 Q 88 155 88 175 Z"/>
+            </path>
+            <path d="M 76 175 Q 80 160 81 163 Q 83 162 84 175 Z" fill="#ffcf5a" opacity="${opacityFlame}"/>
+            
+            <!-- Burner base -->
+            <rect x="65" y="175" width="30" height="15" fill="#475569" rx="2"/>
+            
+            <!-- Stand Wire mesh -->
+            <line x1="40" y1="150" x2="120" y2="150" stroke="#94a3b8" stroke-width="3"/>
+            <line x1="50" y1="150" x2="35" y2="190" stroke="#64748b" stroke-width="3"/>
+            <line x1="110" y1="150" x2="125" y2="190" stroke="#64748b" stroke-width="3"/>
+            
+            <!-- Beaker Glass outline -->
+            <rect x="50" y="70" width="60" height="80" fill="none" stroke="#e2e8f0" stroke-width="2.5" rx="3"/>
+            
+            ${contentsHTML}
+          </svg>
+        `;
+      }
+    }
+
+    function initLatentSimulator() {
+      const sliderM = document.getElementById('sim-latent-slider-m');
+      const sliderQ = document.getElementById('sim-latent-slider-q');
+
+      const update = () => {
+        const m = parseFloat(sliderM.value);
+
+        // Dynamically adjust slider Q maximum to fit the mass
+        // Total energy at point E is Q_E = 3089.6 * m
+        const pts = getLatentPoints(m);
+        const qMax = Math.round(pts.qE);
+        sliderQ.max = qMax;
+
+        const Q = parseFloat(sliderQ.value);
+
+        document.getElementById('lbl-sim-latent-m').innerText = `${m.toFixed(1)} kg`;
+
+        drawLatentSim(m, Q);
+      };
+
+      sliderM.oninput = () => {
+        // Adjust current slider value proportionally to mass to avoid overflow errors
+        const oldM = parseFloat(sliderM.defaultValue || 0.5);
+        const currentQ = parseFloat(sliderQ.value);
+        const ratio = sliderM.value / oldM;
+        sliderQ.value = Math.min(Math.round(3089.6 * sliderM.value), Math.round(currentQ * ratio));
+        sliderM.defaultValue = sliderM.value;
+        update();
+      };
+
+      sliderQ.oninput = update;
+
+      update();
+    }
+
+    function playLatentSim() {
+      if (latentIsHeating) {
+        latentIsHeating = false;
+        const btn = document.getElementById('btn-latent-play');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-play"></i> เล่นจำลองจ่ายความร้อน';
+        return;
+      }
+
+      latentIsHeating = true;
+      latentLastTime = performance.now();
+      const btn = document.getElementById('btn-latent-play');
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-pause"></i> หยุดชั่วคราว';
+
+      const sliderM = document.getElementById('sim-latent-slider-m');
+      const sliderQ = document.getElementById('sim-latent-slider-q');
+
+      const loop = (time) => {
+        if (!latentIsHeating) return;
+        const dt = (time - latentLastTime) / 1000;
+        latentLastTime = time;
+
+        const m = parseFloat(sliderM.value);
+        const pts = getLatentPoints(m);
+        let currentQ = parseFloat(sliderQ.value);
+
+        // Increase Q: complete the full curve in 12 seconds
+        currentQ += (pts.qE / 12.0) * dt;
+
+        if (currentQ >= pts.qE) {
+          currentQ = pts.qE;
+          latentIsHeating = false;
+          if (btn) btn.innerHTML = '<i class="fa-solid fa-play"></i> จบการจำลอง (เล่นใหม่)';
+        }
+
+        sliderQ.value = Math.round(currentQ);
+        drawLatentSim(m, currentQ);
+
+        if (latentIsHeating) latentAnimFrame = requestAnimationFrame(loop);
+      };
+
+      if (latentAnimFrame) cancelAnimationFrame(latentAnimFrame);
+      latentAnimFrame = requestAnimationFrame(loop);
+    }
+
+    function resetLatentSim() {
+      latentIsHeating = false;
+      cancelAnimationFrame(latentAnimFrame);
+      const btn = document.getElementById('btn-latent-play');
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-play"></i> เล่นจำลองจ่ายความร้อน';
+
+      const sliderQ = document.getElementById('sim-latent-slider-q');
+      if (sliderQ) sliderQ.value = 0;
+
+      initLatentSimulator();
+    }
+    // ============================================================================
+    // [ปรับปรุง] ส่วนของการจัดการสุ่มแบบจำประวัติไม่ซ้ำ (Unique Random) และการสุ่มแบบใช้ Seed ตามเลขที่ผู้เรียน
+    // ============================================================================
+
+    // คลาสจัดการการสุ่มแบบปกติ (Math.random) ที่มีการเก็บประวัติเพื่อป้องกันตัวเลขสุ่มซ้ำในการสร้างโจทย์แต่ละครั้ง
+    class NormalRNG {
+      constructor() {
+        this.history = {}; // เก็บชุดข้อมูลของพารามิเตอร์ที่สุ่มไปแล้ว แยกตาม ID ของโจทย์เพื่อป้องกันไม่ให้เจอปุ่มเดิมซ้ำๆ
+      }
+
+      random() {
+        return Math.random();
+      }
+
+      choice(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      // ตรวจสอบว่าพารามิเตอร์ชุดนี้เคยสุ่มเจอแล้วหรือไม่
+      hasGenerated(id, paramStr) {
+        return this.history[id] && this.history[id].includes(paramStr);
+      }
+
+      // บันทึกประวัติการสุ่ม
+      recordGeneration(id, paramStr, limit = 10) {
+        if (!this.history[id]) {
+          this.history[id] = [];
+        }
+        this.history[id].push(paramStr);
+        if (this.history[id].length > limit) {
+          this.history[id].shift(); // ลบข้อมูลสุ่มที่เก่าที่สุดออก
+        }
+      }
+    }
+
+    // คลาสจัดการการสุ่มแบบกำหนดค่าเริ่มต้น (Seeded Random Number Generator) ตามเลขที่ผู้เรียน
+    class SeededRNG {
+      constructor(seedStr) {
+        let hash = 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          hash = (hash * 31 + seedStr.charCodeAt(i)) | 0;
+        }
+        this.seed = hash;
+        if (this.seed === 0) this.seed = 1; // หลีกเลี่ยงค่า seed เป็น 0
+        this.history = {}; // สำหรับการทำสุ่มแบบไม่ซ้ำภายใน session นี้
+      }
+
+      // อัลกอริทึม Mulberry32 สำหรับใช้ในการสุ่มแบบ Seeded
+      random() {
+        let t = this.seed += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      }
+
+      choice(arr) {
+        return arr[Math.floor(this.random() * arr.length)];
+      }
+
+      // สลับลำดับสมาชิกในอาเรย์อย่างสม่ำเสมอตาม Seed
+      shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(this.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      hasGenerated(id, paramStr) {
+        return this.history[id] && this.history[id].includes(paramStr);
+      }
+
+      recordGeneration(id, paramStr, limit = 10) {
+        if (!this.history[id]) {
+          this.history[id] = [];
+        }
+        this.history[id].push(paramStr);
+        if (this.history[id].length > limit) {
+          this.history[id].shift();
+        }
+      }
+    }
+
+    // สร้างอ็อบเจ็กต์สุ่มปกติสำหรับโหมดฝึกฝน (Practice)
+    const practiceRNG = new NormalRNG();
+
+    // ฟังก์ชันตัวช่วยในการสร้างโจทย์และรับประกันความไม่ซ้ำกันของตัวสุ่มพารามิเตอร์
+    function generateQuestionInstance(template, rng) {
+      if (!rng) return template.generate(null); // กรณีใช้คู่มือครู (สุ่มธรรมดาแบบกำหนดค่าคงที่)
+      let instance;
+      let attempts = 0;
+      const maxAttempts = 100;
+
+      while (attempts < maxAttempts) {
+        instance = template.generate(rng);
+        const paramStr = JSON.stringify(instance.params);
+
+        // ถ้ายังไม่เคยถูกสร้าง ให้บันทึกลงประวัติและส่งผลลัพธ์กลับทันที
+        if (!rng.hasGenerated(template.id, paramStr)) {
+          rng.recordGeneration(template.id, paramStr, 15);
+          break;
+        }
+        attempts++;
+      }
+      return instance;
+    }
+
+    const QUESTION_TEMPLATES = [
+      {
+        id: '16_1_1_q1_concept', topic: '16.1.1', type: 'choice',
+        title: 'เปรียบเทียบขนาดช่วงสเกลอุณหภูมิ (ตรวจสอบความเข้าใจ 16.1 ข้อ 1)',
+        choices: [
+          'ช่วงสเกลอุณหภูมิในหน่วยเคลวินมีค่าเท่ากับช่วงสเกลอุณหภูมิในหน่วยองศาเซลเซียส',
+          'สเกลเคลวินเริ่มต้นที่ศูนย์สัมบูรณ์เหมือนกับองศาเซลเซียส',
+          'ทั้งสองหน่วยวัดระดับความร้อนของวัตถุคนละระดับกันโดยสิ้นเชิง',
+          'อัตราการเปลี่ยนแปลงพลังงานจลน์เฉลี่ยของแก๊สมีค่าคงที่ตามสเกลเซลเซียส'
+        ],
+        text: () => `เหตุใดอุณหภูมิที่เปลี่ยนไปในหน่วยเคลวินจึงมีค่าเท่ากับอุณหภูมิที่เปลี่ยนไปในหน่วยองศาเซลเซียส`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ช่วงสเกลอุณหภูมิในหน่วยเคลวินมีค่าเท่ากับช่วงสเกลอุณหภูมิในหน่วยองศาเซลเซียส'], answersRaw: [0],
+            explanation: () => `เนื่องจากช่วงสเกลอุณหภูมิ 1 เคลวิน (\\(\\Delta T = 1\\text{ K}\\)) มีขนาดเท่ากับช่วงสเกล 1 องศาเซลเซียส (\\(\\Delta t = 1\\ ^\\circ\\text{C}\\)) พอดี (เพราะช่วงสเกลระหว่างจุดเยือกแข็งและจุดเดือดของน้ำแบ่งเป็น 100 ส่วนเท่ากันทั้งคู่) ดังนั้นการเปลี่ยนแปลงอุณหภูมิในทั้งสองหน่วยจึงมีค่าเท่ากันเสมอนั่นเอง`
+          };
+        }
+      },
+      {
+        id: '16_1_1_q2_celsius_to_kelvin', topic: '16.1.1', type: 'numeric_single',
+        title: 'การแปลงองศาเซลเซียสเป็นเคลวิน (แบบฝึกหัด 16.1 ข้อ 1ก)',
+        inputs: [{ label: 'อุณหภูมิในหน่วยเคลวิน (K):' }],
+        text: (p) => `จงแปลงอุณหภูมิ \\(${p.t}\\ ^\\circ\\text{C}\\) เป็นอุณหภูมิในหน่วยเคลวิน (K)`,
+        generate: (rng) => {
+          const values = [30, -10, 110, 12.15];
+          const t = rng ? roundHalfEven(-150 + rng.random() * 550, 2) : values[Math.floor(Math.random() * values.length)];
+          const T = t + 273.15;
+          return {
+            params: { t }, answers: [T.toFixed(2), roundHalfEven(T, 1).toString(), Math.round(T).toString()], answersRaw: [T],
+            explanation: () => `จากสูตรการแปลงหน่วยอุณหภูมิ: \\(T = t + 273.15\\) จะได้ \\(T = ${t} + 273.15 = ${T.toFixed(2)}\\text{ K}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_1_q3_kelvin_to_celsius', topic: '16.1.1', type: 'numeric_single',
+        title: 'การแปลงเคลวินเป็นองศาเซลเซียส (แบบฝึกหัด 16.1 ข้อ 1ข)',
+        inputs: [{ label: 'อุณหภูมิในหน่วยองศาเซลเซียส (°C):' }],
+        text: (p) => `จงแปลงอุณหภูมิ \\(${p.T}\\text{ K}\\) เป็นอุณหภูมิในหน่วยองศาเซลเซียส (องศาเซลเซียส)`,
+        generate: (rng) => {
+          const values = [30, 250, 330, 373.15];
+          const T = rng ? roundHalfEven(5 + rng.random() * 600, 2) : values[Math.floor(Math.random() * values.length)];
+          const t = T - 273.15;
+          return {
+            params: { T }, answers: [t.toFixed(2), roundHalfEven(t, 1).toString(), Math.round(t).toString()], answersRaw: [t],
+            explanation: () => `จากสูตรการแปลงหน่วยอุณหภูมิ: \\(t = T - 273.15\\) จะได้ \\(t = ${T} - 273.15 = ${t.toFixed(2)}\\ ^\\circ\\text{C}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_1_q4_concept_diff', topic: '16.1.1', type: 'choice',
+        title: 'ความเหมือนและความแตกต่างของสเกลอุณหภูมิ (แบบฝึกหัดท้ายบท ข้อ 1)',
+        choices: [
+          'เหมือนกันที่แบ่งช่วงระหว่างจุดเยือกแข็งและจุดเดือดของน้ำเป็น 100 ส่วนเท่ากัน แต่ต่างกันที่จุดอ้างอิงเริ่มต้น',
+          'เหมือนกันที่เริ่มวัดจากศูนย์สัมบูรณ์เหมือนกัน แต่ต่างกันที่จำนวนช่องแบ่งสเกลของน้ำเดือด',
+          'เหมือนกันที่มีอุณหภูมิจุดเยือกแข็งของน้ำที่ค่าศูนย์เหมือนกัน แต่ต่างกันที่ขนาด 1 สเกล',
+          'ไม่มีความเหมือนกันเนื่องจากเซลเซียสเป็นหน่วยดั้งเดิมและเคลวินเป็นหน่วยเอสไอ'
+        ],
+        text: () => `จงอธิบายความเหมือนและความแตกต่างระหว่างสเกลเซลเซียสและสเกลเคลวิน`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['เหมือนกันที่แบ่งช่วงระหว่างจุดเยือกแข็งและจุดเดือดของน้ำเป็น 100 ส่วนเท่ากัน แต่ต่างกันที่จุดอ้างอิงเริ่มต้น'], answersRaw: [0],
+            explanation: () => `สเกลเซลเซียสและสเกลเคลวินมีความเหมือนกันคือ ใช้จุดเยือกแข็งและจุดเดือดของน้ำ (ที่ความดัน 1 บรรยากาศ) เป็นจุดอ้างอิง และแบ่งช่วงอุณหภูมินี้ออกเป็น 100 ส่วนเท่ากันเหมือนกัน แต่จุดต่างคือจุดเริ่มต้นอ้างอิง โดยสเกลเซลเซียสกำหนดจุดเยือกแข็งที่ \\(0\\ ^\\circ\\text{C}\\) และจุดเดือดที่ \\(100\\ ^\\circ\\text{C}\\) ส่วนสเกลเคลวินกำหนดจุดเยือกแข็งที่ \\(273.15\\text{ K}\\) และจุดเดือดที่ \\(373.15\\text{ K}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_2_q1_concept', topic: '16.1.2', type: 'choice',
+        title: 'ความแตกต่างระหว่างความจุความร้อนกับความร้อนจำเพาะ (ตรวจสอบความเข้าใจ 16.1 ข้อ 2)',
+        choices: [
+          'ไม่เหมือนกัน โดยความจุความร้อนขึ้นกับมวลของวัตถุ ส่วนความร้อนจำเพาะเป็นสมบัติเฉพาะตัวไม่ขึ้นกับมวล',
+          'เหมือนกันทุกประการ โดยทั้งสองมีค่าคงตัวสำหรับวัตถุชนิดเดียวกันโดยไม่แปรเปลี่ยนตามขนาดหรือมวล',
+          'ไม่เหมือนกัน โดยความจุความร้อนใช้กับการเปลี่ยนสถานะ ส่วนความร้อนจำเพาะใช้กับการเปลี่ยนอุณหภูมิ',
+          'ไม่เหมือนกัน โดยความจุความร้อนวัดในหน่วยจูลต่อกิโลกรัม ส่วนความร้อนจำเพาะวัดในหน่วยจูลต่อเคลวิน'
+        ],
+        text: () => `ความจุความร้อนและความร้อนจำเพาะเหมือนกันหรือไม่ อย่างไร`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ไม่เหมือนกัน โดยความจุความร้อนขึ้นกับมวลของวัตถุ ส่วนความร้อนจำเพาะเป็นสมบัติเฉพาะตัวไม่ขึ้นกับมวล'], answersRaw: [0],
+            explanation: () => `ไม่เหมือนกัน โดยที่ **ความจุความร้อน (\\(C\\))** คือ อัตราส่วนระหว่างความร้อนที่ให้แก่วัตถุต่อนุณหภูมิที่เพิ่มขึ้น (\\(Q/\\Delta T\\)) ซึ่งจะมีค่าไม่คงตัว ขึ้นอยู่กับมวลของวัตถุชิ้นนั้นๆ ส่วน **ความร้อนจำเพาะ (\\(c\\))** คือ ความจุความร้อนต่อหนึ่งหน่วยมวล (\\(C/m = Q/(m\\Delta T)\\)) ซึ่งจะมีค่าคงตัวเป็นสมบัติเฉพาะตัวของสารแต่ละชนิด ไม่ขึ้นกับมวล`
+          };
+        }
+      },
+      {
+        id: '16_1_2_q2_metal_specific_heat', topic: '16.1.2', type: 'numeric_double',
+        title: 'การหาความจุความร้อนและความร้อนจำเพาะ (แบบฝึกหัด 16.1 ข้อ 2)',
+        inputs: [{ label: 'ความจุความร้อน C (J/K):' }, { label: 'ความร้อนจำเพาะ c (J/kg·K):' }],
+        text: (p) => `โลหะชนิดหนึ่งมวล \\(${p.m}\text{ kg}\\) ได้รับความร้อน \\(${p.Q}\text{ J}\\) ทำให้อุณหภูมิเปลี่ยนจาก \\(${p.T1}\ ^\circ\text{C}\\) เป็น \\(${p.T2}\ ^\circ\text{C}\\) จงหาความจุความร้อน (ในหน่วย J/K) และความร้อนจำเพาะของโลหะนี้ (ในหน่วย J/kg K)`,
+        generate: (rng) => {
+          const m = rng ? roundHalfEven(1.0 + rng.random() * 4.0, 1) : 2.0;
+          const Q = rng ? Math.round(1000 + rng.random() * 9000) : 2500;
+          const T1 = rng ? Math.round(15 + rng.random() * 15) : 25;
+          const dT = rng ? Math.round(10 + rng.random() * 30) : 20;
+          const T2 = T1 + dT;
+          const C = Q / dT;
+          const c = C / m;
+          return {
+            params: { m, Q, T1, T2 }, answers: [C.toFixed(1), c.toFixed(1)], answersRaw: [C, c],
+            explanation: () => `หาความจุความร้อน \\(C = \frac{Q}{\Delta T} = \frac{${Q}}{${T2} - ${T1}} = \frac{${Q}}{${dT}} = ${C.toFixed(1)}\text{ J/K}\\) (หรือ J/°C)<br>หาความร้อนจำเพาะ \\(c = \frac{C}{m} = \frac{${C.toFixed(1)}}{${m}} = ${c.toFixed(1)}\text{ J/(kg K)}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_2_q3_heat_capacity_concept', topic: '16.1.2', type: 'choice',
+        title: 'ความจุความร้อนและจำเพาะของเหล็ก 2 มวล (แบบฝึกหัดท้ายบท ข้อ 3)',
+        choices: [
+          'ความร้อนจำเพาะเท่ากัน แต่แท่งเหล็กมวล 2 kg มีความจุความร้อนมากกว่าแท่งมวล 1 kg เป็น 2 เท่า',
+          'ความจุความร้อนเท่ากัน แต่แท่งเหล็กมวล 2 kg มีความร้อนจำเพาะมากกว่าแท่งมวล 1 kg เป็น 2 เท่า',
+          'ทั้งความจุความร้อนและความร้อนจำเพาะมีค่าเท่ากัน เนื่องจากทำจากเหล็กชนิดเดียวกัน',
+          'ต่างกันหมดทุกประการ โดยแท่งเหล็กมวล 1 kg จะมีค่าสูงกว่าในทั้งสองปริมาณ'
+        ],
+        text: () => `แท่งเหล็กมวล 1 กิโลกรัม และ 2 กิโลกรัม มีความจุความร้อนและความร้อนจำเพาะเท่ากันหรือต่างกัน อย่างไร`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ความร้อนจำเพาะเท่ากัน แต่แท่งเหล็กมวล 2 kg มีความจุความร้อนมากกว่าแท่งมวล 1 kg เป็น 2 เท่า'], answersRaw: [0],
+            explanation: () => `แท่งเหล็กมวล \\(2\\text{ kg}\\) มีความจุความร้อนมากกว่าแท่งเหล็กมวล \\(1\\text{ kg}\\) เพราะการทำให้อุณหภูมิของวัตถุที่มีมวลมากร้อนขึ้น \\(1\\text{ K}\\) ต้องให้ความร้อนแก่สารมากกว่าตามปริมาณมวล (\\(C = mc\\)) ขณะที่ **ความร้อนจำเพาะ (\\(c\\))** มีค่าเท่ากันเพราะเป็นสมบัติเฉพาะของเนื้อเหล็ก (\\(c = 450\\text{ J/(kg K)}\\))`
+          };
+        }
+      },
+      {
+        id: '16_1_2_q4_beach_sand_water', topic: '16.1.2', type: 'choice',
+        title: 'เปรียบเทียบอุณหภูมิทรายและน้ำทะเล (แบบฝึกหัดท้ายบท ข้อ 4)',
+        choices: [
+          'ทรายมีความร้อนจำเพาะน้อยกว่าน้ำมาก ทำให้อุณหภูมิของทรายสูงขึ้นเร็วกว่าน้ำเมื่อได้ความร้อนเท่ากัน',
+          'น้ำมีความร้อนจำเพาะน้อยกว่าทราย จึงดูดความร้อนได้ช้ากว่าทำให้อุณหภูมิขึ้นช้า',
+          'ทรายทำปฏิกิริยาเคมีกับรังสีจากแสงอาทิตย์ทำให้เกิดพลังงานความร้อนเพิ่มเติม',
+          'น้ำทะเลมีความจุความร้อนต่ำกว่าทรายจึงระบายความร้อนออกสู่อากาศได้อย่างรวดเร็ว'
+        ],
+        text: () => `บริเวณชายหาด ทั้งบริเวณที่เป็นพื้นทรายและน้ำทะเลได้รับแสงอาทิตย์เท่ากัน แต่ทรายกลับมีอุณหภูมิสูงกว่าน้ำทะเล เป็นเพราะเหตุใด`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ทรายมีความร้อนจำเพาะน้อยกว่าน้ำมาก ทำให้อุณหภูมิของทรายสูงขึ้นเร็วกว่าน้ำเมื่อได้ความร้อนเท่ากัน'], answersRaw: [0],
+            explanation: () => `เนื่องจากทรายมีความร้อนจำเพาะประมาณ \\(800\text{ J/(kg K)}\\) ในขณะที่น้ำมีความร้อนจำเพาะสูงถึง \\(4186\text{ J/(kg K)}\\) ซึ่งหมายความว่าการทำให้น้ำร้อนขึ้นต้องใช้ความร้อนมากกว่าทรายเกือบ 5 เท่า ดังนั้นเมื่อได้รับพลังงานความร้อนเท่ากัน ทรายจึงมีอุณหภูมิสูงขึ้นเร็วกว่าน้ำทะเลมาก`
+          };
+        }
+      },
+      {
+        id: '16_1_2_q5_pool_heat', topic: '16.1.2', type: 'numeric_single',
+        title: 'คำนวณปริมาณความร้อนน้ำในสระ (แบบฝึกหัดท้ายบท ปัญหา ข้อ 3)',
+        inputs: [{ label: 'ปริมาณความร้อนที่ได้รับ Q (J):' }],
+        text: (p) => `สระน้ำแห่งหนึ่งมีน้ำ \\(${p.m_display}\\text{ kg}\\) ในตอนกลางวันได้รับพลังงานความร้อนจากดวงอาทิตย์ ทำให้อุณหภูมิเฉลี่ยของน้ำในสระสูงขึ้น \\(${p.dT}\\ ^\\circ\\text{C}\\) น้ำในสระได้รับความร้อนกี่จูล (กำหนดความร้อนจำเพาะน้ำ \\(c = 4186\\text{ J/(kg K)}\\))`,
+        generate: (rng) => {
+          const m = rng ? (roundHalfEven(0.5 + rng.random() * 2.5, 2) * 1e6) : 1e6;
+          const dT = rng ? Math.round(1 + rng.random() * 4) : 2;
+          const c = 4186;
+          const Q = m * c * dT;
+          
+          let m_display = m.toExponential(2).replace('e+6', ' \\\\times 10^6');
+          if (m === 1e6) m_display = '1.00 \\\\times 10^6';
+          
+          return {
+            params: { m_display, dT }, answers: [Q.toExponential(2), Q.toString()], answersRaw: [Q],
+            explanation: () => `จากสูตร \\(Q = mc\\Delta T\\) แทนค่าจะได้ \\(Q = (${m_display}) \\times 4186 \\times ${dT} = ${formatSci(Q)}\\text{ J}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_3_q1_ice_melting_heat', topic: '16.1.3', type: 'numeric_single',
+        title: 'ความร้อนละลายน้ำแข็ง (แบบฝึกหัด 16.1 ข้อ 3)',
+        inputs: [{ label: 'ความร้อนที่ต้องใช้ Q (kJ):' }],
+        text: (p) => `จงหาความร้อนที่ทำให้น้ำแข็งมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) หลอมเหลวเป็นน้ำหมดที่อุณหภูมิ \\(0\ ^\circ\text{C}\\) (ในหน่วย kJ) กำหนดให้ความร้อนแฝงจำเพาะการหลอมเหลวของน้ำแข็ง \\(L_f = 3.33 \times 10^5\text{ J/kg}\\)`,
+        generate: (rng) => {
+          const m = rng ? roundHalfEven(0.5 + rng.random() * 9.5, 1) : 2.0;
+          const Lf = 3.33e5;
+          const Q = m * Lf;
+          const Q_kJ = Q / 1000;
+          return {
+            params: { m }, answers: [Q_kJ.toFixed(1), Math.round(Q_kJ).toString()], answersRaw: [Q_kJ],
+            explanation: () => `น้ำแข็งหลอมเหลวเป็นน้ำโดยไม่มีการเปลี่ยนอุณหภูมิ ความร้อนที่ใช้เปลี่ยนสถานะคือความร้อนแฝง \\(Q = mL_f = ${m} \times (3.33 \times 10^5) = ${Q.toFixed(0)}\text{ J} = ${Q_kJ.toFixed(1)}\text{ kJ}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_3_q2_ice_to_steam', topic: '16.1.3', type: 'numeric_single',
+        title: 'การทำน้ำ 0 °C เป็นไอน้ำ 100 °C (แบบฝึกหัด 16.1 ข้อ 4)',
+        inputs: [{ label: 'ความร้อนรวมที่ต้องใช้ Q (kJ):' }],
+        text: (p) => `การทำให้น้ำมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) กลายเป็นไอน้ำ \\(100\ ^\circ\text{C}\\) ทั้งหมด ต้องใช้ความร้อนกี่กิโลจูล (kJ) กำหนดความร้อนจำเพาะน้ำ \\(c = 4186\text{ J/(kg K)}\\) และความร้อนแฝงการกลายเป็นไอ \\(L_v = 22.56 \times 10^5\text{ J/kg}\\)`,
+        generate: (rng) => {
+          const m = rng ? roundHalfEven(0.1 + rng.random() * 2.9, 2) : 0.5;
+          const c = 4186;
+          const Lv = 22.56e5;
+          const Q1 = m * c * 100;
+          const Q2 = m * Lv;
+          const Q_tot = Q1 + Q2;
+          const Q_tot_kJ = Q_tot / 1000;
+          return {
+            params: { m }, answers: [Q_tot_kJ.toFixed(1), roundHalfEven(Q_tot_kJ, 1).toString()], answersRaw: [Q_tot_kJ],
+            explanation: () => `คำนวณแยก 2 ขั้นตอน:<br>1. ทำน้ำ \\(0\ ^\circ\text{C} \rightarrow 100\ ^\circ\text{C}\\) ใช้ \\(Q_1 = mc\Delta T = ${m} \times 4186 \times 100 = ${(Q1/1000).toFixed(1)}\text{ kJ}\\)<br>2. ทำน้ำ \\(100\ ^\circ\text{C} \rightarrow\\) ไอน้ำ \\(100\ ^\circ\text{C}\\) ใช้ \\(Q_2 = mL_v = ${m} \times (22.56 \times 10^5) = ${(Q2/1000).toFixed(1)}\text{ kJ}\\)<br>ความร้อนรวมทั้งหมด \\(Q = Q_1 + Q_2 = ${Q_tot_kJ.toFixed(1)}\text{ kJ}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_3_q3_latent_heat_vaporization', topic: '16.1.3', type: 'choice',
+        title: 'ความหมายของความร้อนแฝงจำเพาะของการกลายเป็นไอ (แบบฝึกหัดท้ายบท ข้อ 6)',
+        choices: [
+          'การทำให้น้ำมวล 1 กิโลกรัม ที่ 100 °C กลายเป็นไอน้ำเดือดทั้งหมดที่ 100 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล',
+          'การทำให้น้ำมวล 1 กิโลกรัม ที่ 0 °C กลายเป็นไอน้ำเดือดทั้งหมดที่ 100 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล',
+          'การทำให้น้ำแข็งมวล 1 กิโลกรัม ที่ 0 °C หลอมเหลวเป็นน้ำทั้งหมดที่ 0 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล',
+          'พลังงานที่สูญเสียไปเมื่อไอน้ำเดือด 1 กิโลกรัม แผ่รังสีความร้อนออกมาในสิ่งแวดล้อม'
+        ],
+        text: () => `น้ำมีความร้อนแฝงของการกลายเป็นไอเท่ากับ \\(2.256 \times 10^6\text{ J/kg}\\) หมายความว่าอย่างไร`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['การทำให้น้ำมวล 1 กิโลกรัม ที่ 100 °C กลายเป็นไอน้ำเดือดทั้งหมดที่ 100 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล'], answersRaw: [0],
+            explanation: () => `นิยามของความร้อนแฝงจำเพาะของการกลายเป็นไอคือ พลังงานที่ใช้ในการเปลี่ยนสถานะสารมวล 1 หน่วยจากของเหลวเป็นแก๊สโดยอุณหภูมิไม่เปลี่ยน ดังนั้น สำหรับน้ำจึงหมายความว่า น้ำเดือดมวล \\(1\text{ kg}\\) อุณหภูมิ \\(100\ ^\circ\text{C}\\) ต้องรับความร้อน \\(2.256 \times 10^6\text{ J}\\) เพื่อกลายเป็นไอน้ำหมดที่ \\(100\ ^\circ\text{C}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_3_q4_substance_x_state', topic: '16.1.3', type: 'choice',
+        title: 'การวิเคราะห์สถานะของสาร X (แบบฝึกหัดท้ายบท ข้อ 15)',
+        choices: [
+          'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของเหลว และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นแก๊ส',
+          'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของแข็ง และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นของเหลว',
+          'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของเหลว และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นของเหลว',
+          'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นแก๊ส และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นแก๊ส'
+        ],
+        text: () => `กำหนดคุณสมบัติของสาร x: จุดหลอมเหลว \\(-114\ ^\circ\text{C}\\), จุดเดือด \\(79\ ^\circ\text{C}\\) ที่อุณหภูมิห้องและที่จุดเดือดของน้ำ สาร x จะมีสถานะใดตามลำดับ`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของเหลว และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นแก๊ส'], answersRaw: [0],
+            explanation: () => `ที่อุณหภูมิห้อง (\\(25\ ^\circ\text{C}\\)) มีค่าอยู่ระหว่างจุดหลอมเหลว (\\(-114\ ^\circ\text{C}\\)) และจุดเดือด (\\(79\ ^\circ\text{C}\\)) สาร x จึงมีสถานะเป็นของเหลว และที่อุณหภูมิจุดเดือดของน้ำ (\\(100\ ^\circ\text{C}\\)) ซึ่งสูงกว่าจุดเดือดของสาร x (\\(79\ ^\circ\text{C}\\)) สาร x จึงเดือดกลายเป็นสถานะแก๊ส`
+          };
+        }
+      },
+      {
+        id: '16_1_3_q5_ice_to_steam_full', topic: '16.1.3', type: 'numeric_single',
+        title: 'ความร้อนทั้งหมดในการทำน้ำแข็งติดลบเป็นไอ (แบบฝึกหัดท้ายบท ปัญหา ข้อ 7)',
+        inputs: [{ label: 'ความร้อนรวมทั้งหมด (MJ):' }],
+        text: (p) => `ในการทำให้น้ำแข็งมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(${p.T_start}\ ^\circ\text{C}\\) เป็นไอน้ำเดือดหมดที่ \\(100\ ^\circ\text{C}\\) ต้องใช้ความร้อนทั้งหมดกี่ล้านจูล (MJ) (กำหนดความร้อนจำเพาะน้ำแข็ง \\(c_{\text{ice}} = 2100\text{ J/(kg K)}\\), น้ำ \\(c_{\text{water}} = 4186\text{ J/(kg K)}\\), \\(L_f = 3.33 \times 10^5\text{ J/kg}\\), \\(L_v = 2.256 \times 10^6\text{ J/kg}\\))`,
+        generate: (rng) => {
+          const m = rng ? roundHalfEven(0.5 + rng.random() * 2.5, 1) : 2.0;
+          const T_start = rng ? -Math.round(2 + rng.random() * 18) : -5;
+          
+          const c_ice = 2100;
+          const c_water = 4186;
+          const Lf = 3.33e5;
+          const Lv = 22.56e5;
+          
+          const Q1 = m * c_ice * (0 - T_start);
+          const Q2 = m * Lf;
+          const Q3 = m * c_water * 100;
+          const Q4 = m * Lv;
+          const Q_total_MJ = (Q1 + Q2 + Q3 + Q4) / 1e6;
+          
+          return {
+            params: { m, T_start }, answers: [Q_total_MJ.toFixed(2), Q_total_MJ.toFixed(1)], answersRaw: [Q_total_MJ],
+            explanation: () => `คำนวณแยก 4 ขั้นตอน:<br>1. อุ่นน้ำแข็งจาก \\(${T_start}\ ^\circ\text{C} \rightarrow 0\ ^\circ\text{C}\\) ใช้ \\(Q_1 = m c_{\text{ice}}\Delta T_1 = ${m} \times 2100 \times ${Math.abs(T_start)} = ${(Q1/1e6).toFixed(4)}\text{ MJ}\\)<br>2. ละลายน้ำแข็งหมด \\(Q_2 = mL_f = ${m} \times (3.33 \times 10^5) = ${(Q2/1e6).toFixed(4)}\text{ MJ}\\)<br>3. อุ่นน้ำจาก \\(0\ ^\circ\text{C} \rightarrow 100\ ^\circ\text{C}\\) ใช้ \\(Q_3 = m c_{\text{water}}\Delta T_3 = ${m} \times 4186 \times 100 = ${(Q3/1e6).toFixed(4)}\text{ MJ}\\)<br>4. ต้มน้ำกลายเป็นไอหมด \\(Q_4 = mL_v = ${m} \times (22.56 \times 10^5) = ${(Q4/1e6).toFixed(4)}\text{ MJ}\\)<br>ความร้อนรวมทั้งหมด \\(= Q_1+Q_2+Q_3+Q_4 = ${Q_total_MJ.toFixed(2)}\text{ MJ}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_4_q1_concept_transfer', topic: '16.1.4', type: 'choice',
+        title: 'การถ่ายโอนความร้อนในห้องครัว (ตรวจสอบความเข้าใจ 16.1 ข้อ 3)',
+        choices: [
+          'ผ่านการพาความร้อนโดยการหมุนเวียนอากาศ และการแผ่รังสีความร้อนจากเปลวไฟ',
+          'ผ่านการนำความร้อนของโมเลกุลอากาศเป็นหลัก เนื่องจากอากาศนำความร้อนได้ดีมาก',
+          'ผ่านแรงสั่นสะเทือนของเครื่องเรือนในห้องครัวส่งผ่านมายังร่างกาย',
+          'ผ่านรังสีเอกซ์และความถี่สนามแม่เหล็กไฟฟ้าเหนี่ยวนำ'
+        ],
+        text: () => `ในขณะที่ประกอบอาหารภายในห้องครัวโดยใช้ความร้อนจากเปลวไฟ เพราะเหตุใด คนที่อยู่ภายในครัวจึงรู้สึกว่าได้รับความร้อนจากเปลวไฟนั้น`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['ผ่านการพาความร้อนโดยการหมุนเวียนอากาศ และการแผ่รังสีความร้อนจากเปลวไฟ'], answersRaw: [0],
+            explanation: () => `ความร้อนจากเตาประกอบอาหารเคลื่อนที่มาถึงผิวหนังคนในห้องครัวผ่าน 2 ช่องทางหลัก: **การพาความร้อน (Convection)** โดยมีอากาศหมุนเวียนเป็นตัวพามวลความร้อนมา และ **การแผ่รังสีความร้อน (Radiation)** ในรูปของคลื่นรังสีอินฟราเรดแผ่ออกจากเปลวไฟและภาชนะต้มโดยตรง`
+          };
+        }
+      },
+      {
+        id: '16_1_4_q2_nail_in_water', topic: '16.1.4', type: 'choice',
+        title: 'การเข้าสู่สมดุลความร้อนของตะปูกลางน้ำ (ตรวจสอบความเข้าใจ 16.1 ข้อ 5)',
+        choices: [
+          'อุณหภูมิของน้ำจะเพิ่มขึ้น ตะปูจะลดลง และเมื่อเวลาผ่านไปนานๆ อุณหภูมิทั้งคู่จะเท่ากันคงที่',
+          'น้ำจะร้อนขึ้นเรื่อยๆ และตะปูจะร้อนขึ้นด้วยตามการสะสมความร้อนจนกว่าจะระเหยหมด',
+          'ตะปูอุณหภูมิลดลงแต่น้ำอุณหภูมิคงที่เนื่องจากแก้วดูดรับพลังงานไว้ทั้งหมด',
+          'เกิดการกักเก็บความร้อนอยู่ภายในตะปูโดยไม่มีการถ่ายโอนมายังน้ำเนื่องจากน้ำนำความร้อนต่ำ'
+        ],
+        text: () => `ถ้าใส่ตะปูที่เผาจนร้อนแดงลงในแก้วที่มีน้ำพอสมควร อุณหภูมิของน้ำและตะปูจะเปลี่ยนแปลงอย่างไร และเมื่อปล่อยทิ้งไว้เป็นเวลานาน อุณหภูมิของน้ำและตะปูจะเป็นอย่างไร`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['อุณหภูมิของน้ำจะเพิ่มขึ้น ตะปูจะลดลง และเมื่อเวลาผ่านไปนานๆ อุณหภูมิทั้งคู่จะเท่ากันคงที่'], answersRaw: [0],
+            explanation: () => `เมื่อใส่ตะปูร้อนลงไป ความร้อนจะถ่ายโอนจากตะปูที่มีอุณหภูมิสูงไปยังน้ำที่มีอุณหภูมิต่ำกว่าทำให้อุณหภูมิน้ำสูงขึ้นและอุณหภูมิของตะปูลดลง และเมื่อปล่อยทิ้งไว้เป็นเวลานาน ทั้งคู่จะมีอุณหภูมิเท่ากันและคงที่ตามกฎข้อที่ศูนย์ของอุณหพลศาสตร์ (สมดุลความร้อน)`
+          };
+        }
+      },
+      {
+        id: '16_1_4_q3_metal_in_ice_calculation', topic: '16.1.4', type: 'numeric_double',
+        inputs: [{ label: 'ความร้อนที่ออกจากก้อนโลหะ Q (J):' }, { label: 'ความร้อนจำเพาะโลหะ c (J/kg·K):' }],
+        title: 'การทดลองถ่ายโอนความร้อนและสมดุลความร้อน (แบบฝึกหัด 16.1 ข้อ 5)',
+        text: (p) => `นำก้อนโลหะมวล \\(${p.m1}\text{ g}\\) อุณหภูมิ \\(${p.T_metal}\ ^\circ\text{C}\\) ใส่ลงในน้ำแข็งมวล \\(${p.m2}\text{ g}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) ในภาชนะหุ้มฉนวน ในที่สุดน้ำแข็งละลายหมดกลายเป็นน้ำที่มีอุณหภูมิ \\(${p.T_final}\ ^\circ\text{C}\\) จงหาความร้อนที่ออกจากโลหะ (J) และความร้อนจำเพาะของโลหะนี้ (J/kg K) (กำหนด \\(L_f = 3.33 \times 10^5\text{ J/kg}\\), \\(c_{\text{water}} = 4186\text{ J/(kg K)}\\))`,
+        generate: (rng) => {
+          const m1 = rng ? Math.round(100 + rng.random() * 400) : 300;
+          const T_metal = rng ? Math.round(200 + rng.random() * 250) : 400;
+          const m2 = rng ? Math.round(100 + rng.random() * 400) : 300;
+          const T_final = rng ? roundHalfEven(2.0 + rng.random() * 10, 1) : 5.0;
+          
+          const Lf = 3.33e5;
+          const c_water = 4186;
+          
+          const Q_gain = (m2 / 1000) * Lf + (m2 / 1000) * c_water * T_final;
+          const c_metal = Q_gain / ((m1 / 1000) * (T_metal - T_final));
+          
+          return {
+            params: { m1, T_metal, m2, T_final }, answers: [Q_gain.toFixed(0), c_metal.toFixed(1)], answersRaw: [Q_gain, c_metal],
+            explanation: () => `ตามกฎการอนุรักษ์พลังงานในสมดุลความร้อน:<br>ความร้อนที่น้ำแข็งได้รับเพื่อเปลี่ยนสถานะและเพิ่มอุณหภูมิ = ความร้อนที่ออกจากก้อนโลหะ (\\(Q_{\text{loss}} = Q_{\text{gain}}\\))<br>ก. \\(Q_{\text{gain}} = m_2 L_f + m_2 c_{\text{water}} T_{\text{final}} = (${m2/1000}) \times (3.33 \times 10^5) + (${m2/1000}) \times 4186 \times ${T_final} = ${Q_gain.toFixed(0)}\text{ J}\\)<br>ข. หาความร้อนจำเพาะ \\(Q_{\text{loss}} = m_1 c_{\text{metal}} (T_{\text{metal}} - T_{\text{final}}) \rightarrow c_{\text{metal}} = \frac{${Q_gain.toFixed(0)}}{(${m1/1000}) \times (${T_metal} - ${T_final})} = ${c_metal.toFixed(1)}\text{ J/(kg K)}\\)`
+          };
+        }
+      },
+      {
+        id: '16_1_4_q4_blanket_warming', topic: '16.1.4', type: 'choice',
+        title: 'เหตุผลทางฟิสิกส์ของการห่มผ้าในฤดูหนาว (แบบฝึกหัดท้ายบท ข้อ 16)',
+        choices: [
+          'อากาศที่แทรกอยู่ระหว่างเส้นใยผ้าห่มนำความร้อนไม่ดี และการขัดขวางอากาศช่วยลดการพาความร้อนออกสู่นอกร่างกาย',
+          'ผ้าห่มหนาทำหน้าที่เป็นตัวผลิตกระแสไฟฟ้าสถิตแผ่ความร้อนเหนี่ยวนำให้ผิวหนังโดยตรง',
+          'การบีบอัดปริมาตรรอบตัวของผ้าหนาทำให้ความดันอากาศสูงขึ้นส่งผลให้อุณหภูมิสูงขึ้นตามกฎของแก๊ส',
+          'เส้นใยหนาเป็นตัวสะท้อนรังสีความเย็นของสิ่งแวดล้อมไม่ให้แผ่เข้ามาสัมผัสร่างกาย'
+        ],
+        text: () => `เหตุใดผ้าห่มหรือเสื้อผ้าที่ทำด้วยเส้นใยหนา ๆ ช่วยทำให้ร่างกายอบอุ่นในฤดูหนาว`,
+        generate: (rng) => {
+          return {
+            params: {}, answers: ['อากาศที่แทรกอยู่ระหว่างเส้นใยผ้าห่มนำความร้อนไม่ดี และการขัดขวางอากาศช่วยลดการพาความร้อนออกสู่นอกร่างกาย'], answersRaw: [0],
+            explanation: () => `ระหว่างเส้นใยของผ้าห่มหรือเสื้อผ้าหนาๆ จะมีอากาศแทรกอยู่มาก ซึ่งอากาศเป็นตัวนำความร้อนที่เลว (ฉนวนที่ดี) และเส้นใยยังขวางอากาศไม่ให้เคลื่อนที่สะดวกซึ่งช่วยลดการพาความร้อนออกสู่นอกร่างกาย ทำให้พลังงานความร้อนจากตัวเราถ่ายโอนออกไปสู่อากาศหนาวภายนอกได้ยากขึ้น ร่างกายเราจึงอบอุ่น`
+          };
+        }
+      }
+    ];
+
+    function startPracticeMode(topic) {
+      currentPracticeTopic = topic;
+      document.getElementById('practice-arena').classList.remove('hidden');
+      
+      const topics = ['16-1-1', '16-1-2', '16-1-3', '16-1-4'];
+      const styles = {
+        '16-1-1': { active: 'p-4 bg-blue-50 border-2 border-blue-500 text-blue-900 rounded-xl flex items-center gap-4 transition text-left', hover: 'hover:bg-blue-50' },
+        '16-1-2': { active: 'p-4 bg-orange-50 border-2 border-orange-500 text-orange-900 rounded-xl flex items-center gap-4 transition text-left', hover: 'hover:bg-orange-50' },
+        '16-1-3': { active: 'p-4 bg-rose-50 border-2 border-rose-500 text-rose-900 rounded-xl flex items-center gap-4 transition text-left', hover: 'hover:bg-rose-50' },
+        '16-1-4': { active: 'p-4 bg-amber-50 border-2 border-amber-500 text-amber-900 rounded-xl flex items-center gap-4 transition text-left', hover: 'hover:bg-amber-50' }
+      };
+
+      topics.forEach(t => {
+        const btn = document.getElementById(`btn-prac-${t}`);
+        if (btn) {
+          if (t === topic) {
+            btn.className = styles[t].active;
+          } else {
+            btn.className = `p-4 bg-white ${styles[t].hover} text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left`;
+          }
+        }
+      });
+      document.getElementById('prac-feedback').className = "hidden p-5 rounded-2xl border transition-all duration-300";
+      document.getElementById('prac-explanation-box').classList.add('hidden');
+      regeneratePractice();
+    }
+    
+    function regeneratePractice() {
+      const mode = document.getElementById('prac-type-select').value;
+      const isRandom = mode === 'random';
+      const formattedTopic = currentPracticeTopic.replace(/-/g, '.');
+      const filtered = QUESTION_TEMPLATES.filter(q => q.topic === formattedTopic);
+      if (filtered.length === 0) return;
+      const template = filtered[Math.floor(Math.random() * filtered.length)];
+
+      // เรียกฟังก์ชันสร้างโจทย์โดยส่ง practiceRNG เข้าไปหากเปิดการสุ่ม เพื่อรับประกันความไม่ซ้ำ
+      const rng = isRandom ? practiceRNG : null;
+      const instance = generateQuestionInstance(template, rng);
+
+      currentPracticeQuestion = { template, instance };
+      document.getElementById('prac-badge-mode').innerText = `หัวข้อ ${formattedTopic} • ` + (isRandom ? 'แบบสุ่มตัวแปร' : 'แบบคู่มือครู สสวท.');
+      document.getElementById('prac-question-title').innerText = `📋 โจทย์: ${template.title}`;
+      document.getElementById('prac-question-text').innerText = template.text(instance.params);
+      const choiceZone = document.getElementById('prac-choice-zone');
+      const numericZone = document.getElementById('prac-numeric-zone');
+      document.getElementById('prac-input-val1').value = '';
+      document.getElementById('prac-input-val2').value = '';
+      document.getElementById('prac-input-zone-2').classList.add('hidden');
+      document.getElementById('prac-feedback').className = "hidden p-5 rounded-2xl border transition-all duration-300";
+      document.getElementById('prac-explanation-box').classList.add('hidden');
+      if (template.type === 'choice') {
+        choiceZone.classList.remove('hidden');
+        numericZone.classList.add('hidden');
+        choiceZone.innerHTML = '';
+        template.choices.forEach((c) => {
+          choiceZone.innerHTML += `<button onclick="checkPracticeChoice('${c}')" class="w-full text-left px-4 py-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-medium rounded-xl border border-slate-200 transition">${c}</button>`;
+        });
+      } else {
+        choiceZone.classList.add('hidden');
+        numericZone.classList.remove('hidden');
+        document.getElementById('lbl-prac-input-1').innerText = template.inputs[0].label;
+        if (template.type === 'numeric_double') {
+          document.getElementById('prac-input-zone-2').classList.remove('hidden');
+          document.getElementById('lbl-prac-input-2').innerText = template.inputs[1].label;
+        }
+      }
+      renderMath();
+    }
+
+    function checkPracticeAnswer() {
+      if (!currentPracticeQuestion) return;
+      const template = currentPracticeQuestion.template;
+      const instance = currentPracticeQuestion.instance;
+      if (template.type === 'choice') return;
+      const v1 = document.getElementById('prac-input-val1').value.trim();
+      const v2 = document.getElementById('prac-input-val2').value.trim();
+      if (!v1 || (template.type === 'numeric_double' && !v2)) {
+        triggerAlert("กรอกข้อมูลไม่ครบ", "กรุณากรอกคำตอบให้ครบทุกช่องก่อนตรวจครับ", "fa-circle-question", "bg-amber-100 text-amber-600");
+        return;
+      }
+      const c1 = isNumericAnswerCorrect(v1, instance.answersRaw[0]);
+      const c2 = template.type === 'numeric_double' ? isNumericAnswerCorrect(v2, instance.answersRaw[1]) : true;
+      const isCorrect = c1 && c2;
+      showPracticeFeedback(isCorrect, instance.explanation());
+    }
+
+    function checkPracticeChoice(selectedChoice) {
+      if (!currentPracticeQuestion) return;
+      const instance = currentPracticeQuestion.instance;
+      const isCorrect = selectedChoice === instance.answers[0];
+      showPracticeFeedback(isCorrect, instance.explanation());
+    }
+
+    // ปรับปรุงฟังก์ชันแสดง feedback ให้นำเสนอข้อมูลที่เข้าใจง่าย
+    function showPracticeFeedback(isCorrect, explainText) {
+      const feedback = document.getElementById('prac-feedback');
+      feedback.className = isCorrect
+        ? "p-5 rounded-2xl border bg-emerald-50 border-emerald-100 text-emerald-800 block"
+        : "p-5 rounded-2xl border bg-rose-50 border-rose-100 text-rose-800 block";
+      feedback.innerHTML = isCorrect
+        ? `<div class="flex items-center gap-2 font-bold"><i class="fa-solid fa-circle-check text-emerald-500"></i> ตอบถูกตามหลักเกณฑ์ฟิสิกส์!</div>`
+        : `<div class="flex items-center gap-2 font-bold"><i class="fa-solid fa-circle-xmark text-rose-500"></i> คำตอบยังไม่ถูกครับ ลองเช็ควิธีคำนวณด้านล่างนี้</div>`;
+      document.getElementById('prac-explanation-text').innerHTML = explainText;
+      document.getElementById('prac-explanation-box').classList.remove('hidden');
+      renderMath();
+    }
+
+    function startExamProcess() {
+      const name = document.getElementById('exam-student-name').value.trim();
+      const cls = document.getElementById('exam-student-class').value.trim();
+      const num = document.getElementById('exam-student-no').value.trim();
+      if (!name || !cls || !num) {
+        triggerAlert("กรอกข้อมูลไม่ครบ", "กรุณากรอกชื่อ ชั้นเรียน และเลขที่ผู้เรียนให้ครบถ้วนก่อนจะเริ่มทำข้อสอบครับ", "fa-user-clock", "bg-indigo-100 text-indigo-600");
+        return;
+      }
+      examStudentInfo = { name, class: cls, number: num };
+
+      // สร้างตัวแปรการสุ่มแบบ Seeded RNG จากเลขที่ของผู้สอบ
+      const examRNG = new SeededRNG(num);
+
+      const q16_1 = QUESTION_TEMPLATES.filter(q => q.topic === '16.1.1');
+      const q16_2 = QUESTION_TEMPLATES.filter(q => q.topic === '16.1.2');
+      const q16_3 = QUESTION_TEMPLATES.filter(q => q.topic === '16.1.3');
+      const q16_4 = QUESTION_TEMPLATES.filter(q => q.topic === '16.1.4');
+
+      // สลับลำดับโจทย์แบบใช้ Seeded RNG เพื่อให้เลขที่เดิมได้ข้อสอบข้อเดิมเสมอ
+      const shuffled_1 = examRNG.shuffle(q16_1);
+      const shuffled_2 = examRNG.shuffle(q16_2);
+      const shuffled_3 = examRNG.shuffle(q16_3);
+      const shuffled_4 = examRNG.shuffle(q16_4);
+
+      // เลือก 5 ข้อสอบ: 1 ข้อจาก 16.1.1, 2 ข้อจาก 16.1.2, 1 ข้อจาก 16.1.3, 1 ข้อจาก 16.1.4
+      const selectedTemplates = [
+        shuffled_1[0], 
+        shuffled_2[0], 
+        shuffled_2[1], 
+        shuffled_3[0], 
+        shuffled_4[0]
+      ];
+      
+      const generatedQuestions = selectedTemplates.map((template) => {
+        // ใช้ฟังก์ชันตัวช่วยสุ่มโจทย์แบบไม่ซ้ำ โดยส่งตัวสุ่มแบบ Seeded RNG เข้าไป
+        const instance = generateQuestionInstance(template, examRNG);
+        return {
+          id: template.id, topic: template.topic, type: template.type, title: template.title,
+          text: template.text(instance.params), inputs: template.inputs || [], choices: template.choices || [],
+          answers: instance.answers, answersRaw: instance.answersRaw, explanationText: instance.explanation()
+        };
+      });
+      document.getElementById('lbl-exam-user-info').innerText = `${name} (ม.6/${cls} เลขที่ ${num})`;
+      currentExamQuestions = generatedQuestions;
+      renderExamLiveDOM();
+      initializeExamSession(currentExamQuestions, examStudentInfo);
+      showSection('exam-live');
+    }
+
+    function renderExamLiveDOM() {
+      const container = document.getElementById('exam-questions-container');
+      container.innerHTML = '';
+      currentExamQuestions.forEach((q, idx) => {
+        let inputHTML = '';
+        if (q.type === 'choice') {
+          inputHTML += `<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">`;
+          q.choices.forEach((c, cIdx) => {
+            inputHTML += `<label class="flex items-center gap-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 p-3.5 rounded-xl transition duration-100 cursor-pointer">
+          <input type="radio" name="exam-q${idx}" id="exam-q${idx}-opt${cIdx}" value="${c}" class="w-4 h-4 text-violet-600 focus:ring-violet-500">
+          <span class="text-sm text-slate-800 font-medium">${c}</span>
+        </label>`;
+          });
+          inputHTML += `</div>`;
+        } else if (q.type === 'numeric_single') {
+          inputHTML += `<div class="grid grid-cols-1 gap-4 pt-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">${q.inputs[0].label}</label>
+          <input type="text" autocomplete="off" id="exam-q${idx}-val1" placeholder="เช่น 2.0 หรือ 2.0e-3" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 text-sm">
+        </div>
+      </div>`;
+        } else if (q.type === 'numeric_double') {
+          inputHTML += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">${q.inputs[0].label}</label>
+          <input type="text" autocomplete="off" id="exam-q${idx}-val1" placeholder="ระบุคำตอบแรก" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">${q.inputs[1].label}</label>
+          <input type="text" autocomplete="off" id="exam-q${idx}-val2" placeholder="ระบุคำตอบที่สอง" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 text-sm">
+        </div>
+      </div>`;
+        }
+        container.innerHTML += `<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <span class="text-sm font-bold text-slate-800">📝 ข้อที่ ${idx + 1}: ${q.title}</span>
+        <span class="bg-violet-100 text-violet-800 px-2.5 py-0.5 rounded text-xs font-semibold">2 คะแนน</span>
+      </div>
+      <p class="text-sm md:text-base text-slate-700 leading-relaxed font-medium">${q.text}</p>
+      ${inputHTML}
+    </div>`;
+      });
+      renderMath();
+    }
+
+    function confirmSubmitExam() {
+      const answers = getCurrentExamAnswers();
+      const uncomplete = answers.some(a => a === null || a === '' || (Array.isArray(a) && a.some(v => v.trim() === '')));
+      const msg = uncomplete ? "คุณยังตอบข้อสอบไม่ครบถ้วน ยืนยันที่จะส่งหรือไม่?" : "ยืนยันต้องการที่จะส่งข้อสอบหรือไม่?";
+      if (confirm(msg)) submitExam();
+    }
+
+    function submitExam(timeExpired = false) {
+      if (examSubmissionInProgress) return;
+      examSubmissionInProgress = true;
+      clearInterval(examTimerInterval);
+      if (!currentExamQuestions.length) {
+        endExamSession();
+        triggerAlert("ไม่พบกระดาษคำตอบ", "ระบบไม่พบข้อมูลข้อสอบ กรุณาทำสอบใหม่อีกครั้งครับ", "fa-triangle-exclamation", "bg-rose-100 text-rose-600");
+        showSection('exam-start');
+        return;
+      }
+      const answers = getCurrentExamAnswers();
+      let total_score = 0;
+      const gradedResults = [];
+      currentExamQuestions.forEach((q, idx) => {
+        let isCorrect = false;
+        const userAns = answers[idx];
+        if (q.type === 'choice') isCorrect = userAns === q.answers[0];
+        else if (q.type === 'numeric_single') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], q.answersRaw[0]);
+        else if (q.type === 'numeric_double') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], q.answersRaw[0]) && isNumericAnswerCorrect(userAns[1], q.answersRaw[1]);
+        const score = isCorrect ? 2.0 : 0.0;
+        total_score += score;
+        gradedResults.push({ idx, isCorrect, score, userAns });
+      });
+      examTimeRemaining = Math.max(0, getCurrentExamRemainingSeconds());
+      const elapsed = timeExpired ? EXAM_DURATION_SECONDS : (EXAM_DURATION_SECONDS - examTimeRemaining);
+      const m = Math.floor(elapsed / 60), s = elapsed % 60;
+      const time_taken_str = `${m} นาที ${s} วินาที`;
+      const finishedAt = new Date();
+      const finishedAtDisplay = formatThaiDateTimeBuddhistEra(finishedAt);
+      const savePayload = {
+        score: total_score, timeTaken: time_taken_str, finishedAtDisplay, studentInfo: examStudentInfo,
+        examQuestions: currentExamQuestions, gradedResults: gradedResults, date: finishedAt.toLocaleDateString('th-TH-u-ca-buddhist')
+      };
+      localStorage.setItem('last_exam_results', JSON.stringify(savePayload));
+      endExamSession();
+      showSection('exam-result');
+      displayExamResults(total_score, gradedResults, time_taken_str, examStudentInfo, finishedAtDisplay);
+      updateLatestScoreOnHome();
+    }
+
+    function displayExamResults(score, gradedResults, timeTaken, studentInfo, finishedAtDisplay = '-') {
+      document.getElementById('lbl-res-student-name').innerText = studentInfo.name;
+      document.getElementById('lbl-res-student-meta').innerText = `ชั้น ม.6/${studentInfo.class} เลขที่ ${studentInfo.number}`;
+      document.getElementById('lbl-res-time-elapsed').innerText = `ใช้เวลาไปทั้งหมด: ${timeTaken}`;
+      document.getElementById('lbl-res-finished-at').innerText = `ส่งข้อสอบเมื่อ: ${finishedAtDisplay}`;
+      const percent = (score / 10) * 100;
+      const circle = document.getElementById('res-circle-progress');
+      const offset = 314 - (percent / 100) * 314;
+      circle.style.strokeDashoffset = offset;
+      document.getElementById('lbl-res-total-score').innerText = score;
+      const tbody = document.getElementById('exam-result-tbody');
+      tbody.innerHTML = '';
+      const solutionsContainer = document.getElementById('exam-solutions-container');
+      solutionsContainer.innerHTML = '';
+      currentExamQuestions.forEach((q, idx) => {
+        const grad = gradedResults[idx];
+        const statusBadge = grad.isCorrect
+          ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-circle-check"></i> ถูก</span>`
+          : `<span class="bg-rose-100 text-rose-800 text-xs font-semibold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-circle-xmark"></i> ผิด</span>`;
+        tbody.innerHTML += `<tr>
+      <td class="px-4 py-3 font-semibold text-slate-900">${idx + 1}</td>
+      <td class="px-4 py-3">${q.title} (หัวข้อ ${q.topic})</td>
+      <td class="px-4 py-3 text-center font-bold">2.0</td>
+      <td class="px-4 py-3 text-center font-bold text-indigo-600">${grad.score.toFixed(1)}</td>
+      <td class="px-4 py-3 text-center">${statusBadge}</td>
+    </tr>`;
+        let userAnsText = '';
+        if (q.type === 'choice') userAnsText = grad.userAns || 'ไม่ได้ระบุ';
+        else if (q.type === 'numeric_single') userAnsText = grad.userAns ? grad.userAns[0] : 'ไม่ได้ระบุ';
+        else if (q.type === 'numeric_double') userAnsText = grad.userAns ? `${grad.userAns[0]} และ ${grad.userAns[1]}` : 'ไม่ได้ระบุ';
+        solutionsContainer.innerHTML += `<div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4">
+      <h4 class="font-bold text-slate-900 text-base">🔑 เฉลยข้อที่ ${idx + 1}: ${q.title}</h4>
+      <p class="text-xs text-slate-500 font-medium">โจทย์: ${q.text}</p>
+      <div class="text-xs bg-white border border-slate-200 p-2.5 rounded-lg">
+        <span>คำตอบที่คุณส่ง: <strong class="${grad.isCorrect ? 'text-emerald-600' : 'text-rose-600'}">${userAnsText}</strong></span>
+        <br><span>คำตอบที่ถูกต้อง: <strong>${q.answers.join(' และ ')}</strong></span>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs md:text-sm text-slate-700 space-y-3 math-font">${q.explanationText}</div>
+    </div>`;
+      });
+      const feedback = document.getElementById('lbl-res-badge-feedback');
+      if (score === 10) {
+        feedback.className = "text-xs bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-200 font-semibold leading-relaxed block";
+        feedback.innerHTML = `🌟 <strong>ยอดเยี่ยมระดับเหรียญทอง!</strong> คุณสอบได้คะแนนเต็ม ตอบถูกสมบูรณ์แบบทั้งทฤษฎีและคำนวณเก่งมากครับ`;
+      } else if (score >= 6) {
+        feedback.className = "text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100 font-semibold leading-relaxed block";
+        feedback.innerHTML = `👍 <strong>ดีมาก!</strong> สอบผ่านผ่านเกณฑ์ขั้นต่ำ ควรทบทวนเฉลยแยกรายข้อที่ยังตอบผิดเพื่อให้เกิดความรอบคอบเพิ่มขึ้นครับ`;
+      } else {
+        feedback.className = "text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-lg border border-rose-100 font-semibold leading-relaxed block";
+        feedback.innerHTML = `📚 <strong>ควรกลับไปศึกษาเพิ่ม!</strong> คะแนนสอบยังต่ำกว่าเกณฑ์ ขอแนะนำให้กลับไปทบทวนในส่วน Review และฝีกโจทย์ใหม่บ่อยๆ นะครับ`;
+      }
+      renderMath();
+    }
+
+    function toggleExamSolutionBox() {
+      const box = document.getElementById('exam-solution-box');
+      const text = document.getElementById('lbl-toggle-solution-text');
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        text.innerText = "ซ่อนเฉลยละเอียดของข้อสอบ";
+      } else {
+        box.classList.add('hidden');
+        text.innerText = "ดูเฉลยละเอียดของข้อที่คุณได้รับ";
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
