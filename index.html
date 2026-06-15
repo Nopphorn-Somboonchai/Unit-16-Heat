@@ -1568,7 +1568,7 @@
           <ul class="list-disc pl-5 space-y-1">
             <li>มีทั้งหมด <strong>5 ข้อ</strong> คะแนนรวมเต็ม <strong>10 คะแนน</strong> (ข้อละ 2 คะแนน)
               โดยสุ่มจากเนื้อหา 16.1.1 - 16.1.4</li>
-            <li>มีเวลาจำกัดในการทำข้อสอบ <strong>10 นาที</strong> (มีตัวจับเวลาแสดงบนจอ)</li>
+            <li>มีเวลาจำกัดในการทำข้อสอบ <strong>ตามที่คุณกำหนด</strong> (มีตัวจับเวลาแสดงบนจอ)</li>
             <li>หากหมดเวลา ระบบจะส่งคำตอบทันทีตามข้อมูลที่มีการกรอกไว้ล่าสุด</li>
             <li>ระบบจะบันทึกผลการสอบล่าสุดของคุณไว้ในบราวเซอร์นี้เพื่อใช้ดูประวัติย้อนหลัง</li>
           </ul>
@@ -1601,6 +1601,11 @@
                 <input type="number" id="exam-student-no" placeholder="5"
                   class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-violet-500 focus:outline-none text-sm">
               </div>
+            </div>
+            <div class="mt-3">
+              <label class="block text-xs font-semibold text-slate-500 mb-1">เวลาสอบ (นาที):</label>
+              <input type="number" id="exam-duration-minutes" value="10" min="1" max="120"
+                class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-violet-500 focus:outline-none text-sm">
             </div>
           </div>
         </div>
@@ -1821,7 +1826,7 @@
     let currentExamQuestions = [];
     let examTimerInterval = null;
     let examTimeRemaining = 600;
-    const EXAM_DURATION_SECONDS = 600;
+    let examDurationSeconds = 600;
     const EXAM_STATE_KEY = 'active_exam_session_v6';
     let examStartTimestamp = null;
     let examDeadlineTimestamp = null;
@@ -1969,6 +1974,7 @@
         studentInfo: examStudentInfo,
         examStartTimestamp,
         examDeadlineTimestamp,
+        examDuration: examDurationSeconds,
         answers: getCurrentExamAnswers()
       };
       sessionStorage.setItem(EXAM_STATE_KEY, JSON.stringify(payload));
@@ -2058,7 +2064,7 @@
           clearInterval(examTimerInterval);
           examTimeRemaining = 0;
           document.getElementById('exam-timer-display').innerText = "00:00";
-          triggerAlert("หมดเวลาแล้ว!", "เวลาสอบ 10 นาทีของคุณหมดแล้ว ระบบจะส่งข้อสอบและเฉลยให้ทันที", "fa-hourglass-end", "bg-rose-100 text-rose-600");
+          triggerAlert("หมดเวลาแล้ว!", `เวลาสอบ ${Math.floor(examDurationSeconds / 60)} นาทีของคุณหมดแล้ว ระบบจะส่งข้อสอบและเฉลยให้ทันที`, "fa-hourglass-end", "bg-rose-100 text-rose-600");
           submitExam(true);
         }
       };
@@ -2070,8 +2076,8 @@
       currentExamQuestions = questions;
       examStudentInfo = studentInfo;
       examStartTimestamp = Date.now();
-      examDeadlineTimestamp = examStartTimestamp + (EXAM_DURATION_SECONDS * 1000);
-      examTimeRemaining = EXAM_DURATION_SECONDS;
+      examDeadlineTimestamp = examStartTimestamp + (examDurationSeconds * 1000);
+      examTimeRemaining = examDurationSeconds;
       examIsActive = true;
       examSubmissionInProgress = false;
       startExamExitGuard();
@@ -2088,7 +2094,8 @@
         if (!parsed || !parsed.examQuestions || !parsed.studentInfo || !parsed.examDeadlineTimestamp) return false;
         currentExamQuestions = parsed.examQuestions;
         examStudentInfo = parsed.studentInfo;
-        examStartTimestamp = parsed.examStartTimestamp || (parsed.examDeadlineTimestamp - (EXAM_DURATION_SECONDS * 1000));
+        examDurationSeconds = parsed.examDuration || 600;
+        examStartTimestamp = parsed.examStartTimestamp || (parsed.examDeadlineTimestamp - (examDurationSeconds * 1000));
         examDeadlineTimestamp = parsed.examDeadlineTimestamp;
         examIsActive = true;
         examSubmissionInProgress = false;
@@ -2347,7 +2354,7 @@
         inputK.value = kVal.toFixed(2);
 
         document.getElementById('lbl-sim-temp-c').innerText = `${cVal.toFixed(1)} °C`;
-        document.getElementById('lbl-sim-temp-calc').innerHTML = `\\(T = ${cVal.toFixed(2)} + 273.15 = ${kVal.toFixed(2)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-temp-calc').innerHTML = `\\(T = ${cVal.toFixed(2)} + 273.15 = ${kVal.toFixed(2)}\\text{ K}\\)`;
         document.getElementById('lbl-sim-temp-result').innerText = kVal.toFixed(2);
 
         drawThermometerSVG(cVal);
@@ -2501,7 +2508,7 @@
         document.getElementById('lbl-sim-cap-q').innerText = `${Q} J`;
 
         const deltaT = Q / C;
-        document.getElementById('lbl-sim-cap-calc').innerHTML = `\\(\Delta T = \frac{${Q}}{${C}} = ${deltaT.toFixed(2)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-cap-calc').innerHTML = `\\(\\Delta T = \\frac{${Q}}{${C}} = ${deltaT.toFixed(2)}\\text{ K}\\)`;
         document.getElementById('lbl-sim-cap-result').innerText = deltaT.toFixed(2);
 
         drawHeatCapSim(C, Q, capHeatProgress);
@@ -2697,7 +2704,7 @@
         document.getElementById('lbl-sim-spec-q').innerText = `${Q} J`;
 
         const deltaT = Q / (m * c);
-        document.getElementById('lbl-sim-spec-calc').innerHTML = `\\(\Delta T = \frac{${Q}}{${m.toFixed(1)} \times ${c}} = ${deltaT.toFixed(3)}\text{ K}\\)`;
+        document.getElementById('lbl-sim-spec-calc').innerHTML = `\\(\\Delta T = \\frac{${Q}}{${m.toFixed(1)} \\times ${c}} = ${deltaT.toFixed(3)}\\text{ K}\\)`;
         document.getElementById('lbl-sim-spec-result').innerText = deltaT.toFixed(3);
 
         drawHeatSpecSim(subKey, m, Q, specHeatProgress);
@@ -2793,8 +2800,8 @@
           T,
           phase: 'ice',
           desc: `ของแข็ง (น้ำแข็ง) กำลังทำอุณหภูมิขึ้นจาก -20.0 °C ถึง 0.0 °C`,
-          formula: `Q = m c_{ice} \Delta T`,
-          calc: `Q = ${m.toFixed(1)} \times 2.1 \times (t - (-20))`,
+          formula: `Q = m c_{ice} \\Delta T`,
+          calc: `Q = ${m.toFixed(1)} \\times 2.1 \\times (t - (-20))`,
           activeIdx: 1
         };
       } else if (Q < pts.qB) {
@@ -2806,7 +2813,7 @@
           phase: 'melting',
           desc: `กำลังหลอมเหลว (น้ำแข็งผสมน้ำ) อุณหภูมิคงตัวที่ 0.0 °C (หลอมเหลวแล้ว ${(meltFraction * 100).toFixed(0)}%)`,
           formula: `Q = m L_f`,
-          calc: `Q_{melt} = m_{melt} \times 333\text{ kJ}`,
+          calc: `Q_{melt} = m_{melt} \\times 333\\text{ kJ}`,
           activeIdx: 2
         };
       } else if (Q < pts.qC) {
@@ -2816,8 +2823,8 @@
           T,
           phase: 'water',
           desc: `ของเหลว (น้ำ) กำลังทำอุณหภูมิขึ้นจาก 0.0 °C ถึง 100.0 °C`,
-          formula: `Q = m c_{water} \Delta T`,
-          calc: `Q = ${m.toFixed(1)} \times 4.186 \times (t - 0)`,
+          formula: `Q = m c_{water} \\Delta T`,
+          calc: `Q = ${m.toFixed(1)} \\times 4.186 \\times (t - 0)`,
           activeIdx: 3
         };
       } else if (Q < pts.qD) {
@@ -2829,7 +2836,7 @@
           phase: 'boiling',
           desc: `กำลังเดือดกลายเป็นไอ อุณหภูมิคงตัวที่ 100.0 °C (กลายเป็นไอแล้ว ${(vaporFraction * 100).toFixed(0)}%)`,
           formula: `Q = m L_v`,
-          calc: `Q_{vapor} = m_{vapor} \times 2256\text{ kJ}`,
+          calc: `Q_{vapor} = m_{vapor} \\times 2256\\text{ kJ}`,
           activeIdx: 4
         };
       } else {
@@ -2839,8 +2846,8 @@
           T,
           phase: 'steam',
           desc: `แก๊ส (ไอน้ำ) กำลังทำอุณหภูมิขึ้นจาก 100.0 °C เป็นต้นไป`,
-          formula: `Q = m c_{steam} \Delta T`,
-          calc: `Q = ${m.toFixed(1)} \times 2.0 \times (t - 100)`,
+          formula: `Q = m c_{steam} \\Delta T`,
+          calc: `Q = ${m.toFixed(1)} \\times 2.0 \\times (t - 100)`,
           activeIdx: 5
         };
       }
@@ -2856,7 +2863,7 @@
       box.innerHTML = `
         <div class="p-2.5 rounded-lg border ${f1 ? 'bg-orange-500/20 border-orange-400 font-bold' : 'opacity-50 border-transparent'} text-xs">
           <span>สูตรเปลี่ยนอุณหภูมิ (อุณหภูมิเปลี่ยน):</span>
-          <p class="font-sans font-bold text-cyan-300">\\(Q = m c \Delta T\\)</p>
+          <p class="font-sans font-bold text-cyan-300">\\(Q = m c \\Delta T\\)</p>
         </div>
         <div class="p-2.5 rounded-lg border ${f2 ? 'bg-rose-500/20 border-rose-400 font-bold' : 'opacity-50 border-transparent'} text-xs">
           <span>สูตรเปลี่ยนสถานะ (อุณหภูมิคงตัว):</span>
@@ -2906,7 +2913,7 @@
             <!-- Grid Axes -->
             <line x1="${padX}" y1="${padY}" x2="${padX}" y2="${padY + gh}" stroke="#475569" stroke-width="1.5"/>
             <line x1="${padX}" y1="${padY + gh}" x2="${padX + gw}" y2="${padY + gh}" stroke="#475569" stroke-width="1.5"/>
-            <text x="${padX + gw}" y="${padY + gh + 10}" fill="#94a3b8" font-size="7" text-anchor="end">พลังงานความร้อน Q (kJ)</text>
+            <text x="${padX + gw}" y="${padY + gh + 20}" fill="#94a3b8" font-size="7" text-anchor="end">พลังงานความร้อน Q (kJ)</text>
             <text x="${padX - 5}" y="${padY - 5}" fill="#94a3b8" font-size="7">T (°C)</text>
             
             <!-- Axis Labels -->
@@ -3207,28 +3214,12 @@
       }
     }
 
-    // สร้างอ็อบเจ็กต์สุ่มปกติสำหรับโหมดฝึกฝน (Practice)
-    const practiceRNG = new NormalRNG();
-
-    // ฟังก์ชันตัวช่วยในการสร้างโจทย์และรับประกันความไม่ซ้ำกันของตัวสุ่มพารามิเตอร์
-    function generateQuestionInstance(template, rng) {
-      if (!rng) return template.generate(null); // กรณีใช้คู่มือครู (สุ่มธรรมดาแบบกำหนดค่าคงที่)
-      let instance;
-      let attempts = 0;
-      const maxAttempts = 100;
-
-      while (attempts < maxAttempts) {
-        instance = template.generate(rng);
-        const paramStr = JSON.stringify(instance.params);
-
-        // ถ้ายังไม่เคยถูกสร้าง ให้บันทึกลงประวัติและส่งผลลัพธ์กลับทันที
-        if (!rng.hasGenerated(template.id, paramStr)) {
-          rng.recordGeneration(template.id, paramStr, 15);
-          break;
-        }
-        attempts++;
-      }
-      return instance;
+    // สร้างอ็อบเจ็กต์สุ่มปกติสำหรับโหมดฝึกฝน (Practice) จะไม่ได้ใช้ในระบบไดนามิกแล้ว แต่คงคลาสเดิมไว้
+    
+    // ฟังก์ชันตัวช่วยในการสร้างโจทย์แบบแปรผันตามเลขที่ (Dynamic Parameters)
+    function generateQuestionInstance(template, R) {
+      if (!R) return template.generate(null); // กรณีไม่ได้ส่ง R มา (เช่นดูเฉลยโหมดสุ่มธรรมดา)
+      return template.generate(R);
     }
 
     const QUESTION_TEMPLATES = [
@@ -3256,7 +3247,7 @@
         text: (p) => `จงแปลงอุณหภูมิ \\(${p.t}\\ ^\\circ\\text{C}\\) เป็นอุณหภูมิในหน่วยเคลวิน (K)`,
         generate: (rng) => {
           const values = [30, -10, 110, 12.15];
-          const t = rng ? roundHalfEven(-150 + rng.random() * 550, 2) : values[Math.floor(Math.random() * values.length)];
+          const t = rng ? roundHalfEven(-150 + (rng * 13.5), 2) : values[Math.floor(Math.random() * values.length)];
           const T = t + 273.15;
           return {
             params: { t }, answers: [T.toFixed(2), roundHalfEven(T, 1).toString(), Math.round(T).toString()], answersRaw: [T],
@@ -3271,7 +3262,7 @@
         text: (p) => `จงแปลงอุณหภูมิ \\(${p.T}\\text{ K}\\) เป็นอุณหภูมิในหน่วยองศาเซลเซียส (องศาเซลเซียส)`,
         generate: (rng) => {
           const values = [30, 250, 330, 373.15];
-          const T = rng ? roundHalfEven(5 + rng.random() * 600, 2) : values[Math.floor(Math.random() * values.length)];
+          const T = rng ? roundHalfEven(5 + (rng * 14.2), 2) : values[Math.floor(Math.random() * values.length)];
           const t = T - 273.15;
           return {
             params: { T }, answers: [t.toFixed(2), roundHalfEven(t, 1).toString(), Math.round(t).toString()], answersRaw: [t],
@@ -3317,18 +3308,18 @@
         id: '16_1_2_q2_metal_specific_heat', topic: '16.1.2', type: 'numeric_double',
         title: 'การหาความจุความร้อนและความร้อนจำเพาะ (แบบฝึกหัด 16.1 ข้อ 2)',
         inputs: [{ label: 'ความจุความร้อน C (J/K):' }, { label: 'ความร้อนจำเพาะ c (J/kg·K):' }],
-        text: (p) => `โลหะชนิดหนึ่งมวล \\(${p.m}\text{ kg}\\) ได้รับความร้อน \\(${p.Q}\text{ J}\\) ทำให้อุณหภูมิเปลี่ยนจาก \\(${p.T1}\ ^\circ\text{C}\\) เป็น \\(${p.T2}\ ^\circ\text{C}\\) จงหาความจุความร้อน (ในหน่วย J/K) และความร้อนจำเพาะของโลหะนี้ (ในหน่วย J/kg K)`,
+        text: (p) => `โลหะชนิดหนึ่งมวล \\(${p.m}\\text{ kg}\\) ได้รับความร้อน \\(${p.Q}\\text{ J}\\) ทำให้อุณหภูมิเปลี่ยนจาก \\(${p.T1}\ ^\\circ\\text{C}\\) เป็น \\(${p.T2}\ ^\\circ\\text{C}\\) จงหาความจุความร้อน (ในหน่วย J/K) และความร้อนจำเพาะของโลหะนี้ (ในหน่วย J/kg K)`,
         generate: (rng) => {
-          const m = rng ? roundHalfEven(1.0 + rng.random() * 4.0, 1) : 2.0;
-          const Q = rng ? Math.round(1000 + rng.random() * 9000) : 2500;
-          const T1 = rng ? Math.round(15 + rng.random() * 15) : 25;
-          const dT = rng ? Math.round(10 + rng.random() * 30) : 20;
+          const m = rng ? roundHalfEven(1.0 + (rng * 0.1), 1) : 2.0;
+          const Q = rng ? Math.round(1000 + (rng * 200)) : 2500;
+          const T1 = rng ? Math.round(15 + (rng % 15)) : 25;
+          const dT = rng ? Math.round(10 + (rng % 30)) : 20;
           const T2 = T1 + dT;
           const C = Q / dT;
           const c = C / m;
           return {
             params: { m, Q, T1, T2 }, answers: [C.toFixed(1), c.toFixed(1)], answersRaw: [C, c],
-            explanation: () => `หาความจุความร้อน \\(C = \frac{Q}{\Delta T} = \frac{${Q}}{${T2} - ${T1}} = \frac{${Q}}{${dT}} = ${C.toFixed(1)}\text{ J/K}\\) (หรือ J/°C)<br>หาความร้อนจำเพาะ \\(c = \frac{C}{m} = \frac{${C.toFixed(1)}}{${m}} = ${c.toFixed(1)}\text{ J/(kg K)}\\)`
+            explanation: () => `หาความจุความร้อน \\(C = \\frac{Q}{\\Delta T} = \\frac{${Q}}{${T2} - ${T1}} = \\frac{${Q}}{${dT}} = ${C.toFixed(1)}\\text{ J/K}\\) (หรือ J/°C)<br>หาความร้อนจำเพาะ \\(c = \\frac{C}{m} = \\frac{${C.toFixed(1)}}{${m}} = ${c.toFixed(1)}\\text{ J/(kg K)}\\)`
           };
         }
       },
@@ -3362,7 +3353,7 @@
         generate: (rng) => {
           return {
             params: {}, answers: ['ทรายมีความร้อนจำเพาะน้อยกว่าน้ำมาก ทำให้อุณหภูมิของทรายสูงขึ้นเร็วกว่าน้ำเมื่อได้ความร้อนเท่ากัน'], answersRaw: [0],
-            explanation: () => `เนื่องจากทรายมีความร้อนจำเพาะประมาณ \\(800\text{ J/(kg K)}\\) ในขณะที่น้ำมีความร้อนจำเพาะสูงถึง \\(4186\text{ J/(kg K)}\\) ซึ่งหมายความว่าการทำให้น้ำร้อนขึ้นต้องใช้ความร้อนมากกว่าทรายเกือบ 5 เท่า ดังนั้นเมื่อได้รับพลังงานความร้อนเท่ากัน ทรายจึงมีอุณหภูมิสูงขึ้นเร็วกว่าน้ำทะเลมาก`
+            explanation: () => `เนื่องจากทรายมีความร้อนจำเพาะประมาณ \\(800\\text{ J/(kg K)}\\) ในขณะที่น้ำมีความร้อนจำเพาะสูงถึง \\(4186\\text{ J/(kg K)}\\) ซึ่งหมายความว่าการทำให้น้ำร้อนขึ้นต้องใช้ความร้อนมากกว่าทรายเกือบ 5 เท่า ดังนั้นเมื่อได้รับพลังงานความร้อนเท่ากัน ทรายจึงมีอุณหภูมิสูงขึ้นเร็วกว่าน้ำทะเลมาก`
           };
         }
       },
@@ -3372,8 +3363,8 @@
         inputs: [{ label: 'ปริมาณความร้อนที่ได้รับ Q (J):' }],
         text: (p) => `สระน้ำแห่งหนึ่งมีน้ำ \\(${p.m_display}\\text{ kg}\\) ในตอนกลางวันได้รับพลังงานความร้อนจากดวงอาทิตย์ ทำให้อุณหภูมิเฉลี่ยของน้ำในสระสูงขึ้น \\(${p.dT}\\ ^\\circ\\text{C}\\) น้ำในสระได้รับความร้อนกี่จูล (กำหนดความร้อนจำเพาะน้ำ \\(c = 4186\\text{ J/(kg K)}\\))`,
         generate: (rng) => {
-          const m = rng ? (roundHalfEven(0.5 + rng.random() * 2.5, 2) * 1e6) : 1e6;
-          const dT = rng ? Math.round(1 + rng.random() * 4) : 2;
+          const m = rng ? (roundHalfEven(0.5 + (rng * 0.05), 2) * 1e6) : 1e6;
+          const dT = rng ? Math.round(1 + (rng % 4)) : 2;
           const c = 4186;
           const Q = m * c * dT;
 
@@ -3390,15 +3381,15 @@
         id: '16_1_3_q1_ice_melting_heat', topic: '16.1.3', type: 'numeric_single',
         title: 'ความร้อนละลายน้ำแข็ง (แบบฝึกหัด 16.1 ข้อ 3)',
         inputs: [{ label: 'ความร้อนที่ต้องใช้ Q (kJ):' }],
-        text: (p) => `จงหาความร้อนที่ทำให้น้ำแข็งมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) หลอมเหลวเป็นน้ำหมดที่อุณหภูมิ \\(0\ ^\circ\text{C}\\) (ในหน่วย kJ) กำหนดให้ความร้อนแฝงจำเพาะการหลอมเหลวของน้ำแข็ง \\(L_f = 3.33 \times 10^5\text{ J/kg}\\)`,
+        text: (p) => `จงหาความร้อนที่ทำให้น้ำแข็งมวล \\(${p.m}\\text{ kg}\\) อุณหภูมิ \\(0\ ^\\circ\\text{C}\\) หลอมเหลวเป็นน้ำหมดที่อุณหภูมิ \\(0\ ^\\circ\\text{C}\\) (ในหน่วย kJ) กำหนดให้ความร้อนแฝงจำเพาะการหลอมเหลวของน้ำแข็ง \\(L_f = 3.33 \\times 10^5\\text{ J/kg}\\)`,
         generate: (rng) => {
-          const m = rng ? roundHalfEven(0.5 + rng.random() * 9.5, 1) : 2.0;
+          const m = rng ? roundHalfEven(0.5 + (rng * 0.2), 1) : 2.0;
           const Lf = 3.33e5;
           const Q = m * Lf;
           const Q_kJ = Q / 1000;
           return {
             params: { m }, answers: [Q_kJ.toFixed(1), Math.round(Q_kJ).toString()], answersRaw: [Q_kJ],
-            explanation: () => `น้ำแข็งหลอมเหลวเป็นน้ำโดยไม่มีการเปลี่ยนอุณหภูมิ ความร้อนที่ใช้เปลี่ยนสถานะคือความร้อนแฝง \\(Q = mL_f = ${m} \times (3.33 \times 10^5) = ${Q.toFixed(0)}\text{ J} = ${Q_kJ.toFixed(1)}\text{ kJ}\\)`
+            explanation: () => `น้ำแข็งหลอมเหลวเป็นน้ำโดยไม่มีการเปลี่ยนอุณหภูมิ ความร้อนที่ใช้เปลี่ยนสถานะคือความร้อนแฝง \\(Q = mL_f = ${m} \\times (3.33 \\times 10^5) = ${Q.toFixed(0)}\\text{ J} = ${Q_kJ.toFixed(1)}\\text{ kJ}\\)`
           };
         }
       },
@@ -3406,9 +3397,9 @@
         id: '16_1_3_q2_ice_to_steam', topic: '16.1.3', type: 'numeric_single',
         title: 'การทำน้ำ 0 °C เป็นไอน้ำ 100 °C (แบบฝึกหัด 16.1 ข้อ 4)',
         inputs: [{ label: 'ความร้อนรวมที่ต้องใช้ Q (kJ):' }],
-        text: (p) => `การทำให้น้ำมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) กลายเป็นไอน้ำ \\(100\ ^\circ\text{C}\\) ทั้งหมด ต้องใช้ความร้อนกี่กิโลจูล (kJ) กำหนดความร้อนจำเพาะน้ำ \\(c = 4186\text{ J/(kg K)}\\) และความร้อนแฝงการกลายเป็นไอ \\(L_v = 22.56 \times 10^5\text{ J/kg}\\)`,
+        text: (p) => `การทำให้น้ำมวล \\(${p.m}\\text{ kg}\\) อุณหภูมิ \\(0\ ^\\circ\\text{C}\\) กลายเป็นไอน้ำ \\(100\ ^\\circ\\text{C}\\) ทั้งหมด ต้องใช้ความร้อนกี่กิโลจูล (kJ) กำหนดความร้อนจำเพาะน้ำ \\(c = 4186\\text{ J/(kg K)}\\) และความร้อนแฝงการกลายเป็นไอ \\(L_v = 22.56 \\times 10^5\\text{ J/kg}\\)`,
         generate: (rng) => {
-          const m = rng ? roundHalfEven(0.1 + rng.random() * 2.9, 2) : 0.5;
+          const m = rng ? roundHalfEven(0.1 + (rng * 0.07), 2) : 0.5;
           const c = 4186;
           const Lv = 22.56e5;
           const Q1 = m * c * 100;
@@ -3417,7 +3408,7 @@
           const Q_tot_kJ = Q_tot / 1000;
           return {
             params: { m }, answers: [Q_tot_kJ.toFixed(1), roundHalfEven(Q_tot_kJ, 1).toString()], answersRaw: [Q_tot_kJ],
-            explanation: () => `คำนวณแยก 2 ขั้นตอน:<br>1. ทำน้ำ \\(0\ ^\circ\text{C} \rightarrow 100\ ^\circ\text{C}\\) ใช้ \\(Q_1 = mc\Delta T = ${m} \times 4186 \times 100 = ${(Q1 / 1000).toFixed(1)}\text{ kJ}\\)<br>2. ทำน้ำ \\(100\ ^\circ\text{C} \rightarrow\\) ไอน้ำ \\(100\ ^\circ\text{C}\\) ใช้ \\(Q_2 = mL_v = ${m} \times (22.56 \times 10^5) = ${(Q2 / 1000).toFixed(1)}\text{ kJ}\\)<br>ความร้อนรวมทั้งหมด \\(Q = Q_1 + Q_2 = ${Q_tot_kJ.toFixed(1)}\text{ kJ}\\)`
+            explanation: () => `คำนวณแยก 2 ขั้นตอน:<br>1. ทำน้ำ \\(0\ ^\\circ\\text{C} \\rightarrow 100\ ^\\circ\\text{C}\\) ใช้ \\(Q_1 = mc\\Delta T = ${m} \\times 4186 \\times 100 = ${(Q1 / 1000).toFixed(1)}\\text{ kJ}\\)<br>2. ทำน้ำ \\(100\ ^\\circ\\text{C} \\rightarrow\\) ไอน้ำ \\(100\ ^\\circ\\text{C}\\) ใช้ \\(Q_2 = mL_v = ${m} \\times (22.56 \\times 10^5) = ${(Q2 / 1000).toFixed(1)}\\text{ kJ}\\)<br>ความร้อนรวมทั้งหมด \\(Q = Q_1 + Q_2 = ${Q_tot_kJ.toFixed(1)}\\text{ kJ}\\)`
           };
         }
       },
@@ -3430,11 +3421,11 @@
           'การทำให้น้ำแข็งมวล 1 กิโลกรัม ที่ 0 °C หลอมเหลวเป็นน้ำทั้งหมดที่ 0 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล',
           'พลังงานที่สูญเสียไปเมื่อไอน้ำเดือด 1 กิโลกรัม แผ่รังสีความร้อนออกมาในสิ่งแวดล้อม'
         ],
-        text: () => `น้ำมีความร้อนแฝงของการกลายเป็นไอเท่ากับ \\(2.256 \times 10^6\text{ J/kg}\\) หมายความว่าอย่างไร`,
+        text: () => `น้ำมีความร้อนแฝงของการกลายเป็นไอเท่ากับ \\(2.256 \\times 10^6\\text{ J/kg}\\) หมายความว่าอย่างไร`,
         generate: (rng) => {
           return {
             params: {}, answers: ['การทำให้น้ำมวล 1 กิโลกรัม ที่ 100 °C กลายเป็นไอน้ำเดือดทั้งหมดที่ 100 °C ต้องใช้ความร้อน 2.256 x 10^6 จูล'], answersRaw: [0],
-            explanation: () => `นิยามของความร้อนแฝงจำเพาะของการกลายเป็นไอคือ พลังงานที่ใช้ในการเปลี่ยนสถานะสารมวล 1 หน่วยจากของเหลวเป็นแก๊สโดยอุณหภูมิไม่เปลี่ยน ดังนั้น สำหรับน้ำจึงหมายความว่า น้ำเดือดมวล \\(1\text{ kg}\\) อุณหภูมิ \\(100\ ^\circ\text{C}\\) ต้องรับความร้อน \\(2.256 \times 10^6\text{ J}\\) เพื่อกลายเป็นไอน้ำหมดที่ \\(100\ ^\circ\text{C}\\)`
+            explanation: () => `นิยามของความร้อนแฝงจำเพาะของการกลายเป็นไอคือ พลังงานที่ใช้ในการเปลี่ยนสถานะสารมวล 1 หน่วยจากของเหลวเป็นแก๊สโดยอุณหภูมิไม่เปลี่ยน ดังนั้น สำหรับน้ำจึงหมายความว่า น้ำเดือดมวล \\(1\\text{ kg}\\) อุณหภูมิ \\(100\ ^\\circ\\text{C}\\) ต้องรับความร้อน \\(2.256 \\times 10^6\\text{ J}\\) เพื่อกลายเป็นไอน้ำหมดที่ \\(100\ ^\\circ\\text{C}\\)`
           };
         }
       },
@@ -3447,11 +3438,11 @@
           'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของเหลว และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นของเหลว',
           'ที่อุณหภูมิห้อง (25 °C) สาร x เป็นแก๊ส และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นแก๊ส'
         ],
-        text: () => `กำหนดคุณสมบัติของสาร x: จุดหลอมเหลว \\(-114\ ^\circ\text{C}\\), จุดเดือด \\(79\ ^\circ\text{C}\\) ที่อุณหภูมิห้องและที่จุดเดือดของน้ำ สาร x จะมีสถานะใดตามลำดับ`,
+        text: () => `กำหนดคุณสมบัติของสาร x: จุดหลอมเหลว \\(-114\ ^\\circ\\text{C}\\), จุดเดือด \\(79\ ^\\circ\\text{C}\\) ที่อุณหภูมิห้องและที่จุดเดือดของน้ำ สาร x จะมีสถานะใดตามลำดับ`,
         generate: (rng) => {
           return {
             params: {}, answers: ['ที่อุณหภูมิห้อง (25 °C) สาร x เป็นของเหลว และที่จุดเดือดของน้ำ (100 °C) สาร x เป็นแก๊ส'], answersRaw: [0],
-            explanation: () => `ที่อุณหภูมิห้อง (\\(25\ ^\circ\text{C}\\)) มีค่าอยู่ระหว่างจุดหลอมเหลว (\\(-114\ ^\circ\text{C}\\)) และจุดเดือด (\\(79\ ^\circ\text{C}\\)) สาร x จึงมีสถานะเป็นของเหลว และที่อุณหภูมิจุดเดือดของน้ำ (\\(100\ ^\circ\text{C}\\)) ซึ่งสูงกว่าจุดเดือดของสาร x (\\(79\ ^\circ\text{C}\\)) สาร x จึงเดือดกลายเป็นสถานะแก๊ส`
+            explanation: () => `ที่อุณหภูมิห้อง (\\(25\ ^\\circ\\text{C}\\)) มีค่าอยู่ระหว่างจุดหลอมเหลว (\\(-114\ ^\\circ\\text{C}\\)) และจุดเดือด (\\(79\ ^\\circ\\text{C}\\)) สาร x จึงมีสถานะเป็นของเหลว และที่อุณหภูมิจุดเดือดของน้ำ (\\(100\ ^\\circ\\text{C}\\)) ซึ่งสูงกว่าจุดเดือดของสาร x (\\(79\ ^\\circ\\text{C}\\)) สาร x จึงเดือดกลายเป็นสถานะแก๊ส`
           };
         }
       },
@@ -3459,10 +3450,10 @@
         id: '16_1_3_q5_ice_to_steam_full', topic: '16.1.3', type: 'numeric_single',
         title: 'ความร้อนทั้งหมดในการทำน้ำแข็งติดลบเป็นไอ (แบบฝึกหัดท้ายบท ปัญหา ข้อ 7)',
         inputs: [{ label: 'ความร้อนรวมทั้งหมด (MJ):' }],
-        text: (p) => `ในการทำให้น้ำแข็งมวล \\(${p.m}\text{ kg}\\) อุณหภูมิ \\(${p.T_start}\ ^\circ\text{C}\\) เป็นไอน้ำเดือดหมดที่ \\(100\ ^\circ\text{C}\\) ต้องใช้ความร้อนทั้งหมดกี่ล้านจูล (MJ) (กำหนดความร้อนจำเพาะน้ำแข็ง \\(c_{\text{ice}} = 2100\text{ J/(kg K)}\\), น้ำ \\(c_{\text{water}} = 4186\text{ J/(kg K)}\\), \\(L_f = 3.33 \times 10^5\text{ J/kg}\\), \\(L_v = 2.256 \times 10^6\text{ J/kg}\\))`,
+        text: (p) => `ในการทำให้น้ำแข็งมวล \\(${p.m}\\text{ kg}\\) อุณหภูมิ \\(${p.T_start}\ ^\\circ\\text{C}\\) เป็นไอน้ำเดือดหมดที่ \\(100\ ^\\circ\\text{C}\\) ต้องใช้ความร้อนทั้งหมดกี่ล้านจูล (MJ) (กำหนดความร้อนจำเพาะน้ำแข็ง \\(c_{\\text{ice}} = 2100\\text{ J/(kg K)}\\), น้ำ \\(c_{\\text{water}} = 4186\\text{ J/(kg K)}\\), \\(L_f = 3.33 \\times 10^5\\text{ J/kg}\\), \\(L_v = 2.256 \\times 10^6\\text{ J/kg}\\))`,
         generate: (rng) => {
-          const m = rng ? roundHalfEven(0.5 + rng.random() * 2.5, 1) : 2.0;
-          const T_start = rng ? -Math.round(2 + rng.random() * 18) : -5;
+          const m = rng ? roundHalfEven(0.5 + (rng * 0.06), 1) : 2.0;
+          const T_start = rng ? -Math.round(2 + (rng % 18)) : -5;
 
           const c_ice = 2100;
           const c_water = 4186;
@@ -3477,7 +3468,7 @@
 
           return {
             params: { m, T_start }, answers: [Q_total_MJ.toFixed(2), Q_total_MJ.toFixed(1)], answersRaw: [Q_total_MJ],
-            explanation: () => `คำนวณแยก 4 ขั้นตอน:<br>1. อุ่นน้ำแข็งจาก \\(${T_start}\ ^\circ\text{C} \rightarrow 0\ ^\circ\text{C}\\) ใช้ \\(Q_1 = m c_{\text{ice}}\Delta T_1 = ${m} \times 2100 \times ${Math.abs(T_start)} = ${(Q1 / 1e6).toFixed(4)}\text{ MJ}\\)<br>2. ละลายน้ำแข็งหมด \\(Q_2 = mL_f = ${m} \times (3.33 \times 10^5) = ${(Q2 / 1e6).toFixed(4)}\text{ MJ}\\)<br>3. อุ่นน้ำจาก \\(0\ ^\circ\text{C} \rightarrow 100\ ^\circ\text{C}\\) ใช้ \\(Q_3 = m c_{\text{water}}\Delta T_3 = ${m} \times 4186 \times 100 = ${(Q3 / 1e6).toFixed(4)}\text{ MJ}\\)<br>4. ต้มน้ำกลายเป็นไอหมด \\(Q_4 = mL_v = ${m} \times (22.56 \times 10^5) = ${(Q4 / 1e6).toFixed(4)}\text{ MJ}\\)<br>ความร้อนรวมทั้งหมด \\(= Q_1+Q_2+Q_3+Q_4 = ${Q_total_MJ.toFixed(2)}\text{ MJ}\\)`
+            explanation: () => `คำนวณแยก 4 ขั้นตอน:<br>1. อุ่นน้ำแข็งจาก \\(${T_start}\ ^\\circ\\text{C} \\rightarrow 0\ ^\\circ\\text{C}\\) ใช้ \\(Q_1 = m c_{\\text{ice}}\\Delta T_1 = ${m} \\times 2100 \\times ${Math.abs(T_start)} = ${(Q1 / 1e6).toFixed(4)}\\text{ MJ}\\)<br>2. ละลายน้ำแข็งหมด \\(Q_2 = mL_f = ${m} \\times (3.33 \\times 10^5) = ${(Q2 / 1e6).toFixed(4)}\\text{ MJ}\\)<br>3. อุ่นน้ำจาก \\(0\ ^\\circ\\text{C} \\rightarrow 100\ ^\\circ\\text{C}\\) ใช้ \\(Q_3 = m c_{\\text{water}}\\Delta T_3 = ${m} \\times 4186 \\times 100 = ${(Q3 / 1e6).toFixed(4)}\\text{ MJ}\\)<br>4. ต้มน้ำกลายเป็นไอหมด \\(Q_4 = mL_v = ${m} \\times (22.56 \\times 10^5) = ${(Q4 / 1e6).toFixed(4)}\\text{ MJ}\\)<br>ความร้อนรวมทั้งหมด \\(= Q_1+Q_2+Q_3+Q_4 = ${Q_total_MJ.toFixed(2)}\\text{ MJ}\\)`
           };
         }
       },
@@ -3519,12 +3510,12 @@
         id: '16_1_4_q3_metal_in_ice_calculation', topic: '16.1.4', type: 'numeric_double',
         inputs: [{ label: 'ความร้อนที่ออกจากก้อนโลหะ Q (J):' }, { label: 'ความร้อนจำเพาะโลหะ c (J/kg·K):' }],
         title: 'การทดลองถ่ายโอนความร้อนและสมดุลความร้อน (แบบฝึกหัด 16.1 ข้อ 5)',
-        text: (p) => `นำก้อนโลหะมวล \\(${p.m1}\text{ g}\\) อุณหภูมิ \\(${p.T_metal}\ ^\circ\text{C}\\) ใส่ลงในน้ำแข็งมวล \\(${p.m2}\text{ g}\\) อุณหภูมิ \\(0\ ^\circ\text{C}\\) ในภาชนะหุ้มฉนวน ในที่สุดน้ำแข็งละลายหมดกลายเป็นน้ำที่มีอุณหภูมิ \\(${p.T_final}\ ^\circ\text{C}\\) จงหาความร้อนที่ออกจากโลหะ (J) และความร้อนจำเพาะของโลหะนี้ (J/kg K) (กำหนด \\(L_f = 3.33 \times 10^5\text{ J/kg}\\), \\(c_{\text{water}} = 4186\text{ J/(kg K)}\\))`,
+        text: (p) => `นำก้อนโลหะมวล \\(${p.m1}\\text{ g}\\) อุณหภูมิ \\(${p.T_metal}\ ^\\circ\\text{C}\\) ใส่ลงในน้ำแข็งมวล \\(${p.m2}\\text{ g}\\) อุณหภูมิ \\(0\ ^\\circ\\text{C}\\) ในภาชนะหุ้มฉนวน ในที่สุดน้ำแข็งละลายหมดกลายเป็นน้ำที่มีอุณหภูมิ \\(${p.T_final}\ ^\\circ\\text{C}\\) จงหาความร้อนที่ออกจากโลหะ (J) และความร้อนจำเพาะของโลหะนี้ (J/kg K) (กำหนด \\(L_f = 3.33 \\times 10^5\\text{ J/kg}\\), \\(c_{\\text{water}} = 4186\\text{ J/(kg K)}\\))`,
         generate: (rng) => {
-          const m1 = rng ? Math.round(100 + rng.random() * 400) : 300;
-          const T_metal = rng ? Math.round(200 + rng.random() * 250) : 400;
-          const m2 = rng ? Math.round(100 + rng.random() * 400) : 300;
-          const T_final = rng ? roundHalfEven(2.0 + rng.random() * 10, 1) : 5.0;
+          const m1 = rng ? Math.round(100 + (rng * 10)) : 300;
+          const T_metal = rng ? Math.round(200 + (rng * 6)) : 400;
+          const m2 = rng ? Math.round(100 + (rng * 8)) : 300;
+          const T_final = rng ? roundHalfEven(2.0 + (rng * 0.2), 1) : 5.0;
 
           const Lf = 3.33e5;
           const c_water = 4186;
@@ -3534,7 +3525,7 @@
 
           return {
             params: { m1, T_metal, m2, T_final }, answers: [Q_gain.toFixed(0), c_metal.toFixed(1)], answersRaw: [Q_gain, c_metal],
-            explanation: () => `ตามกฎการอนุรักษ์พลังงานในสมดุลความร้อน:<br>ความร้อนที่น้ำแข็งได้รับเพื่อเปลี่ยนสถานะและเพิ่มอุณหภูมิ = ความร้อนที่ออกจากก้อนโลหะ (\\(Q_{\text{loss}} = Q_{\text{gain}}\\))<br>ก. \\(Q_{\text{gain}} = m_2 L_f + m_2 c_{\text{water}} T_{\text{final}} = (${m2 / 1000}) \times (3.33 \times 10^5) + (${m2 / 1000}) \times 4186 \times ${T_final} = ${Q_gain.toFixed(0)}\text{ J}\\)<br>ข. หาความร้อนจำเพาะ \\(Q_{\text{loss}} = m_1 c_{\text{metal}} (T_{\text{metal}} - T_{\text{final}}) \rightarrow c_{\text{metal}} = \frac{${Q_gain.toFixed(0)}}{(${m1 / 1000}) \times (${T_metal} - ${T_final})} = ${c_metal.toFixed(1)}\text{ J/(kg K)}\\)`
+            explanation: () => `ตามกฎการอนุรักษ์พลังงานในสมดุลความร้อน:<br>ความร้อนที่น้ำแข็งได้รับเพื่อเปลี่ยนสถานะและเพิ่มอุณหภูมิ = ความร้อนที่ออกจากก้อนโลหะ (\\(Q_{\\text{loss}} = Q_{\\text{gain}}\\))<br>ก. \\(Q_{\\text{gain}} = m_2 L_f + m_2 c_{\\text{water}} T_{\\text{final}} = (${m2 / 1000}) \\times (3.33 \\times 10^5) + (${m2 / 1000}) \\times 4186 \\times ${T_final} = ${Q_gain.toFixed(0)}\\text{ J}\\)<br>ข. หาความร้อนจำเพาะ \\(Q_{\\text{loss}} = m_1 c_{\\text{metal}} (T_{\\text{metal}} - T_{\\text{final}}) \\rightarrow c_{\\text{metal}} = \\frac{${Q_gain.toFixed(0)}}{(${m1 / 1000}) \\times (${T_metal} - ${T_final})} = ${c_metal.toFixed(1)}\\text{ J/(kg K)}\\)`
           };
         }
       },
@@ -3593,8 +3584,8 @@
       const template = filtered[Math.floor(Math.random() * filtered.length)];
 
       // เรียกฟังก์ชันสร้างโจทย์โดยส่ง practiceRNG เข้าไปหากเปิดการสุ่ม เพื่อรับประกันความไม่ซ้ำ
-      const rng = isRandom ? practiceRNG : null;
-      const instance = generateQuestionInstance(template, rng);
+      const R = isRandom ? Math.floor(Math.random() * 40) + 1 : null;
+      const instance = generateQuestionInstance(template, R);
 
       currentPracticeQuestion = { template, instance };
       document.getElementById('prac-badge-mode').innerText = `หัวข้อ ${formattedTopic} • ` + (isRandom ? 'แบบสุ่มตัวแปร' : 'แบบคู่มือครู สสวท.');
@@ -3672,6 +3663,8 @@
         triggerAlert("กรอกข้อมูลไม่ครบ", "กรุณากรอกชื่อ ชั้นเรียน และเลขที่ผู้เรียนให้ครบถ้วนก่อนจะเริ่มทำข้อสอบครับ", "fa-user-clock", "bg-indigo-100 text-indigo-600");
         return;
       }
+      const durationMins = parseInt(document.getElementById('exam-duration-minutes').value) || 10;
+      examDurationSeconds = durationMins * 60;
       examStudentInfo = { name, class: cls, number: num };
 
       // สร้างตัวแปรการสุ่มแบบ Seeded RNG จากเลขที่ของผู้สอบ
@@ -3697,13 +3690,14 @@
         shuffled_4[0]
       ];
 
+      const R = parseInt(num);
       const generatedQuestions = selectedTemplates.map((template) => {
-        // ใช้ฟังก์ชันตัวช่วยสุ่มโจทย์แบบไม่ซ้ำ โดยส่งตัวสุ่มแบบ Seeded RNG เข้าไป
-        const instance = generateQuestionInstance(template, examRNG);
+        // ดึงโจทย์โดยส่งเลขที่ (R) ไปผูกกับสูตรโดยตรง
+        const instance = generateQuestionInstance(template, R);
         return {
           id: template.id, topic: template.topic, type: template.type, title: template.title,
-          text: template.text(instance.params), inputs: template.inputs || [], choices: template.choices || [],
-          answers: instance.answers, answersRaw: instance.answersRaw, explanationText: instance.explanation()
+          text: template.text(instance.params), inputs: template.inputs || [], choices: template.choices || []
+          // ไม่บันทึก answers และ answersRaw ลงใน state เพื่อป้องกันการฝังคำตอบแบบ Static (ทำตาม Backend Validation Rule)
         };
       });
       document.getElementById('lbl-exam-user-info').innerText = `${name} (ม.6/${cls} เลขที่ ${num})`;
@@ -3778,18 +3772,24 @@
       const answers = getCurrentExamAnswers();
       let total_score = 0;
       const gradedResults = [];
+      const R = parseInt(examStudentInfo.number) || 1;
       currentExamQuestions.forEach((q, idx) => {
         let isCorrect = false;
         const userAns = answers[idx];
-        if (q.type === 'choice') isCorrect = userAns === q.answers[0];
-        else if (q.type === 'numeric_single') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], q.answersRaw[0]);
-        else if (q.type === 'numeric_double') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], q.answersRaw[0]) && isNumericAnswerCorrect(userAns[1], q.answersRaw[1]);
+        const template = QUESTION_TEMPLATES.find(t => t.id === q.id);
+        
+        // Backend Validation: คำนวณหาเฉลยที่ถูกต้อง On-the-fly ณ เวลานั้น
+        const dynamicCalc = template.generate(R);
+
+        if (q.type === 'choice') isCorrect = userAns === dynamicCalc.answers[0];
+        else if (q.type === 'numeric_single') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], dynamicCalc.answersRaw[0]);
+        else if (q.type === 'numeric_double') isCorrect = userAns && isNumericAnswerCorrect(userAns[0], dynamicCalc.answersRaw[0]) && isNumericAnswerCorrect(userAns[1], dynamicCalc.answersRaw[1]);
         const score = isCorrect ? 2.0 : 0.0;
         total_score += score;
-        gradedResults.push({ idx, isCorrect, score, userAns });
+        gradedResults.push({ idx, isCorrect, score, userAns, expectedAnswers: dynamicCalc.answers, explanationText: dynamicCalc.explanation() });
       });
       examTimeRemaining = Math.max(0, getCurrentExamRemainingSeconds());
-      const elapsed = timeExpired ? EXAM_DURATION_SECONDS : (EXAM_DURATION_SECONDS - examTimeRemaining);
+      const elapsed = timeExpired ? examDurationSeconds : (examDurationSeconds - examTimeRemaining);
       const m = Math.floor(elapsed / 60), s = elapsed % 60;
       const time_taken_str = `${m} นาที ${s} วินาที`;
       const finishedAt = new Date();
@@ -3840,9 +3840,9 @@
       <p class="text-xs text-slate-500 font-medium">โจทย์: ${q.text}</p>
       <div class="text-xs bg-white border border-slate-200 p-2.5 rounded-lg">
         <span>คำตอบที่คุณส่ง: <strong class="${grad.isCorrect ? 'text-emerald-600' : 'text-rose-600'}">${userAnsText}</strong></span>
-        <br><span>คำตอบที่ถูกต้อง: <strong>${q.answers.join(' และ ')}</strong></span>
+        <br><span>คำตอบที่ถูกต้อง: <strong>${grad.expectedAnswers.join(' และ ')}</strong></span>
       </div>
-      <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs md:text-sm text-slate-700 space-y-3 math-font">${q.explanationText}</div>
+      <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs md:text-sm text-slate-700 space-y-3 math-font">${grad.explanationText}</div>
     </div>`;
       });
       const feedback = document.getElementById('lbl-res-badge-feedback');
