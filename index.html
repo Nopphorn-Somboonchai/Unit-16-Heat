@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ฟิสิกส์ ม.6: บทเรียนเรื่องความร้อนและแก๊ส 🌡️🔥</title>
+  <title>ฟิสิกส์ ม.6: บทที่ 16.1 ความร้อนและแก๊ส 🌡️🔥</title>
   <!-- Production Tailwind CSS build -->
   <link rel="stylesheet" href="./styles.css">
   <!-- Google Fonts: Prompt & Sarabun -->
@@ -39,6 +39,19 @@
       --sky: #2f80ed;
       --sun: #ffcf5a;
       --coral: #ff7a70;
+      --success: #28a745;
+      /* สีเขียวสำหรับข้อสอบ */
+    }
+
+    .total-questions-badge {
+      display: inline-block;
+      background-color: var(--success);
+      color: #fff;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 0.9em;
     }
 
     body {
@@ -187,40 +200,7 @@
       border-color: rgba(255, 207, 90, 0.38) !important;
     }
 
-    #review-tab-single .bg-slate-900 {
-      background: linear-gradient(135deg, #12343b, #0f766e) !important;
-    }
 
-    svg[aria-label="ภาพปลายวัตถุวางบนสเกล"] rect:first-child {
-      fill: #fbfefb;
-    }
-
-    .measurement-figure {
-      position: relative;
-      cursor: zoom-in;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      transition: transform 140ms ease, box-shadow 140ms ease;
-    }
-
-    .measurement-figure:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(20, 49, 61, 0.1);
-    }
-
-    .measurement-figure::after {
-      content: "แตะเพื่อซูม";
-      position: absolute;
-      right: 0.75rem;
-      top: 0.75rem;
-      padding: 0.35rem 0.65rem;
-      border-radius: 999px;
-      background: rgba(20, 49, 61, 0.78);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      pointer-events: none;
-    }
 
     #measurement-zoom-stage svg {
       width: min(1120px, 175vw);
@@ -237,10 +217,7 @@
     }
 
     .text-slate-800,
-    .text-slate-900,
-    .text-blue-950,
-    .text-indigo-950,
-    .text-violet-950 {
+    .text-slate-900 {
       color: var(--ink) !important;
     }
 
@@ -275,9 +252,7 @@
 
     .border-slate-100,
     .border-slate-200,
-    .border-blue-100,
-    .border-indigo-100,
-    .border-violet-100 {
+    .border-indigo-100 {
       border-color: var(--line) !important;
     }
 
@@ -304,7 +279,6 @@
         0 10px 18px rgba(20, 49, 61, 0.07);
     }
 
-    .text-blue-600.bg-transparent,
     button.text-blue-600:not(.bg-blue-600) {
       box-shadow: none;
       border-color: transparent !important;
@@ -352,15 +326,6 @@
         border-radius: 14px;
       }
 
-      .measurement-figure svg {
-        min-width: 720px;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .measurement-figure svg {
-        min-width: 680px;
-      }
     }
 
     @media (max-height: 430px) and (orientation: landscape) {
@@ -403,26 +368,12 @@
        ========================================================================== */
 
     /* 1. Live Calculation Box backgrounds (Day/Default Mode) */
-    .bg-blue-900 {
-      background-color: #0f2c59 !important;
-      /* Deep navy blue */
-    }
-
-    .bg-indigo-950 {
-      background-color: #1a1b4b !important;
-      /* Deep indigo */
-    }
-
     .bg-violet-950 {
       background-color: #29134a !important;
       /* Deep violet */
     }
 
     /* 2. Luminous text colors inside dark boxes (Day/Default Mode) */
-    .text-blue-100 {
-      color: #dbeafe !important;
-    }
-
     .text-blue-200 {
       color: #bfdbfe !important;
     }
@@ -455,10 +406,6 @@
 
     .bg-indigo-50 {
       background-color: #f0f4ff !important;
-    }
-
-    .bg-violet-50 {
-      background-color: #f5f3ff !important;
     }
 
     .bg-emerald-50 {
@@ -530,10 +477,6 @@
       background-color: #f0f4ff !important;
     }
 
-    .hover\:bg-violet-50:hover {
-      background-color: #f5f3ff !important;
-    }
-
     /* 8. Form Inputs and Selects (Day/Default Mode) */
     input[type="text"],
     input[type="number"],
@@ -562,7 +505,7 @@
           <i class="fa-solid fa-temperature-half"></i>
         </div>
         <div>
-          <h1 class="text-xl md:text-2xl font-bold tracking-wide">ฟิสิกส์ ม.6: บทเรียนเรื่องความร้อนและแก๊ส</h1>
+          <h1 class="text-xl md:text-2xl font-bold tracking-wide">ฟิสิกส์ ม.6 บทที่ 16 เรื่องความร้อนและแก๊ส</h1>
           <p class="text-xs md:text-sm text-blue-200">รายวิชา ฟิสิกส์ 5 รหัสวิชา ว33205 โรงเรียนห้องสอนศึกษา
             ในพระอุปถัมภ์ฯ</p>
         </div>
@@ -1418,6 +1361,9 @@
       </div>
 
       <!-- Mode Selector -->
+      <div id="total-questions-display" class="total-questions-badge">
+        ข้อสอบในคลัง : <span id="total-count">0</span> ข้อ
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <button onclick="startPracticeMode('16-1-1')" id="btn-prac-16-1-1"
           class="p-4 bg-white hover:bg-blue-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-4 transition text-left">
@@ -1857,10 +1803,6 @@
       else roundedInteger = floor % 2 === 0 ? floor : floor + 1;
       const rounded = sign * roundedInteger / factor;
       return decimalPlaces > 0 ? Number(rounded.toFixed(decimalPlaces)) : rounded;
-    }
-
-    function formatHalfEven(num, decimalPlaces = 0) {
-      return roundHalfEven(num, decimalPlaces).toFixed(decimalPlaces);
     }
 
     function formatSci(num, sigFigs = 2) {
@@ -3215,7 +3157,7 @@
     }
 
     // สร้างอ็อบเจ็กต์สุ่มปกติสำหรับโหมดฝึกฝน (Practice) จะไม่ได้ใช้ในระบบไดนามิกแล้ว แต่คงคลาสเดิมไว้
-    
+
     // ฟังก์ชันตัวช่วยในการสร้างโจทย์แบบแปรผันตามเลขที่ (Dynamic Parameters)
     function generateQuestionInstance(template, R) {
       if (!R) return template.generate(null); // กรณีไม่ได้ส่ง R มา (เช่นดูเฉลยโหมดสุ่มธรรมดา)
@@ -3367,10 +3309,8 @@
           const dT = rng ? Math.round(1 + (rng % 4)) : 2;
           const c = 4186;
           const Q = m * c * dT;
-
-          let m_display = m.toExponential(2).replace('e+6', ' \\\\times 10^6');
-          if (m === 1e6) m_display = '1.00 \\\\times 10^6';
-
+          let m_display = m.toExponential(2).replace('e+6', ' \\times 10^6');
+          if (m === 1e6) m_display = '1.00 \\times 10^6';
           return {
             params: { m_display, dT }, answers: [Q.toExponential(2), Q.toString()], answersRaw: [Q],
             explanation: () => `จากสูตร \\(Q = mc\\Delta T\\) แทนค่าจะได้ \\(Q = (${m_display}) \\times 4186 \\times ${dT} = ${formatSci(Q)}\\text{ J}\\)`
@@ -3777,7 +3717,7 @@
         let isCorrect = false;
         const userAns = answers[idx];
         const template = QUESTION_TEMPLATES.find(t => t.id === q.id);
-        
+
         // Backend Validation: คำนวณหาเฉลยที่ถูกต้อง On-the-fly ณ เวลานั้น
         const dynamicCalc = template.generate(R);
 
@@ -3871,6 +3811,13 @@
       }
     }
 
+    // --- ส่วนแสดงจำนวนข้อสอบเมื่อโหลดหน้าเว็บ ---
+    window.onload = function () {
+      // นับจำนวนโจทย์ทั้งหมดใน array QUESTION_TEMPLATES
+      const totalQuestions = QUESTION_TEMPLATES.length;
+      // อัปเดตตัวเลขไปยัง HTML
+      document.getElementById('total-count').innerText = totalQuestions;
+    };
 
   </script>
 </body>
